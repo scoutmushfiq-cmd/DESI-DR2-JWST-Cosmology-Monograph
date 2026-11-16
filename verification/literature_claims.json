@@ -1,0 +1,316 @@
+{
+  "description": "Registry of every external (literature-sourced) numerical claim quoted in Parts VIII-IX of cosmology_monograph_full.tex, with source, locator, and verification status. Maintained as part of the Round-5 referee response (M4/m5). verification_status values: 'verified' (located in the cited source by direct fetch), 'own-pipeline' (derived from the released chains of this monograph, not a literature claim), 'partial' (source document only partially accessible; qualitative statement verified, exact entry transcribed from the cited tables). Round-6 addition: every 'own-pipeline' entry now carries an 'artifact' field pointing at the released file that backs it, and the audit script asserts that each artifact exists.",
+  "generated": "2026-11-16",
+  "claims": [
+    {
+      "id": "silva_ide_xi_cmb_desi",
+      "claim": "IDE coupling xi = -0.132^{+0.087}_{-0.064} for CMB + DESI DR2 (lower limit xi > -0.254 at 95% CL)",
+      "tex_location": "Part VIII, IDE bullet",
+      "value": {
+        "xi": -0.132,
+        "err_up": 0.087,
+        "err_down": -0.064,
+        "lower_limit_95": -0.254
+      },
+      "source": "E. Silva, M. A. Sabogal, M. Scherer, R. C. Nunes, E. Di Valentino, S. Kumar, Phys. Rev. D 111, 123511 (2025), arXiv:2503.23225",
+      "locator": "Table 2, column CMB + DESI DR2",
+      "verification_status": "verified",
+      "verified_url": "https://arxiv.org/html/2503.23225v2"
+    },
+    {
+      "id": "silva_ide_xi_cmb_desi_pps",
+      "claim": "IDE coupling xi = -0.116^{+0.060}_{-0.050} and H0 = 69.61 +/- 0.44 km/s/Mpc for CMB + DESI DR2 + Pantheon+ (~2 sigma coupling indication)",
+      "tex_location": "Part VIII, IDE bullet",
+      "value": {
+        "xi": -0.116,
+        "err_up": 0.06,
+        "err_down": -0.05,
+        "H0": 69.61,
+        "H0_err": 0.44,
+        "significance": "~2 sigma"
+      },
+      "source": "E. Silva et al., Phys. Rev. D 111, 123511 (2025), arXiv:2503.23225",
+      "locator": "Table 2, column CMB + DESI DR2 + PPS",
+      "verification_status": "verified",
+      "verified_url": "https://arxiv.org/html/2503.23225v2"
+    },
+    {
+      "id": "poulin_ede_pact_lbsmb",
+      "claim": "EDE f_EDE = 0.126 +/- 0.021, H0 = 72.34 +/- 0.72 km/s/Mpc, Delta chi2 = -35.4, SH0ES tension 2.0 sigma (Q_DMAP) in P-ACT-LBSM_b (Planck ell<1000 + ACT DR6 + lensing + Pantheon+ + DESI DR2 + SH0ES M_B prior)",
+      "tex_location": "Part VIII, EDE bullet",
+      "value": {
+        "f_EDE": 0.126,
+        "f_EDE_err": 0.021,
+        "H0": 72.34,
+        "H0_err": 0.72,
+        "dchi2": -35.4,
+        "tension_sigma": 2.0
+      },
+      "source": "V. Poulin, T. L. Smith, R. Calderon, T. Simon, arXiv:2505.08051 (2025)",
+      "locator": "Abstract and Sec. V (P-ACT-LBSM_b dataset)",
+      "verification_status": "verified",
+      "verified_url": "https://arxiv.org/html/2505.08051"
+    },
+    {
+      "id": "poulin_ede_profile_no_sh0es",
+      "claim": "EDE profile likelihood without SH0ES M_B prior: f_EDE = 0.090^{+0.030}_{-0.033}, H0 = 71.96^{+1.08}_{-0.99} km/s/Mpc, f_EDE > 0 at ~2.5 sigma, residual SH0ES tension ~2 sigma",
+      "tex_location": "Part VIII, EDE bullet",
+      "value": {
+        "f_EDE": 0.09,
+        "err_up": 0.03,
+        "err_down": -0.033,
+        "H0": 71.96,
+        "err_up_H0": 1.08,
+        "err_down_H0": -0.99,
+        "fEDE_significance": "~2.5 sigma",
+        "residual_tension": "~2 sigma"
+      },
+      "source": "V. Poulin, T. L. Smith, R. Calderon, T. Simon, arXiv:2505.08051 (2025)",
+      "locator": "Abstract and Secs. III/VI (P-ACT-LBS profile)",
+      "verification_status": "verified",
+      "verified_url": "https://arxiv.org/html/2505.08051"
+    },
+    {
+      "id": "lodha_mirage_dchi2",
+      "claim": "Mirage class attains -Delta chi2 ~ 10.5-20.7, comparable to the w0wa parametrization, with one additional degree of freedom",
+      "tex_location": "Part VIII, Mirage bullet; Table tab:model_comparison_full (Delta chi2 rows -10.5/-16.2/-20.7)",
+      "value": {
+        "minus_dchi2_range": [
+          10.5,
+          20.7
+        ]
+      },
+      "source": "K. Lodha et al. (DESI Collaboration), Phys. Rev. D 112, 083511 (2025), arXiv:2503.14743",
+      "locator": "Sec. VI.C / VII (extended dark energy analysis); exact phrase verified in the official DESI DR2 extended-analysis PDF",
+      "verification_status": "verified",
+      "verified_url": "https://arxiv.org/abs/2503.14743"
+    },
+    {
+      "id": "lodha_mirage_zc",
+      "claim": "f_DE reaches its maximum above unity at z_c ~ 0.45 in the direct DESI DR2 f_DE reconstruction (f_DE^max ~ 1.09)",
+      "tex_location": "Part VI fig:gp_reconstruction caption; highlights; glossary",
+      "value": {
+        "z_c_max": 0.45
+      },
+      "source": "K. Lodha et al., Phys. Rev. D 112, 083511 (2025), arXiv:2503.14743",
+      "locator": "Sec. III (direct f_DE reconstruction)",
+      "verification_status": "partial",
+      "verified_url": "https://arxiv.org/abs/2503.14743",
+      "note": "Round-6 M3: only the location z_c ~ 0.45 of the f_DE maximum could be verified in the accessible source material; the peak value f_DE^max ~ 1.09 could NOT be located in any accessible Lodha et al. source (arXiv HTML blocked; published PRD page not fetched). The value 1.09 has been removed from the manuscript (highlights, fig:gp_reconstruction caption, glossary); only the qualitative 'peaks above unity near z_c ~ 0.45' statement is retained."
+    },
+    {
+      "id": "lodha_thawing_qualitative",
+      "claim": "The algebraic thawing parametrization can improve the fit relative to LambdaCDM, at the cost of two additional degrees of freedom",
+      "tex_location": "Part VIII, theoretical-implications item",
+      "value": null,
+      "source": "K. Lodha et al., Phys. Rev. D 112, 083511 (2025), arXiv:2503.14743",
+      "locator": "Sec. VI.A / VI.E (algebraic thawing, Eq. 15)",
+      "verification_status": "verified",
+      "verified_url": "https://arxiv.org/abs/2503.14743"
+    },
+    {
+      "id": "lodha_thawing_dchi2_table",
+      "claim": "Algebraic thawing Delta chi2_MAP = -2.9 (Pantheon+) / -13.2 (DES-Y5) in tab:model_comparison_full",
+      "tex_location": "Table tab:model_comparison_full, Algebraic Thawing row",
+      "value": {
+        "dchi2_pantheon": -2.9,
+        "dchi2_desy5": -13.2
+      },
+      "source": "K. Lodha et al., Phys. Rev. D 112, 083511 (2025), arXiv:2503.14743",
+      "locator": "Tables 2-4 (compilation)",
+      "verification_status": "partial",
+      "note": "arXiv HTML and DESI PDF were only partially accessible from the verification sandbox; the qualitative statement is verified verbatim, the exact table entry is transcribed from the cited tables."
+    },
+    {
+      "id": "mirage_lnb_own",
+      "claim": "Mirage Savage-Dickey lnB = +3.49 +/- 0.23 (DESI DR2 + CMB) and +3.64 +/- 0.94 (DESI DR2 + CMB + Pantheon+); D_KL = 2.13 / 2.40; Delta-chi2_MAP = -12.4 / -13.2; Delta<lnL> = +5.62 / +6.03. For Union3 / DES-Y5 the official supernova likelihoods are re-implemented and give Mirage Delta-chi2_MAP = -19.3 (4.4 sigma) / -17.0 (4.1 sigma), Delta-AIC = -17.3 / -15.0, Delta-DIC = -17.4 / -15.2, Delta<lnL> = +9.17 / +8.03, with nested-sampling lnB = +6.75 +/- 0.02 (Union3) and +5.04 +/- 0.19 (DES-Y5); Savage-Dickey cross-checks +8.71 +/- 3.03 and +5.21 +/- 1.93.",
+      "tex_location": "Highlights; Part VIII Mirage bullet; Table tab:model_comparison_full (footnoted); Part VII-B validation; Part X",
+      "value": {
+        "lnB_desi_cmb": 3.49,
+        "lnB_desi_cmb_pantheon": 3.64,
+        "D_KL_desi_cmb": 2.13,
+        "D_KL_desi_cmb_pantheon": 2.4,
+        "dchi2_map_desi_cmb": -12.4,
+        "dchi2_map_desi_cmb_pantheon": -13.2,
+        "dlnL_desi_cmb": 5.62,
+        "dlnL_desi_cmb_pantheon": 6.03,
+        "dchi2_map_union3": -19.3,
+        "dchi2_map_desy5": -17.0,
+        "dAIC_union3": -17.3,
+        "dAIC_desy5": -15.0,
+        "dDIC_union3": -17.4,
+        "dDIC_desy5": -15.2,
+        "dlnL_union3": 9.17,
+        "dlnL_desy5": 8.03,
+        "lnB_nested_union3": 6.75,
+        "lnB_nested_desy5": 5.04,
+        "lnB_SD_union3": 8.71,
+        "lnB_SD_desy5": 5.21
+      },
+      "source": "Own pipeline: Mirage MCMC chains (w_a = -3.66(1+w_0), flat prior w_0 ~ U[-2.5,0.5], V = 3.0, 48 walkers x 2500 steps x 2 seeds per dataset) run with verification/run_mirage_sd.py; Savage-Dickey KDE density ratio at w_0 = -1; bounded MAP re-optimization; Delta-D = 30 trim decomposition. Union3/DES-Y5: official released data products (Union3 mu_mat FITS; DES-SN5YR DES-Dovekie HD + STAT+SYS inverse covariance) re-implemented in verification/sn_extra.py, validated against published CPL posteriors; lnB from an independent ellipsoidal nested sampler (verification/nested_lnB.py)",
+      "locator": "verification/mirage_sd.json; verification/sn_extra_results.json; verification/nested_lnB.json; chains/chain_mirage_*.npy; verification/dlnL_decomposition.json",
+      "verification_status": "own-pipeline",
+      "artifact": "verification/mirage_sd.json",
+      "note": "Round-6 M1: the previously quoted values +1.85/+4.60/+6.65 had no artifact backing (absent from every released chain and script) and have been replaced by the computed values above; Union3/DES-Y5 entries were '---' until the official likelihoods were re-implemented and validated (nested-sampling lnB adopted as primary for those rows because the Union3 KDE estimate sits 3.8 sigma in the tail of the half-chain scatter)."
+    },
+    {
+      "id": "mirage_lnb_nested_own",
+      "claim": "Independent ellipsoidal nested-sampling cross-check of all Mirage Bayes factors: lnB = +3.65 +/- 0.35 (DESI DR2 + CMB), +3.40 +/- 0.35 (+ Pantheon+), +6.75 +/- 0.02 (Union3), +5.04 +/- 0.19 (DES-Y5); CPL calibration on DESI DR2 + CMB gives +2.37 vs the canonical Savage-Dickey +2.60. Nested claims are scoped to the 1-parameter Mirage axis (for 2-parameter CPL on SN compilations the w_a -> -4 prior tail defeats both single-ellipsoid nested and 2-D KDE estimators), and our CPL Bayes factors on SN compilations are systematically weaker than the published full-Planck PolyChord values, consistent with our compressed-CMB Delta-chi2_MAP differences.",
+      "tex_location": "Part VII-B nested-sampling validation paragraph; Table tab:model_comparison_full caption; Part X",
+      "value": {
+        "mirage_desi_cmb": 3.65,
+        "mirage_desi_cmb_pantheon": 3.4,
+        "mirage_union3": 6.75,
+        "mirage_desy5": 5.04,
+        "cpl_desi_cmb": 2.37,
+        "cpl_pantheon_published": -0.66,
+        "cpl_union3_published": 3.03,
+        "cpl_desy5_published": 4.88
+      },
+      "source": "Own pipeline: verification/nested_lnB.py (pure-numpy ellipsoidal nested sampler, 128 live points, expansion factor 1.5, target dlnZ = 0.1, two seeds per configuration), identical flat priors to the MCMC chains",
+      "locator": "verification/nested_lnB.json",
+      "verification_status": "own-pipeline",
+      "artifact": "verification/nested_lnB.json"
+    },
+    {
+      "id": "sn_extra_likelihood_validation",
+      "claim": "Re-implemented official Union3 and DES supernova likelihoods validated against published posteriors: CPL MAP (w0, wa) = (-0.665, -1.093) vs published (-0.667, -1.09) on DESI DR2 + CMB + Union3, and (-0.802, -0.749) vs the published DES-Dovekie posterior (-0.803 +/- 0.054, -0.72 +/- 0.21) on DESI DR2 + CMB + DES-Y5 (agreement to 0.02 sigma in w0 and 0.14 sigma in wa; Dovekie = Popovic et al. 2025, arXiv:2511.07517, the recalibrated 1820-SN reanalysis of the 1829-SN DES-SN5YR sample, DES Collaboration 2024, arXiv:2401.02929); Delta-chi2_MAP = -20.6 (Union3) and -17.1 (DES-Dovekie) vs published -17.4 and -21.0. The DES-Y5 Delta-chi2 difference (-17.1 vs -21.0) is dominated not by the CMB compression but by the sample itself: the released Dovekie recalibration (1820 SNe) yields a smaller preference than the DES-SN5YR BEAMS analysis (1829 SNe), consistent with the Dovekie team's own significance reduction from 4.2 sigma to 3.2 sigma. All Mirage-vs-CPL comparisons are made within our own pipeline.",
+      "tex_location": "Part III DES-Y5 sample paragraph; Part VII-B official-likelihood validation paragraph; Part VIII Mirage bullet",
+      "value": {
+        "w0_cpl_union3_own": -0.665,
+        "wa_cpl_union3_own": -1.093,
+        "w0_cpl_union3_published": -0.667,
+        "wa_cpl_union3_published": -1.09,
+        "w0_cpl_dovekie_own": -0.802,
+        "wa_cpl_dovekie_own": -0.749,
+        "w0_cpl_dovekie_published": -0.803,
+        "w0_cpl_dovekie_published_err": 0.054,
+        "wa_cpl_dovekie_published": -0.72,
+        "wa_cpl_dovekie_published_err": 0.21,
+        "w0_agreement_sigma": 0.02,
+        "wa_agreement_sigma": 0.14,
+        "dchi2_map_cpl_union3_own": -20.6,
+        "dchi2_map_cpl_dovekie_own": -17.1,
+        "dchi2_map_cpl_union3_published": -17.4,
+        "dchi2_map_cpl_desy5_published": -21.0,
+        "dovekie_significance_published": "3.2 sigma (reduced from 4.2 sigma in DES-SN5YR)",
+        "dovekie_sample": "1820 SNe (1623 DES + 197 low-z)",
+        "des_sn5yr_sample": "1829 SNe (1635 DES + 194 low-z)"
+      },
+      "source": "Own pipeline: verification/sn_extra.py reading the official released data products (verification/union3/, verification/sn5yr/; caches rebuilt by verification/download_sn_extra_data.py, raw data not committed); published Dovekie posterior from Popovic et al. 2025, arXiv:2511.07517 (MNRAS 548, stag632); DES-SN5YR sample from DES Collaboration 2024, arXiv:2401.02929",
+      "locator": "verification/sn_extra_results.json",
+      "verification_status": "own-pipeline",
+      "artifact": "verification/sn_extra_results.json"
+    },
+    {
+      "id": "dkl_cpl_own",
+      "claim": "CPL Occam penalty D_KL ~ 4-5 (4.06 for Pantheon+ from the chain-level decomposition; ~2.6 for Mirage vs ~5.1 for CPL)",
+      "tex_location": "Highlights; Abstract; Sec. VII-B semantics paragraph; Part VIII Mirage bullet; Part X",
+      "value": {
+        "D_KL_cpl_desi_cmb": 4.06,
+        "D_KL_mirage_desi_cmb": 2.13,
+        "D_KL_mirage_pantheon": 2.4
+      },
+      "source": "Own pipeline: Delta<lnL> decomposition on the released chains (Delta D = 30 trim), equated to the canonical Savage-Dickey lnB",
+      "locator": "verification/dlnL_decomposition.json; Sec. VII-B",
+      "verification_status": "own-pipeline",
+      "note": "Previously (pre-Round-5) mis-attributed as 'the 4.5-5.2 range quoted by Lodha et al.'; that exact range could not be located in Lodha et al. and the attribution was removed. Round-6 M1: the earlier 'D_KL ~ 2.6 (Mirage) vs ~5.1 (CPL)' figures were placeholders; replaced by the computed Mirage decomposition (2.13 / 2.40) against the CPL value 4.06 from the same pipeline.",
+      "artifact": "verification/dlnL_decomposition.json"
+    },
+    {
+      "id": "h0rd_own",
+      "claim": "H0 r_d ~ 10027 +/- 45 km/s (gray hyperbola in fig:ede_horndeski)",
+      "tex_location": "Part VIII, fig:ede_horndeski caption",
+      "value": {
+        "H0_rd": 10027,
+        "err": 45
+      },
+      "source": "Own pipeline: joint DESI DR2 + CMB chain H0 = 68.17 +/- 0.28 km/s/Mpc combined with Planck r_d = 147.09 +/- 0.26 Mpc (quadrature)",
+      "locator": "verification/h0rd_check.json (verification/h0rd_check.py); Part V",
+      "verification_status": "own-pipeline",
+      "note": "Previously quoted as 10027 +/- 65 with no locator; re-derived from our own chain (68.17*147.09 = 10027.1; sigma = sqrt((147.09*0.28)^2 + (68.17*0.26)^2) = 44.8).",
+      "artifact": "verification/h0rd_check.json"
+    },
+    {
+      "id": "elbers_neutrino_block",
+      "claim": "sum m_nu < 0.0642 eV (95% CL), sigma(sum m_nu) = 0.020 eV, N_eff = 3.23^{+0.35}_{-0.34}, FC limit 0.053 eV, sum m_nu,eff = -0.107 +/- 0.052 eV, w0wa limit 0.163 eV",
+      "tex_location": "Part IX, Eq. eq:desi_dr2_mnu_lcdm and eq:desi_dr2_mnu_w0wa",
+      "value": {
+        "mnu_95": 0.0642,
+        "sigma_mnu": 0.02,
+        "Neff": [
+          3.23,
+          0.35,
+          -0.34
+        ],
+        "FC_limit": 0.053,
+        "mnu_eff": [
+          -0.107,
+          0.052
+        ],
+        "mnu_w0wa_95": 0.163
+      },
+      "source": "W. Elbers et al. (DESI Collaboration), Phys. Rev. D 112, 083513 (2025), arXiv:2503.14744",
+      "locator": "Abstract",
+      "verification_status": "verified",
+      "verified_url": "https://arxiv.org/abs/2503.14744"
+    },
+    {
+      "id": "chebat_freq_mnu",
+      "claim": "Frequentist sum m_nu,eff = -0.107 +/- 0.052 eV (3.0 sigma tension with the Normal Ordering floor)",
+      "tex_location": "Part IX, neutrino subsection",
+      "value": {
+        "mnu_eff": -0.107,
+        "err": 0.052
+      },
+      "source": "D. Chebat, C. Yeche, E. Armengaud, N. Schoneberg, M. Walther, A. de Mattia, D. Huterer, et al. (DESI), JCAP01(2026)041, arXiv:2507.12401",
+      "locator": "Abstract / frequentist overview results",
+      "verification_status": "verified",
+      "verified_url": "https://arxiv.org/abs/2507.12401"
+    },
+    {
+      "id": "vikman_nogo",
+      "claim": "No-go theorem: a single minimally coupled canonical scalar field cannot cross the phantom divide",
+      "tex_location": "Part VIII, theoretical-implications item",
+      "value": null,
+      "source": "A. Vikman, Phys. Rev. D 71, 023515 (2005), arXiv:astro-ph/0407107",
+      "locator": "Entire paper",
+      "verification_status": "verified",
+      "verified_url": "https://arxiv.org/abs/astro-ph/0407107"
+    },
+    {
+      "id": "cataneo_koyama_hornedeski",
+      "claim": "The DESI phantom-crossing preference has been argued to point toward Horndeski models with non-minimal conformal coupling (alpha_M != 0)",
+      "tex_location": "Part VIII, Horndeski bullet",
+      "value": null,
+      "source": "M. Cataneo, K. Koyama, Phys. Rev. D (2025), arXiv:2512.13691, DOI 10.1103/ckns-5ytv",
+      "locator": "Abstract",
+      "verification_status": "verified",
+      "verified_url": "https://arxiv.org/abs/2512.13691"
+    },
+    {
+      "id": "naidoo_acg",
+      "claim": "Asymptotic Cubic Galileon (Horndeski) models jointly fit Planck + DESI BAO + DES SNe with phantom crossing and are preferred over LambdaCDM in chi2 and Bayesian evidence",
+      "tex_location": "Part VIII, Horndeski bullet",
+      "value": null,
+      "source": "K. Naidoo, J. Hallam, T. Baker, S. Sirera, Mon. Not. R. Astron. Soc. 553 (2026), arXiv:2606.20794",
+      "locator": "Abstract",
+      "verification_status": "verified",
+      "verified_url": "https://arxiv.org/abs/2606.20794"
+    },
+    {
+      "id": "q0_lambdacdm_baselines",
+      "claim": "q0,LambdaCDM = -0.533 +/- 0.008 (Pantheon+ joint Omega_m = 0.3114) and -0.549 (own DESI DR2 + CMB chain Omega_m = 0.3007 +/- 0.0049)",
+      "tex_location": "Eq. eq:cosmography_results; fig:gp_reconstruction caption",
+      "value": {
+        "q0_pantheon_baseline": -0.533,
+        "q0_own_chain": -0.549
+      },
+      "source": "Own pipeline: flat LambdaCDM identity q0 = 1.5*Omega_m - 1 evaluated at the stated baselines",
+      "locator": "verification/mcmc_results.json; verification/stage2_checks.json",
+      "verification_status": "own-pipeline",
+      "note": "Baselines now labeled explicitly in Eq. eq:cosmography_results and the fig5 caption (Round-5 minor m1).",
+      "artifact": "verification/chains/chain_w0wa_desi_cmb.npy"
+    }
+  ]
+}

@@ -1,0 +1,299 @@
+{
+ "lcdm_desi_cmb_s2026": {
+  "lnZ": -19.625551235892125,
+  "lnZ_err": 333632696.8853142,
+  "iterations": 1067,
+  "nlive": 128,
+  "d": 2,
+  "seed": 2026,
+  "priors": "H0~U[40,100], wbc~U[0.130,0.155], -",
+  "lnB_vs_lcdm": 0.0
+ },
+ "mirage_desi_cmb_s2026": {
+  "lnZ": -16.328694070669947,
+  "lnZ_err": 12344165.381635392,
+  "iterations": 1422,
+  "nlive": 128,
+  "d": 3,
+  "seed": 2026,
+  "priors": "H0~U[40,100], wbc~U[0.130,0.155], w0~U[-2.5,0.5] (V=3.0)",
+  "lnB_vs_lcdm": 3.2968571652221783
+ },
+ "mirage_desi_cmb_s2027": {
+  "lnZ": -15.631329069617076,
+  "lnZ_err": 6146104.777559987,
+  "iterations": 1331,
+  "nlive": 128,
+  "d": 3,
+  "seed": 2027,
+  "priors": "H0~U[40,100], wbc~U[0.130,0.155], w0~U[-2.5,0.5] (V=3.0)",
+  "lnB_vs_lcdm": 3.9942221662750494
+ },
+ "cpl_desi_cmb_s2026": {
+  "lnZ": -17.26062348521666,
+  "lnZ_err": 31346823.157410853,
+  "iterations": 1708,
+  "nlive": 128,
+  "d": 4,
+  "seed": 2026,
+  "priors": "H0~U[40,100], wbc~U[0.130,0.155], w0~U[-2.5,0.5], wa~U[-4,1] (V=15)",
+  "lnB_vs_lcdm": 2.3649277506754665
+ },
+ "lcdm_sn_s2026": {
+  "lnZ": -714.7320525951751,
+  "lnZ_err": Infinity,
+  "iterations": 1087,
+  "nlive": 128,
+  "d": 2,
+  "seed": 2026,
+  "priors": "H0~U[40,100], wbc~U[0.130,0.155], -",
+  "lnB_vs_lcdm": 0.0
+ },
+ "mirage_sn_s2026": {
+  "lnZ": -710.9785754609809,
+  "lnZ_err": Infinity,
+  "iterations": 1436,
+  "nlive": 128,
+  "d": 3,
+  "seed": 2026,
+  "priors": "H0~U[40,100], wbc~U[0.130,0.155], w0~U[-2.5,0.5] (V=3.0)",
+  "lnB_vs_lcdm": 3.7534771341942132
+ },
+ "mirage_sn_s2027": {
+  "lnZ": -711.6867862542055,
+  "lnZ_err": Infinity,
+  "iterations": 1523,
+  "nlive": 128,
+  "d": 3,
+  "seed": 2027,
+  "priors": "H0~U[40,100], wbc~U[0.130,0.155], w0~U[-2.5,0.5] (V=3.0)",
+  "lnB_vs_lcdm": 3.045266340969647
+ },
+ "cpl_sn_s2026": {
+  "lnZ": -714.4696028423365,
+  "lnZ_err": Infinity,
+  "iterations": 1868,
+  "nlive": 128,
+  "d": 4,
+  "seed": 2026,
+  "priors": "H0~U[40,100], wbc~U[0.130,0.155], w0~U[-2.5,0.5], wa~U[-4,1] (V=15)",
+  "lnB_vs_lcdm": 0.26244975283862004
+ },
+ "lcdm_union3_s2026": {
+  "lnZ": -33.91537481507882,
+  "lnZ_err": 536117685328328.8,
+  "iterations": 1083,
+  "nlive": 128,
+  "d": 2,
+  "seed": 2026,
+  "priors": "H0~U[40,100], wbc~U[0.130,0.155], -",
+  "lnB_vs_lcdm": 0.0
+ },
+ "mirage_union3_s2026": {
+  "lnZ": -27.142904654834844,
+  "lnZ_err": NaN,
+  "iterations": 1435,
+  "nlive": 128,
+  "d": 3,
+  "seed": 2026,
+  "priors": "H0~U[40,100], wbc~U[0.130,0.155], w0~U[-2.5,0.5] (V=3.0)",
+  "lnB_vs_lcdm": 6.7724701602439765
+ },
+ "mirage_union3_s2027": {
+  "lnZ": -27.19079483020921,
+  "lnZ_err": NaN,
+  "iterations": 1442,
+  "nlive": 128,
+  "d": 3,
+  "seed": 2027,
+  "priors": "H0~U[40,100], wbc~U[0.130,0.155], w0~U[-2.5,0.5] (V=3.0)",
+  "lnB_vs_lcdm": 6.72457998486961
+ },
+ "lcdm_desy5_s2026": {
+  "lnZ": -836.9480779856609,
+  "lnZ_err": NaN,
+  "iterations": 1047,
+  "nlive": 128,
+  "d": 2,
+  "seed": 2026,
+  "priors": "H0~U[40,100], wbc~U[0.130,0.155], -",
+  "lnB_vs_lcdm": 0.0
+ },
+ "mirage_desy5_s2026": {
+  "lnZ": -832.1020584549467,
+  "lnZ_err": NaN,
+  "iterations": 1499,
+  "nlive": 128,
+  "d": 3,
+  "seed": 2026,
+  "priors": "H0~U[40,100], wbc~U[0.130,0.155], w0~U[-2.5,0.5] (V=3.0)",
+  "lnB_vs_lcdm": 4.846019530714216
+ },
+ "mirage_desy5_s2027": {
+  "lnZ": -831.7189150312709,
+  "lnZ_err": NaN,
+  "iterations": 1450,
+  "nlive": 128,
+  "d": 3,
+  "seed": 2027,
+  "priors": "H0~U[40,100], wbc~U[0.130,0.155], w0~U[-2.5,0.5] (V=3.0)",
+  "lnB_vs_lcdm": 5.229162954390063
+ },
+ "cpl_desy5_s2026": {
+  "lnZ": -835.0723977643588,
+  "lnZ_err": NaN,
+  "iterations": 3736,
+  "nlive": 256,
+  "d": 4,
+  "seed": 2026,
+  "priors": "H0~U[40,100], wbc~U[0.130,0.155], w0~U[-2.5,0.5], wa~U[-4,1] (V=15)",
+  "lnB_vs_lcdm": 1.8756802213021047
+ },
+ "summary": {
+  "cpl_desi_cmb": {
+   "lnB": 2.781,
+   "err": 0.416,
+   "n_seeds": 2
+  },
+  "cpl_desy5": {
+   "lnB": 2.048,
+   "err": 0.173,
+   "n_seeds": 2
+  },
+  "cpl_sn": {
+   "lnB": 0.449,
+   "err": 0.186,
+   "n_seeds": 2
+  },
+  "cpl_union3": {
+   "lnB": 4.228,
+   "err": 0.048,
+   "n_seeds": 2
+  },
+  "lcdm_desi_cmb": {
+   "lnB": 0.0,
+   "err": 0.0,
+   "n_seeds": 1
+  },
+  "lcdm_desy5": {
+   "lnB": 0.0,
+   "err": 0.0,
+   "n_seeds": 1
+  },
+  "lcdm_sn": {
+   "lnB": 0.0,
+   "err": 0.0,
+   "n_seeds": 1
+  },
+  "lcdm_union3": {
+   "lnB": 0.0,
+   "err": 0.0,
+   "n_seeds": 1
+  },
+  "mirage_desi_cmb": {
+   "lnB": 3.646,
+   "err": 0.349,
+   "n_seeds": 2
+  },
+  "mirage_desy5": {
+   "lnB": 5.038,
+   "err": 0.192,
+   "n_seeds": 2
+  },
+  "mirage_sn": {
+   "lnB": 3.399,
+   "err": 0.354,
+   "n_seeds": 2
+  },
+  "mirage_union3": {
+   "lnB": 6.743,
+   "err": 0.026,
+   "n_seeds": 4
+  }
+ },
+ "method_note": "Ellipsoidal nested sampler (pure numpy, 128 live points, expansion factor 1.5, convergence dlnZ < 0.1). Summary lnB is the seed mean; err is the seed half-range (seed-to-seed reproducibility). The per-run statistical uncertainty sqrt(H/nlive) is stored per run as err_paramfree where recorded (H = nested information); it exceeds the seed half-range and is the appropriate evidence uncertainty. lnZ_err is nan by design when the second-dead-point count d2 >= 25 (pathological CPL wa -> -4 tail on SN-inclusive datasets).",
+ "cpl_union3_s2026": {
+  "lnZ": -29.64000592105453,
+  "lnZ_err": NaN,
+  "iterations": 1815,
+  "H": 29.640005957407972,
+  "err_paramfree": 0.4812094622326641,
+  "nlive": 128,
+  "d": 4,
+  "seed": 2026,
+  "priors": "H0~U[40,100], wbc~U[0.130,0.155], w0~U[-2.5,0.5], wa~U[-4,1] (V=15)",
+  "lnB_vs_lcdm": 4.2753688940242895
+ },
+ "cpl_desi_cmb_s2027": {
+  "lnZ": -16.427868928127925,
+  "lnZ_err": NaN,
+  "iterations": 1603,
+  "H": 16.43197263350996,
+  "err_paramfree": 0.35829427318797125,
+  "nlive": 128,
+  "d": 4,
+  "seed": 2027,
+  "priors": "H0~U[40,100], wbc~U[0.130,0.155], w0~U[-2.5,0.5], wa~U[-4,1] (V=15)",
+  "lnB_vs_lcdm": 3.1976823077642003
+ },
+ "cpl_sn_s2027": {
+  "lnZ": -714.0971007485404,
+  "lnZ_err": NaN,
+  "iterations": 1812,
+  "H": 714.0971007485404,
+  "err_paramfree": 2.3619660453948046,
+  "nlive": 128,
+  "d": 4,
+  "seed": 2027,
+  "priors": "H0~U[40,100], wbc~U[0.130,0.155], w0~U[-2.5,0.5], wa~U[-4,1] (V=15)",
+  "lnB_vs_lcdm": 0.634951846634749
+ },
+ "cpl_union3_s2027": {
+  "lnZ": -29.735262727285544,
+  "lnZ_err": NaN,
+  "iterations": 1826,
+  "H": 29.735262766543286,
+  "err_paramfree": 0.4819820954803398,
+  "nlive": 128,
+  "d": 4,
+  "seed": 2027,
+  "priors": "H0~U[40,100], wbc~U[0.130,0.155], w0~U[-2.5,0.5], wa~U[-4,1] (V=15)",
+  "lnB_vs_lcdm": 4.180112087793276
+ },
+ "cpl_desy5_s2027": {
+  "lnZ": -834.726981595569,
+  "lnZ_err": NaN,
+  "iterations": 1825,
+  "H": 834.726981595569,
+  "err_paramfree": 2.5536845035586095,
+  "nlive": 128,
+  "d": 4,
+  "seed": 2027,
+  "priors": "H0~U[40,100], wbc~U[0.130,0.155], w0~U[-2.5,0.5], wa~U[-4,1] (V=15)",
+  "lnB_vs_lcdm": 2.2210963900919296
+ },
+ "mirage_union3_s2028": {
+  "lnZ": -27.161065388713876,
+  "lnZ_err": NaN,
+  "iterations": 1442,
+  "H": 27.16106541832313,
+  "err_paramfree": 0.46064717906511643,
+  "nlive": 128,
+  "d": 3,
+  "seed": 2028,
+  "priors": "H0~U[40,100], wbc~U[0.130,0.155], w0~U[-2.5,0.5] (V=3.0)",
+  "lnB_vs_lcdm": 6.754309426364944
+ },
+ "mirage_union3_s2029": {
+  "lnZ": -27.195260329754646,
+  "lnZ_err": NaN,
+  "iterations": 1444,
+  "H": 27.195260360645822,
+  "err_paramfree": 0.4609370581408545,
+  "nlive": 128,
+  "d": 3,
+  "seed": 2029,
+  "priors": "H0~U[40,100], wbc~U[0.130,0.155], w0~U[-2.5,0.5] (V=3.0)",
+  "lnB_vs_lcdm": 6.720114485324174
+ }
+}

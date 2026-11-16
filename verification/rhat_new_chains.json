@@ -1,0 +1,80 @@
+{
+ "method": "split-Rhat: 8 disjoint 12,000-draw segments per chain (Gelman-Rubin); Mirage pairs additionally cross-seed (2 seeds x 4 segments)",
+ "chains": {
+  "chain_lcdm_union3_s101.npy": {
+   "H0": 1.00055,
+   "wbc": 1.00046
+  },
+  "chain_lcdm_desy5_s101.npy": {
+   "H0": 1.00044,
+   "wbc": 1.00037
+  },
+  "chain_cpl_union3_s1.npy": {
+   "H0": 1.00165,
+   "wbc": 1.00167,
+   "w0": 1.00077,
+   "wa": 1.00097
+  },
+  "chain_cpl_desy5_s1.npy": {
+   "H0": 1.00193,
+   "wbc": 1.00027,
+   "w0": 1.00137,
+   "wa": 1.00068
+  },
+  "chain_mirage_union3_s71.npy": {
+   "H0": 1.00211,
+   "wbc": 1.00218,
+   "w0": 1.00069
+  },
+  "chain_mirage_union3_s72.npy": {
+   "H0": 1.00092,
+   "wbc": 1.0009,
+   "w0": 1.00201
+  },
+  "chain_mirage_desy5_s71.npy": {
+   "H0": 1.00091,
+   "wbc": 1.00106,
+   "w0": 1.00074
+  },
+  "chain_mirage_desy5_s72.npy": {
+   "H0": 1.00129,
+   "wbc": 1.0014,
+   "w0": 1.00129
+  },
+  "chain_cpl_pp_cc_trgb.npy": {
+   "H0": 1.00294,
+   "wbc": 1.00255,
+   "w0": 1.00313,
+   "wa": 1.00371
+  },
+  "chain_cpl_pp_cc_shoes.npy": {
+   "H0": 1.00041,
+   "wbc": 1.00091,
+   "w0": 1.00237,
+   "wa": 1.00237
+  },
+  "chain_rdfree_lcdm_desi_cc_pp.npy": {
+   "H0": 1.00142,
+   "wbc": 1.00128,
+   "rd": 1.00116
+  },
+  "chain_rdfree_cpl_desi_cc_pp.npy": {
+   "H0": 1.00126,
+   "wbc": 1.00279,
+   "w0": 1.00301,
+   "wa": 1.00132,
+   "rd": 1.00156
+  },
+  "mirage_union3__crossseed": {
+   "H0": 1.00165,
+   "wbc": 1.00162,
+   "w0": 1.00153
+  },
+  "mirage_desy5__crossseed": {
+   "H0": 1.00103,
+   "wbc": 1.00115,
+   "w0": 1.00097
+  }
+ },
+ "max_rhat": 1.00371
+}

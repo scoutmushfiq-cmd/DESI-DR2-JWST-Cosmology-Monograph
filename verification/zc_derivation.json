@@ -1,0 +1,21 @@
+{
+ "formula": "z_c = -(1+w0)/(1+w0+wa), valid for w0 > -1 and 1+w0+wa < 0",
+ "desi_cmb_cpl": {
+  "median": 0.495,
+  "std": 0.077,
+  "frac_draws_crossing": 0.975,
+  "chains": 4,
+  "n": 403200
+ },
+ "desi_cmb_pantheon_cpl": {
+  "median": 0.345,
+  "std": 0.107,
+  "frac_draws_crossing": 0.999,
+  "chains": 2
+ },
+ "point_estimates_from_published_posteriors": {
+  "union3": 0.44,
+  "des_y5": 0.41
+ },
+ "note": "Supersedes the irreproducible z_c = 0.42 +- 0.09; the crossing redshift is dataset-dependent and is quoted with its dataset wherever it appears."
+}
