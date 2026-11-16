@@ -60,4 +60,4 @@ A: The manuscript's quoted hyperparameters were not the maximum-likelihood optim
 A: Yes. Our re-verification implemented the full unbinned STAT+SYS likelihood with analytic M_B marginalization. A four-variant scan (`verification/sn_variant_scan.json`) shows sample selection is the dominant systematic: the cosmology subsample (non-calibrators, z_HD > 0.01) reproduces both the manuscript and DESI DR2 official values, whereas including the 77 low-z SH0ES calibrators without their dedicated treatment biases w₀ by ≈ +0.10. The manuscript's uncalibrated-Pantheon+ convention matches the DESI analysis.
 
 **Q: H₀ error bars appear small for an MCMC pipeline — were chains converged?**
-A: Four independent seeds per model give Gelman–Rubin R̂ ≤ 1.014 and ESS ≈ 96 000 (`verification/convergence_diagnostics.json`); all chains and seeds are released.
+A: Four independent seeds per model give Gelman–Rubin R̂ ≤ 1.014 and ESS ≥ 85 800 (of 96 000 retained samples per chain) (`verification/convergence_diagnostics.json`); all chains and seeds are released.

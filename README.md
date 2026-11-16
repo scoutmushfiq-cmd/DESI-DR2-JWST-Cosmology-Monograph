@@ -1,4 +1,4 @@
-# The Architecture of the Cosmos — Research Monograph (48 Pages)
+# The Architecture of the Cosmos — Research Monograph (56 Pages)
 
 **Model-Independent Constraints on the Hubble Constant and Dark Energy Equation of State from DESI DR2 BAO, Pantheon+ Supernovae, and JWST Distance-Ladder Calibrations**
 
@@ -12,31 +12,31 @@
   1. AI & Systems Researcher; SOO & Lead AI/ML Engineer, Craftly (`@Craftly-Robot`), Bogura, Bangladesh
   2. Department of Computer Science, University of the People, Pasadena, California, USA
   3. Science Division (HSC '28), Govt. Azizul Haque College, Bogura, Bangladesh
-- **Edition:** Unabridged 48-Page Monograph Edition (October 2026)
+- **Edition:** Unabridged 56-Page Monograph Edition (November 2026)
 - **License:** Creative Commons Attribution 4.0 International (`CC-BY-4.0`)
 
 ## Overview & Key Findings
 
-This 48-page research monograph synthesizes multi-probe cosmological distance measurements from **DESI DR2 BAO** ($0.295 \le z \le 2.330$), **Pantheon+ / Union3 / DES-Y5 Type Ia Supernovae**, **32 Cosmic Chronometers**, **Planck 2018 / PR4 CMB shift parameters**, **JWST local distance-ladder calibrations (TRGB, JAGB, Cepheids)**, and **TDCOSMO XXVII (2026) JWST strong lensing time delays**:
+This 56-page research monograph synthesizes multi-probe cosmological distance measurements from **DESI DR2 BAO** ($0.295 \le z \le 2.330$), **Pantheon+ / Union3 / DES-Y5 Type Ia Supernovae**, **32 Cosmic Chronometers**, **Planck 2018 / PR4 CMB shift parameters**, **JWST local distance-ladder calibrations (TRGB, JAGB, Cepheids)**, and **TDCOSMO XXVII (2026) JWST strong lensing time delays**:
 
 1. **Hubble Constant ($H_0$) & Local Distance Ladder Cross-Check:** Direct galaxy-by-galaxy JWST vs. HST distance modulus comparisons confirm $\Delta\mu_{\text{JWST}-\text{HST}} = -0.02 \pm 0.03\text{ mag}$, demonstrating that HST Cepheid crowding does not drive the $4.52\sigma\text{--}5.72\sigma$ Hubble tension. Independent one-step geometric probes—including TDCOSMO XXVII JWST strong lensing ($H_0 = 73.50 \pm 2.80\text{ km s}^{-1}\text{ Mpc}^{-1}$), SBF ($73.30 \pm 2.40$), and Water Megamasers ($73.90 \pm 3.00$)—consistently support the elevated local expansion rate.
-2. **Dynamical Dark Energy ($w_0 w_a\text{CDM}$) & Phantom Crossing:** Joint Bayesian MCMC and Gaussian Process reconstructions reveal a $2.8\sigma\text{--}4.2\sigma$ preference for time-evolving dark energy ($w_0 = -0.752 \pm 0.058$, $w_a = -0.86 \pm 0.24$ with Pantheon+; $w_0 = -0.838 \pm 0.055$, $w_a = -0.62^{+0.22}_{-0.19}$ in our combined fit), crossing the phantom divide $w = -1$ at $z_c = 0.42 \pm 0.09$.
+2. **Dynamical Dark Energy ($w_0 w_a\text{CDM}$) & Phantom Crossing:** Joint Bayesian MCMC and Gaussian Process reconstructions reveal a $2.8\sigma\text{--}4.2\sigma$ preference for time-evolving dark energy ($w_0 = -0.838 \pm 0.055$, $w_a = -0.62^{+0.22}_{-0.19}$ with Pantheon+; $w_0 = -0.667 \pm 0.088$, $w_a = -1.09^{+0.31}_{-0.27}$ with Union3; $w_0 = -0.752 \pm 0.057$, $w_a = -0.86^{+0.23}_{-0.20}$ with DES-Y5), crossing the phantom divide $w = -1$ at $z_c = 0.42 \pm 0.09$.
 3. **Resolution of the "Negative Neutrino Mass" Anomaly:** Under flat $\Lambda\text{CDM}$, DESI DR2 + CMB compresses the neutrino mass bound to $\sum m_\nu < 0.0642\text{ eV}$ ($< 0.053\text{ eV}$ Feldman-Cousins; $\sum m_{\nu,\text{eff}} = -0.107 \pm 0.052\text{ eV}$, in $3.0\sigma$ tension with Normal Hierarchy). Allowing dynamical dark energy ($w_0 w_a\text{CDM}$) relaxes the bound to $\sum m_\nu < 0.163\text{ eV}$ (95% CL), restoring consistency with neutrino oscillation experiments.
 4. **Low-Redshift ($z < 0.1$) Supernova Photometric Offset:** We quantify the $\Delta\mu = -0.043 \pm 0.014\text{ mag}$ zero-point offset between legacy Landolt-system low-$z$ SNe Ia in DES-Y5 and the homogenized Pantheon+ compilation, explaining the shift between $4.2\sigma$ (DES-Y5) and $2.8\sigma$ (Pantheon+).
 
 ## Repository Contents
 
-- `The_Architecture_of_the_Cosmos_Monograph_Md_Mushfiqur_Rahim.pdf` — Complete 48-page compiled monograph PDF.
-- `cosmology_monograph_full.tex` — Complete LaTeX source code of the 48-page monograph.
+- `The_Architecture_of_the_Cosmos_Monograph_Md_Mushfiqur_Rahim.pdf` — Complete 56-page compiled monograph PDF.
+- `cosmology_monograph_full.tex` — Complete LaTeX source code of the 56-page monograph.
 - `CITATION.cff` & `.zenodo.json` — Official citation and Zenodo DOI archiving metadata linked to ORCID `0009-0003-1021-685X`.
-- `figs/` & `book_assets/` — All 23 high-resolution vector figures (`.pdf` and `.png`).
+- `figs/` & `book_assets/` — All 26 high-resolution vector figures (`.pdf` and `.png`).
 
 ## Independent Verification & Corrections (November 2026)
 
 The full analysis pipeline was independently re-implemented and re-run from scratch (Python + NumPy + SciPy, affine-invariant MCMC with the paper's exact slaved-parametrization likelihood). Everything lives in [`verification/`](verification/):
 
 - `verification/cosmo.py` — self-contained pipeline: DESI DR2 BAO likelihood (13 observables), CMB compression, 32 cosmic chronometers, slaved Ω_m = (ω_bc + ω_ν)/h² parametrization, MCMC, GP reconstruction, model comparison (ΛCDM / wCDM / CPL / JBP / Log), Gelman–Rubin R̂, ESS, AIC/BIC/DIC, Savage–Dickey Bayes factors.
-- `verification/VERIFICATION_REPORT.md` — full 10-section report of every reproduced number.
+- `verification/VERIFICATION_REPORT.md` — full 15-section report of every reproduced number.
 - `verification/CORRECTIONS_FOR_MANUSCRIPT.md` — the 5 corrections applied to the manuscript in this PR.
 - `verification/model_comparison.json`, `convergence_diagnostics.json`, `rdfree_result.json`, `stage1*.json`, `stage2_checks.json`, `band_min_slaved.json` — machine-readable results.
 - `verification/figures/` — verification corner plot, GP reconstruction, and Ω_m diagnostic figures.
@@ -44,7 +44,7 @@ The full analysis pipeline was independently re-implemented and re-run from scra
 - `submission/` — Nature cover letter and referee-response template (with pre-drafted answers to the most likely technical queries, grounded in the verification results).
 - `verification/extensions/NATURE_EXTENSIONS.tex` — the new manuscript sections (VII-B … VII-E + corrections appendix), already merged into `cosmology_monograph_full.tex` in this PR.
 
-**Reproduce:** `cd verification && python run_mcmc_all.py && python run_nature_suite.py` (requires `numpy`, `scipy`, `matplotlib`). All 17 posterior chains (~51 MB) are committed under `verification/chains/`, so every table can be re-checked directly from the chains; the scripts regenerate them deterministically from fixed seeds. The manuscript itself was compiled end-to-end with Tectonic (**53 pages, zero errors**) — see `verification/VERIFICATION_REPORT.md` §11.
+**Reproduce:** `cd verification && python run_mcmc_all.py && python run_nature_suite.py` (requires `numpy`, `scipy`, `matplotlib`). All 23 posterior chains (~59 MB) are committed under `verification/chains/`, so every table can be re-checked directly from the chains; the scripts regenerate them deterministically from fixed seeds. The manuscript itself was compiled end-to-end with Tectonic (**56 pages, zero errors**) — see `verification/VERIFICATION_REPORT.md` §11.
 
 ### Key reproduced results (DESI DR2 + CMB)
 
