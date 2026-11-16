@@ -1,9 +1,11 @@
-"""Split-Rhat for the eight Union3 / DES-Dovekie chains committed in
-verification/chains/ (the runtime Rhat in sn_extra_results.json covers only
-the Mirage pairs). The committed chains are flattened (96,000 x n) draws, so
-the Gelman-Rubin statistic is computed on 8 disjoint 12,000-draw segments
-(split-Rhat); for the Mirage pairs the two seeds are additionally treated as
-independent chains. Writes rhat_new_chains.json.
+"""Split-Rhat for the twelve new chains committed in verification/chains/
+(the eight Union3 / DES-Dovekie extension chains, the two +TRGB/+SH0ES
+pipeline chains, and the two sound-horizon-free LambdaCDM/CPL chains; the
+runtime Rhat in sn_extra_results.json covers only the Mirage pairs). The
+committed chains are flattened (96,000 x n) draws, so the Gelman-Rubin
+statistic is computed on 8 disjoint 12,000-draw segments (split-Rhat); for
+the Mirage pairs the two seeds are additionally treated as independent
+chains. Writes rhat_new_chains.json.
 
 Run from verification/:  python rhat_new_chains.py
 """
@@ -23,6 +25,10 @@ CHAIN_PARAMS = {
     "chain_mirage_union3_s72.npy": ["H0", "wbc", "w0"],
     "chain_mirage_desy5_s71.npy": ["H0", "wbc", "w0"],
     "chain_mirage_desy5_s72.npy": ["H0", "wbc", "w0"],
+    "chain_cpl_pp_cc_trgb.npy": ["H0", "wbc", "w0", "wa"],
+    "chain_cpl_pp_cc_shoes.npy": ["H0", "wbc", "w0", "wa"],
+    "chain_rdfree_lcdm_desi_cc_pp.npy": ["H0", "wbc", "rd"],
+    "chain_rdfree_cpl_desi_cc_pp.npy": ["H0", "wbc", "w0", "wa", "rd"],
 }
 
 MIRAGE_PAIRS = {

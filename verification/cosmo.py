@@ -86,7 +86,7 @@ H0_LADDER = {
     "DESI+CMB+PP (w0wa)":(67.51, 0.59),
     "DESI+CMB+Y5 (w0wa)":(66.74, 0.56),
     "DESI+CMB+U3 (w0wa)":(65.91, 0.84),
-    "rd-free (DESI+CC+PP)": (69.24, 1.82),
+    "rd-free (DESI+CC+PP)": (68.19, 1.45),
     "CCHP HST+JWST TRGB":(70.39, 1.94),
     "SH0ES 2022":        (73.04, 1.04),
     "SH0ES 2024 (42SN)": (73.17, 0.86),

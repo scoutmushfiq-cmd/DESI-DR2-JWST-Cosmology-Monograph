@@ -41,6 +41,30 @@
    "wbc": 1.0014,
    "w0": 1.00129
   },
+  "chain_cpl_pp_cc_trgb.npy": {
+   "H0": 1.00294,
+   "wbc": 1.00255,
+   "w0": 1.00313,
+   "wa": 1.00371
+  },
+  "chain_cpl_pp_cc_shoes.npy": {
+   "H0": 1.00041,
+   "wbc": 1.00091,
+   "w0": 1.00237,
+   "wa": 1.00237
+  },
+  "chain_rdfree_lcdm_desi_cc_pp.npy": {
+   "H0": 1.00142,
+   "wbc": 1.00128,
+   "rd": 1.00116
+  },
+  "chain_rdfree_cpl_desi_cc_pp.npy": {
+   "H0": 1.00126,
+   "wbc": 1.00279,
+   "w0": 1.00301,
+   "wa": 1.00132,
+   "rd": 1.00156
+  },
   "mirage_union3__crossseed": {
    "H0": 1.00165,
    "wbc": 1.00162,
@@ -52,5 +76,5 @@
    "w0": 1.00097
   }
  },
- "max_rhat": 1.00218
+ "max_rhat": 1.00371
 }

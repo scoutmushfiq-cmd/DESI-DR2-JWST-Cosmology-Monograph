@@ -266,9 +266,10 @@ check("0.42 \\pm 0.09" not in readme,
 check("0.50 \\pm 0.08" in readme and "0.35 \\pm 0.11" in readme,
       "README missing dataset-specific z_c values (0.50 +- 0.08 / 0.35 +- 0.11)")
 check("58 pages" not in readme, "Round-8 m1: README still claims 58 pages")
-check("64 pages" in readme, "README missing the 64-page compile claim")
-check("~59 MB" not in readme, "Round-8 m1: README still claims ~59 MB of chains")
-check("~92 MB" in readme, "README missing the ~92 MB chain-size claim")
+check("65 pages" in readme, "README missing the 65-page compile claim")
+check("~59 MB" not in readme and "~92 MB" not in readme,
+      "README still claims a stale chain size (~59 MB / ~92 MB)")
+check("~97 MB" in readme, "README missing the ~97 MB chain-size claim")
 TPL = os.path.join(ROOT, "submission", "referee_response_template.md")
 check(os.path.exists(TPL), "referee_response_template.md missing")
 if os.path.exists(TPL):
@@ -365,14 +366,15 @@ check("whose supernova likelihoods our pipeline does not re-implement" not in te
 check("$^{\\ddagger}$" in tex, "dagger-dagger marker missing from the table rows")
 # README package metadata: chain count and new artifacts
 chain_files = [f for f in os.listdir(os.path.join(VER, "chains")) if f.endswith(".npy")]
-check(len(chain_files) == 37, "expected 37 chain files, found %d" % len(chain_files))
-check("All 37 posterior chains" in readme, "README chain count not updated to 37")
-check("All 27 posterior chains" not in readme, "README still quotes the stale 27-chain count")
+check(len(chain_files) == 39, "expected 39 chain files, found %d" % len(chain_files))
+check("All 39 posterior chains" in readme, "README chain count not updated to 39")
+check("All 27 posterior chains" not in readme and "All 37 posterior chains" not in readme,
+      "README still quotes a stale chain count")
 for art in ["sn_extra.py", "nested_lnB.py", "sn_extra_results.json", "nested_lnB.json", "download_sn_extra_data.py"]:
     check(art in readme, "README missing new artifact %s" % art)
 for f in ["submission/referee_response_template.md", "submission/cover_letter.md"]:
     body = open(os.path.join(ROOT, f), encoding="utf-8").read()
-    check("+6.75" in body and "+5.04" in body if f.endswith("referee_response_template.md") else True,
+    check("+6.74" in body and "+5.04" in body if f.endswith("referee_response_template.md") else True,
           "%s missing the Union3/DES-Y5 Mirage evidence values" % f)
 
 # 23. Round-9 fixes: fig6 regeneration, 1820 reconciliation, abstract Mirage evidence, new-chain R-hat
@@ -390,9 +392,9 @@ check("computes its own Mirage-axis evidence for all four dataset combinations" 
       "abstract missing the own-pipeline Mirage evidence sentence")
 check("recovering $81\\text{--}99.6\\%$ of the CPL" in tex,
       "abstract missing the Mirage CPL-recovery range")
-check("with a maximum of $1.0022$ across all parameter--chain combinations" in tex,
-      "Part VII-B missing the split-R-hat statement (max 1.0022)")
-check("two seeds for Mirage, one each for $\\Lambda$CDM and CPL" in tex,
+check("with a maximum of $1.0037$ across all parameter--chain combinations" in tex,
+      "Part VII-B missing the split-R-hat statement (max 1.0037)")
+check("two seeds for Mirage, one each for the others" in tex,
       "Part VII-B missing the corrected per-model seed counts")
 
 # 24. Round-10 fixes: DES-Dovekie identification (the released 1820-SN file is the
@@ -448,9 +450,11 @@ _rhat_path = os.path.join(VER, "rhat_new_chains.json")
 check(os.path.exists(_rhat_path), "rhat_new_chains.json missing")
 if os.path.exists(_rhat_path):
     _rh = json.load(open(_rhat_path))
-    check(_rh["max_rhat"] <= 1.003, "rhat_new_chains max_rhat %.5f exceeds 1.003" % _rh["max_rhat"])
-    check(abs(_rh["max_rhat"] - 1.0022) < 0.0006,
-          "rhat_new_chains max_rhat %.5f disagrees with quoted 1.0022" % _rh["max_rhat"])
+    check(len([k for k in _rh["chains"] if k.endswith(".npy")]) == 12,
+          "rhat_new_chains.json has %d chain entries, expected 12" % len([k for k in _rh["chains"] if k.endswith(".npy")]))
+    check(_rh["max_rhat"] <= 1.005, "rhat_new_chains max_rhat %.5f exceeds 1.005" % _rh["max_rhat"])
+    check(abs(_rh["max_rhat"] - 1.0037) < 0.0006,
+          "rhat_new_chains max_rhat %.5f disagrees with quoted 1.0037" % _rh["max_rhat"])
 check("z_c = 0.42" not in tex and "z_c \\approx 0.42" not in tex,
       "retracted z_c = 0.42 still present in tex")
 _fig5 = os.path.join(ROOT, "figs", "fig5_gp_wz_reconstruction.pdf")
@@ -478,9 +482,9 @@ if os.path.exists(_sj_path):
 for _frag in ["$0.3112 \\pm 0.0060$", "$67.65 \\pm 0.59$", "$-0.831 \\pm 0.053$",
               "$-0.661 \\pm 0.196$", "$r_d = 147.09$ (fixed)",
               "$0.3107 \\pm 0.0059$", "$67.73 \\pm 0.57$", "$-0.838 \\pm 0.053$",
-              "$-0.646 \\pm 0.195$", "$-12.9$ ($3.6\\sigma$)",
+              "$-0.646 \\pm 0.195$", "$-12.9$ ($3.2\\sigma$)",
               "$0.2992 \\pm 0.0051$", "$69.00 \\pm 0.52$", "$-0.904 \\pm 0.052$",
-              "$-0.556 \\pm 0.198$", "$-12.5$ ($3.5\\sigma$)"]:
+              "$-0.556 \\pm 0.198$", "$-12.5$ ($3.1\\sigma$)"]:
     check(_frag in tex, "MCMC Pipeline table row fragment missing from tex: %s" % _frag)
 _pr_path = os.path.join(VER, "pipeline_rows_results.json")
 check(os.path.exists(_pr_path), "pipeline_rows_results.json missing")
@@ -536,6 +540,71 @@ check("$H_0 = 70.39 \\pm 1.94\\text{ km s}^{-1}\\text{ Mpc}^{-1}$, orange" not i
 check(os.path.exists(os.path.join(VER, "make_fig4_corner.py")), "make_fig4_corner.py missing")
 check("make_fig4_corner.py" in open(os.path.join(VER, "figure_provenance.md"), encoding="utf-8").read(),
       "figure_provenance.md missing the fig4 released-generator entry")
+
+
+# 26. Round-12 fixes: per-dof sigma convention (M1), twelve-chain split-R-hat
+# claim (M2), artifact-backed Sound-Horizon-Free row and recomputed tension
+# row (M3), and package-wide staleness (M4/m1-m4).
+check("degrees of freedom equal to the number of added parameters" in tex,
+      "Part VII missing the per-dof sigma-convention semantics statement")
+for _frag in ["$-13.3$ ($\\mathbf{3.2}\\boldsymbol{\\sigma}$)",
+              "$-12.9$ ($3.2\\sigma$)", "$-12.5$ ($3.1\\sigma$)",
+              "$-4.7$ ($1.7\\sigma$)"]:
+    check(_frag in tex, "Round-12 M1/M3: tex missing significance fragment %s" % _frag)
+check("($3.6\\sigma$)" not in tex and "($3.5\\sigma$)" not in tex,
+      "Round-12 M1: superseded 3.6/3.5-sigma conversions still present in tex")
+check("All twelve new MCMC chains" in tex and "All eight new MCMC chains" not in tex,
+      "Round-12 M2: split-R-hat claim not extended to all twelve chains")
+_rdf_path = os.path.join(VER, "rdfree_results.json")
+check(os.path.exists(_rdf_path), "rdfree_results.json missing")
+if os.path.exists(_rdf_path):
+    _rdf = json.load(open(_rdf_path))
+    _c = _rdf["rdfree_cpl"]
+    check(abs(_c["H0"][0] - 68.19) < 0.006 and abs(_c["H0"][1] - 1.45) < 0.006,
+          "rdfree CPL H0 disagrees with tex 68.19 +/- 1.45")
+    check(abs(_c["Om"][0] - 0.3048) < 0.0006 and abs(_c["Om"][1] - 0.0188) < 0.0006,
+          "rdfree CPL Om disagrees with tex 0.3048 +/- 0.0188")
+    check(abs(_c["w0"][0] + 0.891) < 0.0006 and abs(_c["w0"][1] - 0.058) < 0.0006,
+          "rdfree CPL w0 disagrees with tex -0.891 +/- 0.058")
+    check(abs(_c["wa"][0] + 0.245) < 0.0006 and abs(_c["wa"][1] - 0.357) < 0.0006,
+          "rdfree CPL wa disagrees with tex -0.245 +/- 0.357")
+    check(abs(_c["rd"][0] - 146.36) < 0.006 and abs(_c["rd"][1] - 2.88) < 0.006,
+          "rdfree CPL rd disagrees with tex 146.36 +/- 2.88")
+    check(abs(_rdf["dchi2_MAP_cpl_vs_lcdm"] + 4.7) < 0.06,
+          "rdfree dchi2_MAP disagrees with tex -4.7")
+for _frag in ["$0.3048 \\pm 0.0188$", "$68.19 \\pm 1.45$", "$-0.891 \\pm 0.058$",
+              "$-0.245 \\pm 0.357$", "$r_d = 146.36 \\pm 2.88$"]:
+    check(_frag in tex, "Round-12 M3: Sound-Horizon-Free row fragment missing from tex: %s" % _frag)
+for _stale in ["69.24", "146.99", "0.2929", "$-0.900 \\pm 0.052$", "$-0.042 \\pm 0.454$"]:
+    check(_stale not in tex, "Round-12 M3: superseded Sound-Horizon-Free value %r still in tex" % _stale)
+check("Sound-Horizon-Free ($r_d$ free)} ($68.19 \\pm 1.45$) & $2.72\\sigma$ & $2.95\\sigma$" in tex,
+      "Round-12 M3: tension-matrix Sound-Horizon-Free row not recomputed")
+check("($69.24 \\pm 1.82$)" not in tex, "Round-12 M3: old tension-row H0 still present")
+check("MCMC Run 2" not in tex, "Round-12 m1: undefined 'MCMC Run 2' still in tex")
+check("rdfree\\_results.json" in tex, "Round-12 m2: caption missing the rdfree_results.json pointer")
+check("chain\\_rdfree\\_" in tex, "Round-12 m2: caption missing the rdfree chain names")
+check(os.path.exists(os.path.join(VER, "make_fig1_fig8.py")), "make_fig1_fig8.py missing")
+for _fn in ["fig1_hubble_tension_whisker.pdf", "fig8_tension_heatmap_matrix.pdf"]:
+    _fp = os.path.join(ROOT, "figs", _fn)
+    check(os.path.exists(_fp), "regenerated figure missing: %s" % _fn)
+    if os.path.exists(_fp):
+        try:
+            import pymupdf as _pm
+            _t = _pm.open(_fp)[0].get_text()
+            check("68.19" in _t and "69.24" not in _t,
+                  "%s still embeds the superseded Sound-Horizon-Free values" % _fn)
+        except Exception as _e:
+            check(False, "%s text extraction failed: %s" % (_fn, _e))
+if os.path.exists(TPL):
+    check("+6.74 \u00b1 0.03" in tpl, "Round-12 M4: template missing the corrected +6.74 +/- 0.03")
+    check("DES-Dovekie distance release" in tpl, "Round-12 M4: template missing the Dovekie label")
+    check("+6.75" not in tpl and "DES-SN5YR likelihoods" not in tpl,
+          "Round-12 M4: template still contains stale values")
+check("four for Mirage on Union3" in readme, "Round-12 M4: README missing the four-seed Mirage wording")
+check("+6.74 \u00b1 0.03" in readme, "Round-12 M4: README missing the corrected +6.74 +/- 0.03")
+if os.path.exists(CL):
+    check("split-R" in cl and "1.0037" in cl,
+          "Round-12 m4: cover letter missing the split-R-hat statement")
 
 # 14. No orphaned figure assets: every figs/ file is referenced by the tex
 figdir = os.path.join(ROOT, "figs")
