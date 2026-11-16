@@ -374,6 +374,24 @@ for f in ["submission/referee_response_template.md", "submission/cover_letter.md
     check("+6.75" in body and "+5.04" in body if f.endswith("referee_response_template.md") else True,
           "%s missing the Union3/DES-Y5 Mirage evidence values" % f)
 
+# 23. Round-9 fixes: fig6 regeneration, 1820 reconciliation, abstract Mirage evidence, new-chain R-hat
+check(os.path.exists(os.path.join(VER, "make_fig6_model_comparison.py")),
+      "fig6 generator script missing")
+check("regenerated" in open(os.path.join(VER, "figure_provenance.md"), encoding="utf-8").read(),
+      "figure_provenance.md fig6 entry not updated to regenerated")
+check("hatched Mirage bars are computed" in tex and "in this work (Table" in tex,
+      "fig:bayes_comparison caption missing the hatched this-work note")
+check("both contain exactly 1820 SNe" in tex and "1829-SN count" in tex,
+      "Part III missing the 1820-vs-1829 sample reconciliation")
+check("22 binned distance moduli of the official release" in tex and "(1+z_{\\rm HEL})" in tex,
+      "Part III missing the Union3/DES-Y5 operational likelihood spec")
+check("computes its own Mirage-axis evidence for all four dataset combinations" in tex,
+      "abstract missing the own-pipeline Mirage evidence sentence")
+check("recovering $81\\text{--}99.6\\%$ of the CPL" in tex,
+      "abstract missing the Mirage CPL-recovery range")
+check("satisfy $\\widehat{R} \\le 1.001$" in tex,
+      "Part VII-B missing the new-chain R-hat statement")
+
 # 14. No orphaned figure assets: every figs/ file is referenced by the tex
 figdir = os.path.join(ROOT, "figs")
 if os.path.isdir(figdir):
