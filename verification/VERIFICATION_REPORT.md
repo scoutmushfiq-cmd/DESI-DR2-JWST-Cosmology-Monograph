@@ -277,3 +277,18 @@ Round-6 review (`submission/hostile_referee_report_round6.md`) audited the Round
 | m8: thawing/emergent table rows lacked a reader-facing caveat | Caption caveat added (see M4) |
 
 `audit_numbers.py` extended from 138 to **179 checks** (Mirage artifact-backed values vs tex, absence of all unverifiable Mirage numbers, f_DE^max absence, bibliography authorship, registry artifact existence incl. `h0rd_check.json` and `mirage_sd.json`). Status: **179/179 pass**. Recompiled: **61 pages, zero errors, zero unresolved references**; page counts synced (README ×5, `.zenodo.json`, cover letter). Pantheon+ STAT+SYS data files re-downloaded from the official release (not committed, per `verification/pantheon/README.md`).
+
+## Round 7 (hostile referee, audit of the Round-6 fixes) — findings and fixes
+
+Round-7 review (`submission/hostile_referee_report_round7.md`) audited the Round-6 Mirage artifact and its manuscript integration. Verdict: MINOR REVISION — the Mirage evidence is genuine and artifact-backed, but the insertion left five consistency defects, two of them claims that were true before Round 6 and false after it. All addressed:
+
+| Finding | Fix applied |
+| --- | --- |
+| M1: "All Savage–Dickey values quoted in this monograph derive from this single canonical computation" became false after Round 6 (the Mirage +3.49/+3.64 come from a separate KDE computation on the Mirage chains) | Sentence amended: the canonical computation covers the nested two-parameter and constant-w models; the Mirage values use the identical estimator (Scott-rule KDE at the nested point) on the dedicated Mirage chains, archived in `mirage_sd.json` |
+| M2: D_KL ≈ 4.06 labeled "chain-level estimate … for the supernova-inclusive datasets" — wrong dataset (the decomposition is DESI DR2 + CMB; SN-inclusive χ²_min would be ≈1413, not 23.6) | Label corrected to "for the DESI DR2 + CMB chains", with the explicit statement that the Mirage D_KL = 2.13 is computed on the same chains, so the halving comparison is apples-to-apples |
+| m1: Mirage posterior constraints never quoted | Part VIII now quotes w_0 = −0.70 ± 0.11 (DESI DR2 + CMB) and −0.83 ± 0.05 (+ Pantheon+, statistically identical to the CPL −0.838 ± 0.055, as expected for a model whose second direction is unconstrained) |
+| m2: `tab:modelcomp_verification` had no Mirage row | Row added (χ²_min 11.24, k = 3, Δχ² −12.39, AIC 17.24, BIC 19.36, DIC 17.19, lnB_SD +3.49), with V = 3.0 stated in the caption and the "Priors and evidence volumes" paragraph |
+| m3: Part VII-B robust-conclusions paragraph predated the Mirage row | Now quantified: the Mirage slice captures −12.39 of the −15.29 CPL improvement (81%) with one extra parameter and the strongest per-parameter density-ratio evidence (+3.49) |
+| m4: Mirage lnB uncertainties had no stated provenance | Table footnote states they are half-chain scatter (four half-chains of 96,000 samples) |
+
+`audit_numbers.py` extended from 179 to **189 checks** (Mirage verification-table row vs `mirage_sd.json` χ²_MAP, Mirage w_0 quotes vs chain summaries, prior-volume and provenance sentences, absence of both Round-7 contradiction claims). Status: **189/189 pass**. Recompiled: **62 pages, zero errors, zero unresolved references**; page counts synced (README ×5, `.zenodo.json`, cover letter).

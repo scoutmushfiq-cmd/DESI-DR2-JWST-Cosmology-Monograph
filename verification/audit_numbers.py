@@ -230,6 +230,34 @@ if os.path.exists(hrd_path):
     check(abs(hrd["H0_rd"] - 10027.1) < 0.1 and abs(hrd["err_quadrature"] - 44.8) < 0.1,
           "h0rd_check.json values inconsistent with derivation")
 
+# 20. Round-7: Mirage row in the verification table + provenance sentences
+check("Mirage ($w_a = -3.66(1+w_0)$) & 11.24 & 3 & $-12.39" in tex,
+      "tab:modelcomp_verification missing Mirage row (11.24/3/-12.39)")
+check("17.24 & 19.36 & 17.19" in tex,
+      "tab:modelcomp_verification Mirage AIC/BIC/DIC cells missing")
+if os.path.exists(msd_path):
+    mo = msd["mirage_desi_cmb"]["chi2_MAP_opt"]
+    check(abs(round(mo, 2) - 11.24) < 0.006,
+          "Mirage chi2_MAP_opt (%.3f) inconsistent with table value 11.24" % mo)
+    w0m = msd["mirage_desi_cmb"]["summary"]["w0"]
+    check(("-0.70 \\pm 0.11") in tex and
+          abs(round(w0m["mean"], 2) + 0.70) < 0.006 and
+          abs(round(w0m["std"], 2) - 0.11) < 0.006,
+          "Mirage w0 (DESI+CMB) quote inconsistent with mirage_sd.json")
+    w0p = msd["mirage_desi_cmb_pantheon"]["summary"]["w0"]
+    check(("-0.83 \\pm 0.05") in tex and
+          abs(round(w0p["mean"], 2) + 0.83) < 0.006 and
+          abs(round(w0p["std"], 2) - 0.05) < 0.006,
+          "Mirage w0 (Pantheon+) quote inconsistent with mirage_sd.json")
+check("$V = 3.0$ (Mirage)" in tex, "tab:modelcomp_verification caption missing Mirage prior volume")
+check("half-chain scatter" in tex, "Mirage lnB uncertainty provenance missing in tex")
+check("for the supernova-inclusive datasets" not in tex,
+      "Round-7 M2: D_KL 4.06 still labeled 'supernova-inclusive datasets'")
+check("All Savage--Dickey values quoted in this monograph derive from this single canonical computation" not in tex,
+      "Round-7 M1: false 'single canonical computation' claim still present")
+check("identical estimator (Scott-rule Gaussian KDE evaluated at the nested point) applied to the dedicated Mirage chains" in tex,
+      "Round-7 M1 fix sentence missing")
+
 # 14. No orphaned figure assets: every figs/ file is referenced by the tex
 figdir = os.path.join(ROOT, "figs")
 if os.path.isdir(figdir):
