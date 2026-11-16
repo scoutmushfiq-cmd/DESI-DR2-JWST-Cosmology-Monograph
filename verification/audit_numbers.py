@@ -562,8 +562,8 @@ if os.path.exists(_rdf_path):
     _c = _rdf["rdfree_cpl"]
     check(abs(_c["H0"][0] - 68.19) < 0.006 and abs(_c["H0"][1] - 1.45) < 0.006,
           "rdfree CPL H0 disagrees with tex 68.19 +/- 1.45")
-    check(abs(_c["Om"][0] - 0.3048) < 0.0006 and abs(_c["Om"][1] - 0.0188) < 0.0006,
-          "rdfree CPL Om disagrees with tex 0.3048 +/- 0.0188")
+    check(abs(_c["Om"][0] - 0.3050) < 0.0006 and abs(_c["Om"][1] - 0.0132) < 0.0006,
+          "rdfree CPL Om disagrees with tex 0.3050 +/- 0.0132 (chain-direct, Round 13)")
     check(abs(_c["w0"][0] + 0.891) < 0.0006 and abs(_c["w0"][1] - 0.058) < 0.0006,
           "rdfree CPL w0 disagrees with tex -0.891 +/- 0.058")
     check(abs(_c["wa"][0] + 0.245) < 0.0006 and abs(_c["wa"][1] - 0.357) < 0.0006,
@@ -572,7 +572,7 @@ if os.path.exists(_rdf_path):
           "rdfree CPL rd disagrees with tex 146.36 +/- 2.88")
     check(abs(_rdf["dchi2_MAP_cpl_vs_lcdm"] + 4.7) < 0.06,
           "rdfree dchi2_MAP disagrees with tex -4.7")
-for _frag in ["$0.3048 \\pm 0.0188$", "$68.19 \\pm 1.45$", "$-0.891 \\pm 0.058$",
+for _frag in ["$0.3050 \\pm 0.0132$", "$68.19 \\pm 1.45$", "$-0.891 \\pm 0.058$",
               "$-0.245 \\pm 0.357$", "$r_d = 146.36 \\pm 2.88$"]:
     check(_frag in tex, "Round-12 M3: Sound-Horizon-Free row fragment missing from tex: %s" % _frag)
 for _stale in ["69.24", "146.99", "0.2929", "$-0.900 \\pm 0.052$", "$-0.042 \\pm 0.454$"]:
@@ -605,6 +605,57 @@ check("+6.74 \u00b1 0.03" in readme, "Round-12 M4: README missing the corrected 
 if os.path.exists(CL):
     check("split-R" in cl and "1.0037" in cl,
           "Round-12 m4: cover letter missing the split-R-hat statement")
+
+
+# 27. Round-13 fixes: chain-direct Sound-Horizon-Free Omega_m (M1), surgical
+# fig7 marker/label patch (M2), two-tier fig8 severity labeling (M3), and the
+# five minors (fig13 asymmetric H0pe bar, fig10 unbacked error, fig11 forecast
+# caveat, fig1 thick/thin rewording, fig2 reference-model statement).
+_r12 = open(os.path.join(VER, "run_round12_fixes.py"), encoding="utf-8").read()
+check("Om_draws = (ch[:, 1] + cosmo.W_NU) / (ch[:, 0] / 100.0) ** 2" in _r12,
+      "Round-13 M1: run_round12_fixes.py missing the chain-direct Om computation")
+check("Om_s = np.sqrt" not in _r12,
+      "Round-13 M1: quadrature Om propagation still present in run_round12_fixes.py")
+if os.path.exists(_rdf_path):
+    _l = _rdf["rdfree_lcdm"]
+    check(abs(_l["Om"][0] - 0.3044) < 0.0006 and abs(_l["Om"][1] - 0.0077) < 0.0006,
+          "Round-13 M1: rdfree LCDM Om disagrees with chain-direct 0.3044 +/- 0.0077")
+check("$0.3050 \\pm 0.0132$" in tex and "0.0188" not in tex,
+      "Round-13 M1: tex Sound-Horizon-Free Om not updated to chain-direct 0.3050 +/- 0.0132")
+check(os.path.exists(os.path.join(VER, "patch_fig7.py")) and
+      os.path.exists(os.path.join(VER, "patch_fig10_fig13.py")) and
+      os.path.exists(os.path.join(VER, "fig7_DejaVuSans.ttf")),
+      "Round-13 M2: fig7/fig10/fig13 patch scripts or bundled font missing")
+_f7 = _pm.open(os.path.join(ROOT, "figs", "fig7_ede_horndeski_degeneracy.pdf"))[0]
+_t7 = _f7.get_text()
+check("\u00b1 65" not in _t7 and "\u00b1 45" in _t7,
+      "Round-13 M2: fig7 hyperbola label not corrected to +/- 45")
+check("0.092" not in _t7 and "\u2248 0.09" in _t7,
+      "Round-13 M2: fig7 EDE legend not corrected to the backed f_EDE range")
+_f8 = _pm.open(os.path.join(ROOT, "figs", "fig8_tension_heatmap_matrix.pdf"))[0]
+_t8 = _f8.get_text()
+check("MOD." not in _t8 and _t8.count("SEVERE") == 13,
+      "Round-13 M3: fig8 severity labels not on the two-tier >=3-sigma scheme")
+check("two-tier severity label" in tex and "labeled SEVERE" in tex,
+      "Round-13 M3: fig8 caption missing the two-tier labeling description")
+check("published means and uncertainties" in tex and "from our pipeline outputs" not in tex,
+      "Round-13 M3: fig8 caption still overstates provenance ('our pipeline outputs')")
+_f13 = _pm.open(os.path.join(ROOT, "figs", "fig13_non_cepheid_lensing_lowz_sn.pdf"))[0]
+_t13 = _f13.get_text()
+check("75.40 \u00b1 6.80" not in _t13 and "+8.10" in _t13 and "5.50" in _t13,
+      "Round-13 m1: fig13 H0pe label not corrected to the asymmetric interval")
+_f10 = _pm.open(os.path.join(ROOT, "figs", "fig10_jwst_vs_hst_host_comparison.pdf"))[0]
+_t10 = _f10.get_text()
+check("1.85" not in _t10 and "71.20" in _t10,
+      "Round-13 m2: fig10 still quotes the unbacked +/- 1.85")
+check("75.40^{+8.10}_{-5.50}" in tex and "75.40 \\pm 6.80" not in tex,
+      "Round-13 m1: tex still quotes the symmetric H0pe interval")
+check("only the two SH0ES rows" in tex,
+      "Round-13 m4: fig1 caption still overgeneralizes the 2-sigma bars")
+check("\\Omega_m = 0.334" in tex,
+      "Round-13 m5: fig2 caption missing the explicit reference model")
+check("illustrative projections" in tex,
+      "Round-13 m3: fig11 caption missing the illustrative-forecast caveat")
 
 # 14. No orphaned figure assets: every figs/ file is referenced by the tex
 figdir = os.path.join(ROOT, "figs")

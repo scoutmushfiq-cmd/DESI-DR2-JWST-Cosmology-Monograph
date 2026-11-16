@@ -123,7 +123,7 @@ for i, (nm, _, _) in enumerate(row_heads):
 print("unchanged rows reproduce the previous figure exactly")
 
 def sev(v):
-    return "SEVERE" if v >= 4 else ("MOD." if v >= 2 else "CONSIST.")
+    return "SEVERE" if v >= 3 else "CONSIST."
 
 fig, ax = plt.subplots(figsize=(9.6, 5.5))
 im = ax.imshow(T, cmap="RdYlGn_r", vmin=0, vmax=6.5, aspect="auto")

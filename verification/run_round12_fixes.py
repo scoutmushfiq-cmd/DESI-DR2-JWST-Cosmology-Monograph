@@ -46,10 +46,8 @@ def main():
         s = summarize(ch, j.pnames)
         entry = {k: [round(v["mean"], 4), round(v["std"], 4)] for k, v in s.items()}
         H0m, H0s = entry["H0"]
-        h2 = (H0m / 100.0) ** 2
-        Om = (entry["wbc"][0] + cosmo.W_NU) / h2
-        Om_s = np.sqrt((2 * Om / H0m * H0s) ** 2 + (entry["wbc"][1] / h2) ** 2)
-        entry["Om"] = [round(float(Om), 4), round(float(Om_s), 4)]
+        Om_draws = (ch[:, 1] + cosmo.W_NU) / (ch[:, 0] / 100.0) ** 2
+        entry["Om"] = [round(float(Om_draws.mean()), 4), round(float(Om_draws.std()), 4)]
         out[tag] = entry
         print(tag, entry, "%.0f s" % (time.time() - t0), flush=True)
 
