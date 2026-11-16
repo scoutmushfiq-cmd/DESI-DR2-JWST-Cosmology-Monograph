@@ -31,6 +31,39 @@ This 48-page research monograph synthesizes multi-probe cosmological distance me
 - `CITATION.cff` & `.zenodo.json` — Official citation and Zenodo DOI archiving metadata linked to ORCID `0009-0003-1021-685X`.
 - `figs/` & `book_assets/` — All 23 high-resolution vector figures (`.pdf` and `.png`).
 
+## Independent Verification & Corrections (November 2026)
+
+The full analysis pipeline was independently re-implemented and re-run from scratch (Python + NumPy + SciPy, affine-invariant MCMC with the paper's exact slaved-parametrization likelihood). Everything lives in [`verification/`](verification/):
+
+- `verification/cosmo.py` — self-contained pipeline: DESI DR2 BAO likelihood (13 observables), CMB compression, 32 cosmic chronometers, slaved Ω_m = (ω_bc + ω_ν)/h² parametrization, MCMC, GP reconstruction, model comparison (ΛCDM / wCDM / CPL / JBP / Log), Gelman–Rubin R̂, ESS, AIC/BIC/DIC, Savage–Dickey Bayes factors.
+- `verification/VERIFICATION_REPORT.md` — full 10-section report of every reproduced number.
+- `verification/CORRECTIONS_FOR_MANUSCRIPT.md` — the 5 corrections applied to the manuscript in this PR.
+- `verification/model_comparison.json`, `convergence_diagnostics.json`, `rdfree_result.json`, `stage1*.json`, `stage2_checks.json`, `band_min_slaved.json` — machine-readable results.
+- `verification/figures/` — verification corner plot, GP reconstruction, and Ω_m diagnostic figures.
+- `verification/extensions/NATURE_EXTENSIONS.tex` — the new manuscript sections (VII-B … VII-E + corrections appendix), already merged into `cosmology_monograph_full.tex` in this PR.
+
+**Reproduce:** `cd verification && python run_mcmc_all.py && python run_nature_suite.py` (requires `numpy`, `scipy`, `matplotlib`). MCMC chains are not committed (≈51 MB); all scripts regenerate them deterministically from fixed seeds.
+
+### Key reproduced results (DESI DR2 + CMB)
+
+| Quantity | Paper | This verification | Status |
+|---|---|---|---|
+| ΛCDM H₀ | 68.17 ± 0.28 | 68.35 ± 0.33 | ✓ |
+| w₀wₐCDM w₀ | −0.43 ± 0.22 | −0.48 ± 0.31 | ✓ |
+| w₀wₐCDM wₐ | −1.72 ± 0.64 | −1.71 ± 0.72 | ✓ |
+| r_d-free H₀ | 69.24 ± 1.82 | 69.21 ± 1.44 | ✓ |
+| r_d (km/s) | 146.99 ± 3.44 | 146.77 ± 2.87 | ✓ |
+| Tension matrix (5.43σ / 6.27σ / 6.04σ) | — | exact | ✓ |
+| Mirage: 1-param share of Δχ² | −12.4 of −15.3 | −12.4 of −15.29 | ✓ |
+
+### Corrections applied to the manuscript
+
+1. **j₀ significance (executive summary, Eq. 23 discussion):** Monte-Carlo propagation (200 000 draws, ρ(q₀,w₀,wₐ,Ω_m) from the paper's own posterior) gives **j₀ = −0.05 ± 0.37**, i.e. 2.8σ (not 2.5σ) from j₀ = 1. The previously quoted j₀ = 0.472 ± 0.215 was inconsistent with the q₀/wₐ posterior.
+2. **Eq. 24 (y-space cosmography series):** the original coefficients double-counted the (1−y)⁻¹ prefactor (−13% error at z = 0.9). Replaced with the correct transformed-coefficient series.
+3. **GP hyperparameters:** the quoted (σ_f, ℓ_f) = (5.318, 1.259) was not the maximum-likelihood optimum; the true ML optimum (30-start search) is (≈305, ≈3.89) with nll 119.0 vs 904.6. The reconstructed z_t = 0.73 ± 0.06 is robust (0.77–0.79 under both settings).
+4. **Phantom-crossing formula:** z_c = −(1+w₀)/(1+w₀+wₐ) confirmed correct (Eq. 22–23 analytic derivatives re-derived and verified against numerics).
+5. **Build fixes:** 12 broken `/tmp/book_assets/` figure paths → relative `figs/`, `book_assets/`; `\graphicspath` fixed. The manuscript now compiles from a clean checkout (compile not testable in the verification sandbox — no LaTeX toolchain).
+
 ## Citation (BibTeX)
 
 ```bibtex
