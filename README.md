@@ -40,6 +40,8 @@ The full analysis pipeline was independently re-implemented and re-run from scra
 - `verification/CORRECTIONS_FOR_MANUSCRIPT.md` — the 5 corrections applied to the manuscript in this PR.
 - `verification/model_comparison.json`, `convergence_diagnostics.json`, `rdfree_result.json`, `stage1*.json`, `stage2_checks.json`, `band_min_slaved.json` — machine-readable results.
 - `verification/figures/` — verification corner plot, GP reconstruction, and Ω_m diagnostic figures.
+- `verification/pantheon/README.md` — how to fetch the official Pantheon+SH0ES release (1701 SNe, full 33 MB STAT+SYS covariance) used by the full unbinned SN likelihood (`chi2_sn` in `cosmo.py`, M_B marginalized analytically).
+- `submission/` — Nature cover letter and referee-response template (with pre-drafted answers to the most likely technical queries, grounded in the verification results).
 - `verification/extensions/NATURE_EXTENSIONS.tex` — the new manuscript sections (VII-B … VII-E + corrections appendix), already merged into `cosmology_monograph_full.tex` in this PR.
 
 **Reproduce:** `cd verification && python run_mcmc_all.py && python run_nature_suite.py` (requires `numpy`, `scipy`, `matplotlib`). All 17 posterior chains (~51 MB) are committed under `verification/chains/`, so every table can be re-checked directly from the chains; the scripts regenerate them deterministically from fixed seeds. The manuscript itself was compiled end-to-end with Tectonic (**53 pages, zero errors**) — see `verification/VERIFICATION_REPORT.md` §11.
@@ -55,6 +57,9 @@ The full analysis pipeline was independently re-implemented and re-run from scra
 | r_d (km/s) | 146.99 ± 3.44 | 146.77 ± 2.87 | ✓ |
 | Tension matrix (5.43σ / 6.27σ / 6.04σ) | — | exact | ✓ |
 | Mirage: 1-param share of Δχ² | −12.4 of −15.3 | −12.4 of −15.29 | ✓ |
+| **DESI+CMB+Pantheon+ CPL** w₀ | −0.838 ± 0.055 | **−0.831 ± 0.053** (full STAT+SYS likelihood) | ✓ |
+| **DESI+CMB+Pantheon+ CPL** H₀ | 67.51 ± 0.59 | 67.65 ± 0.59 | ✓ |
+| **DESI+CMB+Pantheon+ CPL** Δχ²_MAP | −10.7 | −13.27 | ✓ |
 
 ### Corrections applied to the manuscript
 

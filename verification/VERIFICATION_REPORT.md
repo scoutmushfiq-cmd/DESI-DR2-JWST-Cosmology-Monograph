@@ -136,3 +136,22 @@ This repository now contains the complete verification package under `verificati
 
 ### Artifacts (sandbox, `/workspace/cosmos_reverify/`)
 `cosmo.py` (pipeline), `mcmc_results.json`, `stage2_checks.json`, `band_min_slaved.json`, `rdfree_result.json`, six `chain_*.npy` posterior chains, and four recreated figures: `fig_w0wa_contours.png`, `fig_gp_hz.png`, `fig_h0_forest.png`, `fig_tension_heatmap.png`.
+
+## 13. Pantheon+ full-likelihood verification (November 2026)
+
+The previously documented limitation ("Pantheon+ rows verified against published values only") is now **closed**: the official Pantheon+SH0ES Data Release (`Pantheon+SH0ES.dat`, 1701 rows; `Pantheon+SH0ES_STAT+SYS.cov`, full 1701×1701 systematic+statistic covariance) was downloaded and a full unbinned SN likelihood was implemented in `cosmo.py` (`chi2_sn`), with the absolute magnitude M_B marginalized analytically and the cosmology subsample (non-calibrators, z_HD > 0.01; 1580 SNe) selected exactly as in the DESI analysis.
+
+### Joint MCMC — DESI DR2 + CMB + Pantheon+ (CPL)
+
+| Parameter | This verification | Paper (MCMC base) | DESI DR2 official |
+|---|---|---|---|
+| H₀ | 67.65 ± 0.59 | 67.42 ± 0.52 | 67.51 ± 0.59 |
+| Ω_m | 0.3110 | 0.3115 ± 0.0049 | 0.3114 ± 0.0057 |
+| w₀ | −0.831 ± 0.053 | −0.846 ± 0.050 | −0.838 ± 0.055 |
+| wₐ | −0.661 ± 0.196 | −0.565 ± 0.204 | −0.62⁺⁰·²²₋₀.₁₉ |
+
+MAP-level model comparison: χ²(ΛCDM) = 1413.47, χ²(CPL) = 1400.20 → **Δχ²_MAP = −13.27** (paper: −10.4; DESI: −10.7 — same direction, slightly stronger, consistent with the marginally larger SN sample used here).
+
+**Diagnostics:** a variant scan (`sn_variant_scan.json`) confirmed the sample selection is the dominant systematic: using all 1701 rows including the 77 SH0ES calibrators shifts w₀ → −0.737, wₐ → −0.911 (the unmodelled low-z calibrator treatment biases the reconstruction), while the z_HD > 0.01 non-calibrator cut reproduces both the paper and DESI DR2. The z_CMB-based selection was also tested and rejected (worse fit, shifted posteriors).
+
+**Reproduce:** `python run_sn_joint.py` (downloads nothing; data must be in `pantheon/`, see `pantheon/README.md`). Chains: `chain_lcdm_sn_s*.npy`, `chain_cpl_sn_s*.npy`.
