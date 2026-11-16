@@ -7,7 +7,8 @@
     "dlnL_semantics": "posterior mean chi2 within Delta-D = 30 of chi2_min (likelihood-dominated region), thin factor 16, identical to dlnL_decomposition.json",
     "D_KL": "D_KL = Delta<lnL>_trim - lnB_SD",
     "DIC": "DIC = chi2(theta_bar) + 2 p_D, p_D = mean chi2 (Delta-D=30 trim) - chi2(theta_bar), thin 16; dAIC = dchi2_MAP + 2*dk with dk=+1",
-    "lnB_uncertainty": "half-chain scatter (4 half-chains, 96000 samples each)"
+    "lnB_uncertainty": "half-chain scatter (4 half-chains, 96000 samples each)",
+    "ESS_note": "ESS in this artifact is reported by a lag-1 autocorrelation cutoff: ess() returns the full retained sample count (192000 = 2 chains x 96000) when lag-1 autocorrelation < 0.05, so the exact value 192000 means 'autocorrelation below detection', not an estimated effective sample size. These ESS values are not quoted in the manuscript."
   },
   "mirage_desi_cmb": {
     "label": "DESI DR2 BAO + CMB",

@@ -292,3 +292,19 @@ Round-7 review (`submission/hostile_referee_report_round7.md`) audited the Round
 | m4: Mirage lnB uncertainties had no stated provenance | Table footnote states they are half-chain scatter (four half-chains of 96,000 samples) |
 
 `audit_numbers.py` extended from 179 to **189 checks** (Mirage verification-table row vs `mirage_sd.json` χ²_MAP, Mirage w_0 quotes vs chain summaries, prior-volume and provenance sentences, absence of both Round-7 contradiction claims). Status: **189/189 pass**. Recompiled: **62 pages, zero errors, zero unresolved references**; page counts synced (README ×5, `.zenodo.json`, cover letter).
+
+## Round 8 (hostile referee, audit of the submission package around the manuscript) — findings and fixes
+
+Round-8 review (`submission/hostile_referee_report_round8.md`) shifted the audit target from the tex — which survived seven rounds — to the **rest of the submission package**: README bullets, cover letter, pre-drafted referee responses, and the Round-7 caption extensions. Verdict: MAJOR REVISION — the shipped package quoted values the manuscript itself had retracted as fabricated/retracted in Rounds 3–6. All addressed:
+
+| Finding | Fix applied |
+| --- | --- |
+| M1: README Overview bullet 2 still quoted the superseded z_c = 0.42 ± 0.09 (retracted in Round 3 as derived-nowhere; audit guarded the tex only) | Replaced with the dataset-specific propagated values: z_c = 0.50 ± 0.08 (DESI DR2 + CMB; 0.35 ± 0.11 with Pantheon+), with the `zc_derivation.json` pointer |
+| M2: `referee_response_template.md` pre-drafted answers quoted the Round-5-retracted D_KL ≈ 4.5–5.2 and the Round-6-retracted Mirage ln B = +1.85, plus stale z_c ≈ 0.42 / 0.42 ± 0.09 | Both answers rewritten with artifact-backed numbers: D_KL = 4.06 (CPL, own chain-level decomposition), D_KL = 2.13 / 2.40 (Mirage), ln B = +3.49 ± 0.23 / +3.64 ± 0.94 (`mirage_sd.json`), z_c = 0.50 ± 0.08 / 0.35 ± 0.11 (Eq. zc_derivation) |
+| M3: `cover_letter.md` — the first technical number the Nature editor reads — quoted z_c = 0.42 ± 0.09 | Corrected to 0.35 ± 0.11 with Pantheon+ (0.50 ± 0.08 DESI+CMB alone) |
+| M4: `tab:modelcomp_verification` caption misdescribed the Mirage row on three counts: L-BFGS-B optimizer (Mirage used Powell), 4,000-draw DIC (Mirage used 12,000, thin 16), "Silverman's gives identical values" (Mirage Scott +3.49 vs Silverman +3.46) | Caption now states: multi-start optimization with Powell for the Mirage row; 12,000 draws for the Mirage DIC; Scott–Silverman agreement for the two-parameter/constant-w models and the 0.03 Mirage difference within the quoted ± |
+| m1: README reproduction paragraph said "58 pages" (actual 62) and "~59 MB" chains (actual ~68 MB) | Corrected to 62 pages, ~68 MB |
+| m2: `mirage_sd.json` ESS = 192,000 exactly for every parameter — a lag-1 autocorrelation < 0.05 cutoff artifact, not an estimated effective sample size | `method.ESS_note` annotation added to the artifact (values not quoted in the tex); flagged so no reader cites 192,000 as an ESS measurement |
+| Systemic: the audit guarded the tex but not the package files, which is how M1–M3 accumulated | `audit_numbers.py` extended with a package-consistency section scanning README bullets, the referee template, and the cover letter for every superseded value and required artifact-backed number |
+
+`audit_numbers.py` extended from 189 to **217 checks**. Status: **217/217 pass**. Recompiled: **62 pages, zero errors**; official PDF rebuilt. Commit `a2e6607`.

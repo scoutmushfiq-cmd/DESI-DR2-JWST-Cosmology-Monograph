@@ -258,6 +258,49 @@ check("All Savage--Dickey values quoted in this monograph derive from this singl
 check("identical estimator (Scott-rule Gaussian KDE evaluated at the nested point) applied to the dedicated Mirage chains" in tex,
       "Round-7 M1 fix sentence missing")
 
+# 21. Round-8: package consistency — README bullets, referee-response template,
+# and cover letter must carry the same artifact-backed numbers as the tex.
+check("0.42 \\pm 0.09" not in readme,
+      "Round-8 M1: README still quotes superseded z_c = 0.42 +- 0.09")
+check("0.50 \\pm 0.08" in readme and "0.35 \\pm 0.11" in readme,
+      "README missing dataset-specific z_c values (0.50 +- 0.08 / 0.35 +- 0.11)")
+check("58 pages" not in readme, "Round-8 m1: README still claims 58 pages")
+check("62 pages" in readme, "README missing the 62-page compile claim")
+check("~59 MB" not in readme, "Round-8 m1: README still claims ~59 MB of chains")
+check("~68 MB" in readme, "README missing the ~68 MB chain-size claim")
+TPL = os.path.join(ROOT, "submission", "referee_response_template.md")
+check(os.path.exists(TPL), "referee_response_template.md missing")
+if os.path.exists(TPL):
+    tpl = open(TPL, encoding="utf-8").read()
+    for frag in ["4.5\u20135.2", "4.5--5.2", "+1.85", "0.42 \u00b1 0.09", "z_c \u2248 0.42"]:
+        check(frag not in tpl,
+              "Round-8 M2: referee template still contains retracted value %r" % frag)
+    for frag in ["D_KL = 4.06", "ln B = +3.49 \u00b1 0.23", "+3.64 \u00b1 0.94",
+                 "D_KL = 2.13", "2.40", "0.50 \u00b1 0.08", "0.35 \u00b1 0.11"]:
+        check(frag in tpl, "referee template missing artifact-backed value %r" % frag)
+CL = os.path.join(ROOT, "submission", "cover_letter.md")
+check(os.path.exists(CL), "cover_letter.md missing")
+if os.path.exists(CL):
+    cl = open(CL, encoding="utf-8").read()
+    check("0.42 \u00b1 0.09" not in cl,
+          "Round-8 M3: cover letter still quotes superseded z_c = 0.42 +- 0.09")
+    check("0.35 \u00b1 0.11" in cl and "0.50 \u00b1 0.08" in cl,
+          "cover letter missing dataset-specific z_c values")
+# Round-8 M4: verification-table caption must describe the Mirage row's actual methodology
+check("12{,}000 for the Mirage row" in tex,
+      "caption missing Mirage 12,000-draw DIC provenance")
+check("Powell for the Mirage row" in tex,
+      "caption missing Powell optimizer attribution for the Mirage row")
+check("differs by 0.03 for Mirage" in tex,
+      "caption missing the Scott-Silverman 0.03 Mirage difference")
+check("bounded multi-start L-BFGS-B optimization" not in tex,
+      "caption still claims L-BFGS-B for all rows")
+check("Silverman's gives identical values to the quoted precision" not in tex,
+      "caption still claims identical Silverman values for all rows")
+if os.path.exists(msd_path):
+    check("ESS_note" in msd.get("method", {}),
+          "Round-8 m2: mirage_sd.json missing ESS cutoff-annotation method note")
+
 # 14. No orphaned figure assets: every figs/ file is referenced by the tex
 figdir = os.path.join(ROOT, "figs")
 if os.path.isdir(figdir):
