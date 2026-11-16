@@ -25,7 +25,7 @@
    0.1411,
    -1.0649
   ],
-  "lnB_SDX": -1.46,
+  "lnB_SDX": -1.49,
   "dchi2_vs_LCDM": -3.63,
   "DIC_frac_kept": 1.0
  },
@@ -42,40 +42,47 @@
    -0.4231,
    -1.7231
   ],
-  "lnB_SDX": 1.78,
+  "lnB_SDX": 2.6,
   "dchi2_vs_LCDM": -15.29,
   "DIC_frac_kept": 0.902
  },
  "JBP": {
-  "chi2_min": 14.16,
+  "chi2_min": 12.534,
   "k": 4,
-  "AIC": 22.16,
-  "BIC": 24.99,
+  "AIC": 20.53,
+  "BIC": 23.37,
   "DIC": 21.95,
   "pD": 4.67,
   "best": [
-   63.6934,
-   0.1406,
-   -1.1857,
-   1.002
+   64.6275,
+   0.1414,
+   -1.1395,
+   1.0
   ],
-  "dchi2_vs_LCDM": -9.47,
-  "DIC_frac_kept": 1.0
+  "dchi2_vs_LCDM": -11.1,
+  "DIC_frac_kept": 1.0,
+  "lnB_SDX": -0.83
  },
  "Log": {
-  "chi2_min": 11.75,
+  "chi2_min": 8.625,
   "k": 4,
-  "AIC": 19.75,
-  "BIC": 22.58,
+  "AIC": 16.62,
+  "BIC": 19.46,
   "DIC": 16.28,
   "pD": 3.82,
   "best": [
-   67.7219,
+   64.6989,
    0.1424,
-   -1.159,
-   0.5159
+   -1.4168,
+   0.9778
   ],
-  "dchi2_vs_LCDM": -11.88,
-  "DIC_frac_kept": 0.937
+  "dchi2_vs_LCDM": -15.0,
+  "DIC_frac_kept": 0.937,
+  "lnB_SDX": 1.82
+ },
+ "_provenance": {
+  "chi2_min/AIC/BIC": "bounded multi-start L-BFGS-B MAP seeded from released chains (jbp_log_map_fix.json); JBP MAP lies on the wa=+1 prior boundary",
+  "DIC": "chain-based, 4000 draws, Delta D=30 tail trim",
+  "lnB_SDX": "canonical Savage-Dickey from combined released chains, Gaussian KDE (Scott; Silverman identical to quoted precision); V=2.5 (wCDM), V=15 (two-parameter models); see savage_dickey_canonical.json"
  }
 }
