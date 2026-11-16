@@ -61,7 +61,7 @@ b.fill_between(zt, flo, fhi, alpha=0.35, color="C0")
 b.plot(zt, fmed, "C0", lw=1.8, label=r"$f_{\rm DE}(z)$ median")
 b.axhline(1.0, color="k", lw=0.8, ls="--")
 b.plot([z_pk], [f_pk], "ko", ms=4)
-b.annotate(r"$f_{\rm DE}^{\rm max}\!\approx\!%.2f,\ z_c\!\approx\!0.42$" % f_pk,
+b.annotate(r"$f_{\rm DE}^{\rm max}\!\approx\!%.2f$ at $z\!\approx\!%.2f$" % (f_pk, z_pk),
            xy=(z_pk, f_pk), xytext=(0.75, 1.12), fontsize=9,
            arrowprops=dict(arrowstyle="->", lw=0.8))
 b.set_xlim(0, 2)

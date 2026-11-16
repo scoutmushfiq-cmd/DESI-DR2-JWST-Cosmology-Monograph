@@ -84,12 +84,14 @@ def nested_run(joint, d, nlive=NLIVE, target=TARGET_dlnZ, seed=SEED,
     logw_shell = np.log1p(-np.exp(-1.0 / nlive))     # log(1 - e^{-1/nlive})
     logZ = -1e300
     logZ2 = 0.0
+    logSWL = -1e300
     t = 0
     logX = 0.0
     while True:
         i = int(L.argmin())
         logZ = np.logaddexp(logZ, L[i] + logX + logw_shell)
         logZ2 = np.logaddexp(logZ2, 2 * L[i] + 2 * logX + 2 * logw_shell)
+        logSWL = np.logaddexp(logSWL, 2 * L[i] + logX + logw_shell)
         Lw = L[i]
         logX -= 1.0 / nlive
         t += 1
@@ -135,10 +137,14 @@ def nested_run(joint, d, nlive=NLIVE, target=TARGET_dlnZ, seed=SEED,
                         logsumexp(L) - np.log(nlive) + logX)
     logZ2 = np.logaddexp(logZ2,
                          logsumexp(2 * L) + 2 * logX - 2 * np.log(nlive))
+    logSWL = np.logaddexp(logSWL,
+                          logsumexp(2 * L) + logX - np.log(nlive))
     with np.errstate(invalid="ignore", over="ignore"):
         d2 = logZ2 - 2 * logZ
         err = float(np.sqrt(np.expm1(d2))) if 0 <= d2 < 25 else np.nan
-    return float(logZ), err, t
+        H = float(np.exp(logSWL - logZ) - logZ) if logSWL > -1e299 else np.nan
+        err_param = float(np.sqrt(max(H, 0.0) / nlive)) if np.isfinite(H) else np.nan
+    return float(logZ), err, t, H, err_param
 
 
 def main(ds, model, seed=SEED, nlive=NLIVE):
@@ -147,8 +153,9 @@ def main(ds, model, seed=SEED, nlive=NLIVE):
     key = f"{model}_{ds}_s{seed}"
     joint = Joint(**MODELS[model], **DATASETS[ds])
     d = len(joint.pnames)
-    lnZ, err, it = nested_run(joint, d, seed=seed, nlive=nlive)
+    lnZ, err, it, H, err_param = nested_run(joint, d, seed=seed, nlive=nlive)
     out[key] = {"lnZ": lnZ, "lnZ_err": err, "iterations": it,
+                "H": H, "err_paramfree": err_param,
                 "nlive": nlive, "d": d, "seed": seed,
                 "priors": "H0~U[40,100], wbc~U[0.130,0.155], "
                           + ("w0~U[-2.5,0.5] (V=3.0)" if model == "mirage"

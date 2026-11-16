@@ -6,6 +6,7 @@ actual build. Run from verification/ after every manuscript edit:
     python audit_numbers.py
 """
 import json, os, re, subprocess, sys
+import numpy as np
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 VER = os.path.join(ROOT, "verification")
@@ -265,9 +266,9 @@ check("0.42 \\pm 0.09" not in readme,
 check("0.50 \\pm 0.08" in readme and "0.35 \\pm 0.11" in readme,
       "README missing dataset-specific z_c values (0.50 +- 0.08 / 0.35 +- 0.11)")
 check("58 pages" not in readme, "Round-8 m1: README still claims 58 pages")
-check("63 pages" in readme, "README missing the 63-page compile claim")
+check("64 pages" in readme, "README missing the 64-page compile claim")
 check("~59 MB" not in readme, "Round-8 m1: README still claims ~59 MB of chains")
-check("~86 MB" in readme, "README missing the ~86 MB chain-size claim")
+check("~92 MB" in readme, "README missing the ~92 MB chain-size claim")
 TPL = os.path.join(ROOT, "submission", "referee_response_template.md")
 check(os.path.exists(TPL), "referee_response_template.md missing")
 if os.path.exists(TPL):
@@ -308,7 +309,7 @@ if os.path.exists(snx_path):
     snx = json.load(open(snx_path))
     # table cells for the dagger-dagger rows
     for ds, cells in [
-        ("union3", ["-19.3", "4.4", "-17.3", "-17.4", "+9.17", "+6.75 \\pm 0.02"]),
+        ("union3", ["-19.3", "4.4", "-17.3", "-17.4", "+9.17", "+6.74 \\pm 0.03"]),
         ("desy5", ["-17.0", "4.1", "-15.0", "-15.2", "+8.03", "+5.04 \\pm 0.19"]),
     ]:
         for cell in cells:
@@ -340,9 +341,9 @@ if os.path.exists(nested_path):
     ns = json.load(open(nested_path))["summary"]
     for key, cell, err in [("mirage_desi_cmb", "+3.65 \\pm 0.35", 0.35),
                            ("mirage_sn", "+3.40 \\pm 0.35", 0.35),
-                           ("mirage_union3", "+6.75 \\pm 0.02", 0.02),
+                           ("mirage_union3", "+6.74 \\pm 0.03", 0.03),
                            ("mirage_desy5", "+5.04 \\pm 0.19", 0.19),
-                           ("cpl_desi_cmb", "+2.37", None)]:
+                           ("cpl_desi_cmb", "+2.78 \\pm 0.42", 0.42)]:
         check(cell in tex, "nested-sampling value %s missing from tex" % key)
         v = ns[key]["lnB"]
         quoted = float(re.search(r"([+-][0-9.]+)", cell).group(1))
@@ -364,8 +365,8 @@ check("whose supernova likelihoods our pipeline does not re-implement" not in te
 check("$^{\\ddagger}$" in tex, "dagger-dagger marker missing from the table rows")
 # README package metadata: chain count and new artifacts
 chain_files = [f for f in os.listdir(os.path.join(VER, "chains")) if f.endswith(".npy")]
-check(len(chain_files) == 35, "expected 35 chain files, found %d" % len(chain_files))
-check("All 35 posterior chains" in readme, "README chain count not updated to 35")
+check(len(chain_files) == 37, "expected 37 chain files, found %d" % len(chain_files))
+check("All 37 posterior chains" in readme, "README chain count not updated to 37")
 check("All 27 posterior chains" not in readme, "README still quotes the stale 27-chain count")
 for art in ["sn_extra.py", "nested_lnB.py", "sn_extra_results.json", "nested_lnB.json", "download_sn_extra_data.py"]:
     check(art in readme, "README missing new artifact %s" % art)
@@ -389,8 +390,10 @@ check("computes its own Mirage-axis evidence for all four dataset combinations" 
       "abstract missing the own-pipeline Mirage evidence sentence")
 check("recovering $81\\text{--}99.6\\%$ of the CPL" in tex,
       "abstract missing the Mirage CPL-recovery range")
-check("satisfy $\\widehat{R} \\le 1.001$" in tex,
-      "Part VII-B missing the new-chain R-hat statement")
+check("with a maximum of $1.0022$ across all parameter--chain combinations" in tex,
+      "Part VII-B missing the split-R-hat statement (max 1.0022)")
+check("two seeds for Mirage, one each for $\\Lambda$CDM and CPL" in tex,
+      "Part VII-B missing the corrected per-model seed counts")
 
 # 24. Round-10 fixes: DES-Dovekie identification (the released 1820-SN file is the
 # recalibrated reanalysis of DES-SN5YR, Popovic et al. 2025, arXiv:2511.07517,
@@ -436,6 +439,103 @@ if _slv:
           "sn_extra_likelihood_validation claim missing the Dovekie posterior / citation")
     check("sample itself" in _blob,
           "sn_extra_likelihood_validation claim missing the sample-difference explanation")
+
+# 25. Round-11 fixes: fig5 annotation (retracted z_c = 0.42 removed), nested lnB
+# seed structure (2 seeds per CPL configuration, 4 for Mirage-Union3), split-R-hat
+# artifact for the eight new chains, own-chain MCMC Pipeline rows (no undefined
+# Q_CMB symbol), and the corrected sn_joint chi2 fields.
+_rhat_path = os.path.join(VER, "rhat_new_chains.json")
+check(os.path.exists(_rhat_path), "rhat_new_chains.json missing")
+if os.path.exists(_rhat_path):
+    _rh = json.load(open(_rhat_path))
+    check(_rh["max_rhat"] <= 1.003, "rhat_new_chains max_rhat %.5f exceeds 1.003" % _rh["max_rhat"])
+    check(abs(_rh["max_rhat"] - 1.0022) < 0.0006,
+          "rhat_new_chains max_rhat %.5f disagrees with quoted 1.0022" % _rh["max_rhat"])
+check("z_c = 0.42" not in tex and "z_c \\approx 0.42" not in tex,
+      "retracted z_c = 0.42 still present in tex")
+_fig5 = os.path.join(ROOT, "figs", "fig5_gp_wz_reconstruction.pdf")
+check(os.path.exists(_fig5), "fig5_gp_wz_reconstruction.pdf missing")
+if os.path.exists(_fig5):
+    try:
+        import pymupdf
+        _t5 = pymupdf.open(_fig5)[0].get_text()
+        check("0.42" not in _t5, "fig5 still annotates the retracted z_c ~ 0.42")
+        check("0.16" in _t5, "fig5 missing the z ~ 0.16 peak annotation")
+    except Exception as _e:
+        check(False, "fig5 PDF text extraction failed: %s" % _e)
+check("Q_{\\rm CMB}" not in tex, "undefined symbol Q_CMB still present in tex")
+check("$(\\theta_*,\\omega_b,\\omega_{\\rm bc})_{\\rm CMB}$ + Pantheon+" in tex,
+      "MCMC Pipeline Base row missing the defined CMB compression notation")
+_sj_path = os.path.join(VER, "sn_joint_results.json")
+check(os.path.exists(_sj_path), "sn_joint_results.json missing")
+if os.path.exists(_sj_path):
+    _sj = json.load(open(_sj_path))["pantheon_joint"]
+    check(_sj["lcdm"]["chi2_min"] > 1000, "sn_joint lcdm chi2_min %.3f still corrupted" % _sj["lcdm"]["chi2_min"])
+    check(_sj["cpl"]["chi2_min"] > 1000, "sn_joint cpl chi2_min %.3f still corrupted" % _sj["cpl"]["chi2_min"])
+    _sdm = json.load(open(os.path.join(VER, "sn_map_dchi2.json")))
+    check(abs(_sdm["dchi2_map"] + 13.3) < 0.06, "sn_map_dchi2 dchi2_map disagrees with tex -13.3")
+    check("-13.3" in tex, "tex missing the Base-row dchi2 -13.3")
+for _frag in ["$0.3112 \\pm 0.0060$", "$67.65 \\pm 0.59$", "$-0.831 \\pm 0.053$",
+              "$-0.661 \\pm 0.196$", "$r_d = 147.09$ (fixed)",
+              "$0.3107 \\pm 0.0059$", "$67.73 \\pm 0.57$", "$-0.838 \\pm 0.053$",
+              "$-0.646 \\pm 0.195$", "$-12.9$ ($3.6\\sigma$)",
+              "$0.2992 \\pm 0.0051$", "$69.00 \\pm 0.52$", "$-0.904 \\pm 0.052$",
+              "$-0.556 \\pm 0.198$", "$-12.5$ ($3.5\\sigma$)"]:
+    check(_frag in tex, "MCMC Pipeline table row fragment missing from tex: %s" % _frag)
+_pr_path = os.path.join(VER, "pipeline_rows_results.json")
+check(os.path.exists(_pr_path), "pipeline_rows_results.json missing")
+if os.path.exists(_pr_path):
+    _pr = json.load(open(_pr_path))
+    _t = _pr["cpl_pp_cc_trgb"]; _s = _pr["cpl_pp_cc_shoes"]
+    check(abs(_t["Om"][0] - 0.3107) < 0.0006 and abs(_t["Om"][1] - 0.0059) < 0.0006,
+          "pipeline +TRGB Om disagrees with tex 0.3107 +/- 0.0059")
+    check(abs(_t["H0"][0] - 67.73) < 0.006 and abs(_t["H0"][1] - 0.57) < 0.006,
+          "pipeline +TRGB H0 disagrees with tex 67.73 +/- 0.57")
+    check(abs(_t["w0"][0] + 0.838) < 0.0006 and abs(_t["wa"][0] + 0.646) < 0.0006,
+          "pipeline +TRGB (w0, wa) disagrees with tex")
+    check(abs(_t["dchi2_MAP"] + 12.9) < 0.06, "pipeline +TRGB dchi2 disagrees with tex -12.9")
+    check(abs(_s["Om"][0] - 0.2992) < 0.0006 and abs(_s["Om"][1] - 0.0051) < 0.0006,
+          "pipeline +SH0ES Om disagrees with tex 0.2992 +/- 0.0051")
+    check(abs(_s["H0"][0] - 69.00) < 0.006 and abs(_s["H0"][1] - 0.52) < 0.006,
+          "pipeline +SH0ES H0 disagrees with tex 69.00 +/- 0.52")
+    check(abs(_s["w0"][0] + 0.904) < 0.0006 and abs(_s["wa"][0] + 0.556) < 0.0006,
+          "pipeline +SH0ES (w0, wa) disagrees with tex")
+    check(abs(_s["dchi2_MAP"] + 12.5) < 0.06, "pipeline +SH0ES dchi2 disagrees with tex -12.5")
+check("$69.00 \\pm 0.52$ in our unbinned-prior run" in tex,
+      "narrative missing the updated unbinned-prior SH0ES-run H0")
+check("68.64" not in tex, "superseded +SH0ES row value 68.64 still present in tex")
+for _fn, _mean in [("chains/chain_cpl_desy5_s1.npy", None),
+                   ("chains/chain_cpl_union3_s1.npy", None)]:
+    _p = os.path.join(VER, _fn)
+    check(os.path.exists(_p), "own-posterior chain %s missing" % _fn)
+if all(os.path.exists(os.path.join(VER, _fn)) for _fn, _ in
+       [("chains/chain_cpl_desy5_s1.npy", 0), ("chains/chain_cpl_union3_s1.npy", 0)]):
+    _cd = np.load(os.path.join(VER, "chains/chain_cpl_desy5_s1.npy"))
+    _cu = np.load(os.path.join(VER, "chains/chain_cpl_union3_s1.npy"))
+    check(abs(_cd[:, 2].mean() + 0.798) < 0.006 and abs(_cd[:, 3].mean() + 0.774) < 0.006,
+          "Dovekie own-posterior means disagree with tex (-0.798, -0.774)")
+    check(abs(_cu[:, 2].mean() + 0.657) < 0.006 and abs(_cu[:, 3].mean() + 1.134) < 0.006,
+          "Union3 own-posterior means disagree with tex (-0.657, -1.134)")
+check("(-0.798 \\pm 0.055, -0.774 \\pm 0.212, 67.45 \\pm 0.54)" in tex,
+      "Part VII-B missing the own Dovekie posterior sentence")
+check("(-0.657 \\pm 0.085, -1.134 \\pm 0.278, 65.99 \\pm 0.83)" in tex,
+      "Part VII-B missing the own Union3 posterior sentence")
+check("seed half-ranges quantify seed-to-seed reproducibility" in tex
+      and "$\\approx 0.46$ nats" in tex,
+      "Part VII-B missing the sqrt(H/nlive) evidence-uncertainty caveat")
+check("a consistency that holds at the $68\\%$-band level" in tex,
+      "Executive Summary missing the GP H(z)-route 68%-band caveat")
+check("The official DESI DR2 analysis, combining" in tex,
+      "abstract bullet 3 missing the official-analysis attribution fix")
+check("in the official analyses (our re-implementation chains" in tex,
+      "abstract bullet 2 missing the own-chain H0 provenance")
+check("$H_0 = 68.81 \\pm 2.22\\text{ km s}^{-1}\\text{ Mpc}^{-1}$, orange" in tex,
+      "fig4 caption missing the corrected TRGB prior value 68.81 +/- 2.22")
+check("$H_0 = 70.39 \\pm 1.94\\text{ km s}^{-1}\\text{ Mpc}^{-1}$, orange" not in tex,
+      "fig4 caption still quotes the wrong 70.39 prior as the TRGB prior")
+check(os.path.exists(os.path.join(VER, "make_fig4_corner.py")), "make_fig4_corner.py missing")
+check("make_fig4_corner.py" in open(os.path.join(VER, "figure_provenance.md"), encoding="utf-8").read(),
+      "figure_provenance.md missing the fig4 released-generator entry")
 
 # 14. No orphaned figure assets: every figs/ file is referenced by the tex
 figdir = os.path.join(ROOT, "figs")

@@ -8,6 +8,7 @@ and the official DESI DR2 CPL row: Om 0.3114+-0.0057, H0 67.51+-0.59,
 w0 -0.838+-0.055, wa -0.62^(+0.22)_(-0.19), dchi2 -10.7 (2.8 sigma).
 """
 import json
+import os
 import numpy as np
 import cosmo
 from cosmo import Joint, run_mcmc, summarize, init_walkers_on_band, h0_on_band
@@ -17,21 +18,28 @@ OUT = {}
 def _summ_dict(summ):
     return {k: {kk: float(vv) for kk, vv in v.items()} for k, v in summ.items()}
 
+def chi2_min_chain(joint, chains, chunk=4000):
+    best = np.inf
+    for c in chains:
+        for i in range(0, len(c), chunk):
+            best = min(best, float(joint.chi2(c[i:i + chunk]).min()))
+    return best
+
 def fit(de, seeds=(1, 2), n_steps=2500):
     joint = Joint(w0wa=(de == "cpl"), sn=True, de=de)
     chains = []
     for s in seeds:
-        c = run_mcmc(joint, n_walkers=48, n_steps=n_steps, burn=500, seed=s)
+        fn = os.path.join("chains", f"chain_{de}_sn_s{s}.npy")
+        if os.path.exists(fn):
+            c = np.load(fn)
+        else:
+            c = run_mcmc(joint, n_walkers=48, n_steps=n_steps, burn=500, seed=s)
+            np.save(fn, c)
         chains.append(c)
-        np.save(f"chain_{de}_sn_s{s}.npy", c)
     names = joint.pnames
     full = np.concatenate(chains, axis=0)
     summ = summarize(full, names)
-    best = None
-    for c in chains:
-        i = np.argmin(c[:, -1])
-        if best is None or c[i, -1] < best:
-            best = c[i, -1]
+    best = chi2_min_chain(joint, chains)
     return summ, best, names
 
 print("=== LambdaCDM  DESI+CMB+Pantheon+ ===", flush=True)

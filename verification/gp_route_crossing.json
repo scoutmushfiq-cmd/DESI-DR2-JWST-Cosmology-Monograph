@@ -1,12 +1,13 @@
 {
- "recipe": "make_figures2.py fig_gp_wz recipe; gp_hz() ML hyperparameters (sigma_f=305.10, l_f=3.8854), rng(23), 600 draws",
- "w0_median": -0.9748517440971105,
+ "recipe": "make_figures2.py fig_gp_wz recipe; gp_hz() ML hyperparameters (sigma_f=305.08, l_f=3.8853), rng(23), 600 draws",
+ "w0_median": -0.9748165375271105,
+ "w0_std": 0.09413358064509608,
  "median_crossings": [
   0.14
  ],
- "w_at_0p5": -1.105459176767762,
- "per_draw_cross_median": 0.3807127045074359,
- "per_draw_cross_std": 0.49028769510821807,
+ "w_at_0p5": -1.1055473572595984,
+ "per_draw_cross_median": 0.38063664259712326,
+ "per_draw_cross_std": 0.4903030116710274,
  "n_draws_with_crossing": 430,
  "n_draws": 600,
  "frac_draws_crossing": 0.7166666666666667,

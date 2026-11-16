@@ -42,6 +42,7 @@ def main():
         recipe="make_figures2.py fig_gp_wz recipe; gp_hz() ML hyperparameters "
                "(sigma_f=%.2f, l_f=%.4f), rng(23), 600 draws" % (g["sf"], g["lf"]),
         w0_median=float(wmed[0]),
+        w0_std=float(wz[:, 0].std()),
         median_crossings=med_cross,
         w_at_0p5=float(np.interp(0.5, zt, wmed)),
         per_draw_cross_median=float(np.median(per_draw)),

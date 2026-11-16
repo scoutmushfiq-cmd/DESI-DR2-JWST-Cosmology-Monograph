@@ -18,7 +18,7 @@
           "hi": 0.14109492357404663
         }
       },
-      "chi2_min": 0.136220512206369
+      "chi2_min": 1413.472388765954
     },
     "cpl": {
       "summary": {
@@ -51,31 +51,10 @@
           "hi": -0.46562130742954827
         }
       },
-      "chi2_min": -1.6998728645320433
+      "chi2_min": 1400.2047171262557
     },
-    "map_fit": {
-      "lcdm": {
-        "chi2": 1413.4723842346423,
-        "H0": 68.20229542203867,
-        "Om": 0.3028145995681645
-      },
-      "cpl": {
-        "chi2": 1400.2006130331379,
-        "H0": 67.6412,
-        "Om": 0.31125,
-        "w0": -0.83453,
-        "wa": -0.6381
-      },
-      "dchi2_map": -13.271771201504407
-    },
-    "notes": [
-      "Posterior means/stds from 48-walker affine-invariant MCMC, 2 seeds x 2500 steps, burn 500.",
-      "MAP chi2 from multi-start Nelder-Mead on the same likelihood.",
-      "SN sample: 1580 non-calibrator SNe with zHD>0.01 (DESI official uses 1550 with additional cuts);",
-      "M_B marginalized analytically; full STAT+SYS covariance (1701x1701, subselected).",
-      "Agreement: w0 -0.831+-0.053 vs DESI -0.838+-0.055; H0 67.65+-0.59 vs 67.51+-0.59;",
-      "Om 0.3110 vs 0.3114; dchi2_MAP -13.3 vs paper -10.4 / DESI -10.7 (same direction, slightly stronger)."
-    ]
+    "dchi2_map_cpl_vs_lcdm": -13.267671639698392,
+    "lcdm_bandmin_chi2": 67.60379551385346
   },
   "targets": {
     "paper_mcmc_base": {
