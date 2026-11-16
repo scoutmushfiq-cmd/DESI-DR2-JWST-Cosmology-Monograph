@@ -114,5 +114,25 @@ Paper's claimed range 5.43σ–6.27σ for the w₀wₐ rows vs SH0ES 2024: **rep
 
 **Ready-to-merge LaTeX:** `extensions/NATURE_EXTENSIONS.tex` — four new sections (Numerical Validation & Convergence; Parametrization Robustness; Om(z) & GP w(z); Systematics, Limitations & Prospects) + verified-corrections appendix, with tables and figure includes.
 
+## 11. Compilation verification (LaTeX)
+
+The manuscript was compiled end-to-end with Tectonic 0.15.0 (XeTeX-based engine) against the corrected source in this repository:
+
+- **Result:** `cosmology_monograph_full.pdf` — **53 pages**, 2.98 MiB, zero errors.
+- All new sections confirmed present in the rendered PDF: Part VII-B (Validation), VII-C (Robustness), VII-D (Ω_m/GP diagnostics), VII-E (Systematics), plus the corrections appendix.
+- **Fix applied during compilation testing:** 7 Unicode em-dashes (U+2014) in the prose were replaced with the TeX ligature `---`; the ec 8-bit fonts cannot render the raw Unicode character ("Missing character" warnings, invisible text in the PDF).
+- All 23 figure assets in `figs/` and `book_assets/` resolve correctly from the fixed relative `\graphicspath`; the previously broken `/tmp/book_assets/` paths are gone.
+- The compiled PDF replaces `The_Architecture_of_the_Cosmos_Monograph_Md_Mushfiqur_Rahim.pdf` at the repository root.
+
+**Reproduce:** `tectonic -X compile cosmology_monograph_full.tex` (or any pdfLaTeX/XeLaTeX toolchain with the included `figs/` and `book_assets/`).
+
+## 12. Committed artifacts
+
+This repository now contains the complete verification package under `verification/`:
+
+- `cosmo.py` — self-contained pipeline (likelihoods, MCMC, GP, model comparison, diagnostics).
+- `chains/` — all 17 posterior chains (`chain_*.npy`, ~51 MB) with fixed seeds, so every table in this report is reproducible without re-running the samplers.
+- All results JSON, driver scripts, recreated figures, and `extensions/NATURE_EXTENSIONS.tex`.
+
 ### Artifacts (sandbox, `/workspace/cosmos_reverify/`)
 `cosmo.py` (pipeline), `mcmc_results.json`, `stage2_checks.json`, `band_min_slaved.json`, `rdfree_result.json`, six `chain_*.npy` posterior chains, and four recreated figures: `fig_w0wa_contours.png`, `fig_gp_hz.png`, `fig_h0_forest.png`, `fig_tension_heatmap.png`.
