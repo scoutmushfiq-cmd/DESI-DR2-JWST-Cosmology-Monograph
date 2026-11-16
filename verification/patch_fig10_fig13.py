@@ -115,6 +115,12 @@ else:
                                 bar.x1 + 1.0, ROW_Y + CAP_HALF + 1.2),
                    color=None, fill=(1, 1, 1), width=0)
 
+    GRID = (0.6901198029518127, 0.6902418732643127, 0.6901045441627502)
+    for gx in (293.74, 348.77):
+        page.draw_line(pymupdf.Point(gx, ROW_Y - CAP_HALF - 1.2),
+                       pymupdf.Point(gx, ROW_Y + CAP_HALF + 1.2),
+                       color=GRID, width=0.8)
+
     XL, XH = to_x(69.90), to_x(83.50)
     page.draw_line(pymupdf.Point(XL, ROW_Y), pymupdf.Point(XH, ROW_Y),
                    color=CRIMSON, width=1.2)
@@ -155,6 +161,15 @@ else:
         "fig13: old lower bar segment not covered"
     assert any(c.x0 <= marker.x1 and c.x1 >= bar.x1 for c in covers), \
         "fig13: old upper bar segment not covered"
+    grid_hits = [g for g in page.get_drawings()
+                 if g.get("color") is not None
+                 and g.get("fill") is None
+                 and all(abs(g["color"][i] - GRID[i]) < 0.01 for i in range(3))
+                 and g["rect"].y0 < ROW_Y < g["rect"].y1
+                 and abs(g["rect"].height - 9.4) < 1.5
+                 and any(abs(g["rect"].x0 - gx) < 0.1 for gx in (293.74, 348.77))]
+    assert len(grid_hits) >= 2, \
+        "fig13: gridlines not redrawn across the patched row band"
     assert marker2 is not None and \
         abs(65.0 + ((marker2.x0 + marker2.x1) / 2 - X65) / PT_PER_H0 - 75.40) < 0.05, \
         "fig13: marker disturbed"
