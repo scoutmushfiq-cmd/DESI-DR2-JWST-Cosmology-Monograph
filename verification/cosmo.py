@@ -235,6 +235,56 @@ def chi2_cc(H0, Om, w0=-1.0, wa=0.0):
     return np.sum(d**2, axis=1)
 
 # ----------------------------------------------------------------------------
+# 2b. PANTHEON+ SUPERNOVA LIKELIHOOD (full 1701 SN STAT+SYS covariance)
+# ----------------------------------------------------------------------------
+_SN_CACHE = {}
+
+def _load_sn(path_prefix="pantheon/sn"):
+    if "ok" in _SN_CACHE:
+        return _SN_CACHE
+    import os
+    dat, cov = path_prefix + "_data.dat", path_prefix + "_cov.cov"
+    if not (os.path.exists(dat) and os.path.exists(cov)):
+        _SN_CACHE["ok"] = False
+        return _SN_CACHE
+    d = np.genfromtxt(dat, names=True, dtype=None, encoding="utf-8")
+    mask = (d["IS_CALIBRATOR"] == 0) & (d["zHD"] > 0.01)
+    z_sn = d["zHD"][mask].astype(float)
+    mb = d["m_b_corr"][mask].astype(float)
+    N = int(open(cov).readline().split()[0])
+    C = np.loadtxt(cov, skiprows=1).reshape(N, N)
+    C = 0.5 * (C + C.T)
+    C = C[np.ix_(mask, mask)]
+    N = int(mask.sum())
+    Cinv = np.linalg.inv(C)
+    Cinv_1 = Cinv @ np.ones(N)
+    C_11 = float(np.ones(N) @ Cinv_1)
+    _SN_CACHE.update(ok=True, z=z_sn, mb=mb, Cinv=Cinv,
+                     Cinv_1=Cinv_1, C_11=C_11, N=N)
+    return _SN_CACHE
+
+def chi2_sn(H0, Om, w0=-1.0, wa=0.0):
+    """Pantheon+ chi2 with the absolute magnitude M_B marginalized
+    analytically (uncalibrated SN sample, full STAT+SYS covariance)."""
+    S = _load_sn()
+    if not S.get("ok"):
+        return np.zeros(len(np.atleast_1d(H0)))
+    g = geometry(H0, Om, w0, wa)
+    H0 = np.atleast_1d(H0)
+    n = len(H0)
+    I_at = np.empty((n, S["N"]))
+    for k in range(n):
+        I_at[k] = np.interp(S["z"], ZGRID, g["I"][k])
+    DL = (1.0 + S["z"])[None, :] * (C_KMS / H0[:, None]) * I_at
+    DL = np.maximum(DL, 1e-8)
+    mu_th = 5.0 * np.log10(DL) + 25.0
+    r = S["mb"][None, :] - mu_th
+    Cr = r @ S["Cinv"].T
+    A = np.einsum("ni,ni->n", r, Cr)
+    B = Cr @ np.ones(S["N"])
+    return A - B ** 2 / S["C_11"]
+
+# ----------------------------------------------------------------------------
 # 3. JOINT LOG-POSTERIOR FACTORY
 # ----------------------------------------------------------------------------
 W_NU = 0.06 / 93.14          # normal-ordering floor, one massive neutrino treatment
@@ -245,9 +295,9 @@ class Joint:
     """Slaved parametrization: params (H0, w_bc[, w0, wa][, rd]);
     Omega_m = (w_bc + w_nu) / h^2. Flags select likelihood terms."""
     def __init__(self, w0wa=False, rd_free=False, bao=True, cmb=True, cc=False,
-                 h0_prior=None, rd_prior=None, de=None):
+                 sn=False, h0_prior=None, rd_prior=None, de=None):
         self.w0wa, self.rd_free = w0wa, rd_free
-        self.bao, self.cmb, self.cc = bao, cmb, cc
+        self.bao, self.cmb, self.cc, self.sn = bao, cmb, cc, sn
         self.h0_prior = h0_prior
         self.rd_prior = rd_prior
         self.de = de or DE_MODEL
@@ -293,6 +343,7 @@ class Joint:
             x2 += ((wbc - X_CMB_OBS[2]) / SIG_WBC) ** 2
             x2 += ((W_B_FID - X_CMB_OBS[1]) / SIG_WB) ** 2
         if self.cc:  x2 += chi2_cc(H0, Om, w0, wa)
+        if self.sn:  x2 += chi2_sn(H0, Om, w0, wa)
         if self.h0_prior is not None:
             m, s = self.h0_prior
             x2 += ((H0 - m) / s) ** 2

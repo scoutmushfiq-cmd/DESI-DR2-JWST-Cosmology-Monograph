@@ -155,3 +155,20 @@ MAP-level model comparison: χ²(ΛCDM) = 1413.47, χ²(CPL) = 1400.20 → **Δ�
 **Diagnostics:** a variant scan (`sn_variant_scan.json`) confirmed the sample selection is the dominant systematic: using all 1701 rows including the 77 SH0ES calibrators shifts w₀ → −0.737, wₐ → −0.911 (the unmodelled low-z calibrator treatment biases the reconstruction), while the z_HD > 0.01 non-calibrator cut reproduces both the paper and DESI DR2. The z_CMB-based selection was also tested and rejected (worse fit, shifted posteriors).
 
 **Reproduce:** `python run_sn_joint.py` (downloads nothing; data must be in `pantheon/`, see `pantheon/README.md`). Chains: `chain_lcdm_sn_s*.npy`, `chain_cpl_sn_s*.npy`.
+
+## 14. Referee-report response fixes (November 2026)
+
+A hostile internal Reviewer-2 stress test (`submission/hostile_referee_report.md`) identified six major objections; every actionable one has been addressed in the manuscript and pipeline:
+
+| Objection | Fix applied |
+|---|---|
+| Broken `Figure ??` in the executive summary | The JWST-vs-HST host comparison figure was missing from the document entirely; it is now included in Part IV (`fig:jwst_hst_hosts`), and a build-time check confirms zero unresolved references in the 56-page compiled PDF. |
+| Tension range "4.52σ–5.72σ" mixes baselines without saying so | Both range occurrences now label the baselines explicitly (4.52σ vs DESI DR2+CMB; 5.72σ vs Planck 2018 alone). The 5.72σ value itself was verified correct for the Planck-only baseline: (73.17−67.36)/√(0.86²+0.54²) = 5.72. |
+| Compressed CMB never validated in-paper | New VII-B paragraph validates the 3-parameter compression against the official full-Planck DESI DR2 posteriors (agreement < 0.1σ per parameter for both ΛCDM and w₀wₐCDM) and quantifies the residual Δχ²_MAP difference (−15.3 vs −12.5) instead of hiding it. |
+| Pantheon+ convention under-specified | The exact convention (non-calibrators, z_HD > 0.01, z_HD column, full STAT+SYS covariance, analytic M_B marginalization) is now stated in §3.3, with the four-variant robustness scan published as Table `tab:sn_convention_robustness` (calibrator inclusion biases w₀ by ≈ +0.10). |
+| Δχ²_MAP quoted as "Nσ"; SD prior volume asserted | New VII-B paragraph separates the three statistics (MAP Δχ² = −15.3; ΔDIC = −11.26; Savage–Dickey ln B = +2.71/+2.60 for V = 13.5/15 — robust to the prior-volume choice at the 0.11 level) and defines the "Nσ" convention. |
+| "Model-independent" overused | A terminology note in the introduction restricts the phrase to the GP reconstructions and distance-level likelihoods; all parametric fits are explicitly labeled model-dependent. |
+
+New artifacts: `posterior_avg_dchi2.json` (posterior-averaged Δχ² and SD prior-volume sensitivity), updated `cosmo.py` (full Pantheon+ `chi2_sn`), 4 SN-joint chains, and the compile-verified 56-page PDF.
+
+Remaining known limitations (documented, not hidden): the compressed CMB is validated against, but not replaced by, the full Planck likelihood; Union3/DES-Y5 likelihoods are used via published constraints, not re-implemented; the pipeline's dedicated Zenodo DOI must be minted at submission time.

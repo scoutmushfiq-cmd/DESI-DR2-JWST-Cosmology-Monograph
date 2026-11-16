@@ -1,0 +1,10 @@
+{
+  "mean_chi2_lcdm": 25.605392792307164,
+  "mean_chi2_cpl": 52.69636443039642,
+  "posterior_avg_dchi2_CPL_minus_LCDM": 27.090971638089258,
+  "savage_dickey_lnB": {
+    "V=13.5": 2.7058550646602453,
+    "V=15.0": 2.600494549002419
+  },
+  "note": "Posterior-averaged dchi2 is volume-dominated (+27) and is NOT a significance; the three complementary statistics quoted in the manuscript are MAP dchi2 (-15.3), DIC (-11.26), and Savage-Dickey lnB (+2.6 to +2.7), the latter robust to the prior-volume convention."
+}
