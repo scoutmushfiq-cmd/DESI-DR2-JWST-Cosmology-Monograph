@@ -147,6 +147,35 @@ if os.path.exists(prov_path):
         base = os.path.basename(target)
         check(base in prov, "figure_provenance.md missing entry for %s" % target)
 
+# 15. Literature-claims registry (Round-5 M4/m5): coverage + tex presence
+try:
+    lc = json.load(open(os.path.join(VER, "literature_claims.json")))
+    claims = lc["claims"]
+    check(len(claims) >= 15, "literature_claims.json has fewer than 15 registered claims")
+    for c in claims:
+        check(c.get("verification_status") in ("verified", "own-pipeline", "partial"),
+              "claim %s has invalid verification_status" % c.get("id"))
+        check(bool(c.get("source")) and bool(c.get("locator")),
+              "claim %s missing source or locator" % c.get("id"))
+    # verified external numbers that must appear in the tex
+    for frag in ["0.126 \\pm 0.021", "72.34 \\pm 0.72", "-0.132", "69.61 \\pm 0.44",
+                 "10.5\\text{--}20.7", "0.090", "71.96", "Phys.\\ Rev.\\ D 71, 023515",
+                 "2505.08051", "2507.12401", "JCAP01(2026)041", "111, 123511"]:
+        check(frag in tex, "tex missing verified literature value %r" % frag)
+    # superseded / unverifiable numbers must be gone
+    for frag in ["69.10", "-0.036 \\pm 0.014", "10027 \\pm 65", "139.70 \\pm 1.45",
+                 "71.85", "alpha_{M,0} = -0.18", "1.09 \\pm 0.05",
+                 "4.5\\text{--}5.2", "Universal Distance Modes Collaboration",
+                 "quoted by Lodha et al."]:
+        check(frag not in tex, "tex still contains superseded value %r" % frag)
+    # citation hygiene: no mirror or personal-page links
+    check("alphaxiv" not in tex, "tex still links to alphaxiv mirror")
+    check("umich.edu" not in tex, "tex still links to umich personal page")
+    check("Zaldarriaga (2026)" in tex.replace("M.\\ Zaldarriaga (2026)", "Zaldarriaga (2026)"),
+          "tex missing Zaldarriaga (2026) author citation")
+except FileNotFoundError:
+    check(False, "literature_claims.json missing")
+
 # 14. No orphaned figure assets: every figs/ file is referenced by the tex
 figdir = os.path.join(ROOT, "figs")
 if os.path.isdir(figdir):

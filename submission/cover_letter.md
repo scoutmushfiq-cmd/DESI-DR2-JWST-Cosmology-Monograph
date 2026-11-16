@@ -6,7 +6,7 @@
 
 Dear Editors,
 
-We submit for your consideration a 58-page research monograph that addresses the two defining anomalies of modern cosmology — the Hubble constant tension and the evidence for evolving dark energy — through a single, fully reproducible Bayesian pipeline built on the most precise late-time probes currently available.
+We submit for your consideration a 60-page research monograph that addresses the two defining anomalies of modern cosmology — the Hubble constant tension and the evidence for evolving dark energy — through a single, fully reproducible Bayesian pipeline built on the most precise late-time probes currently available.
 
 **Why this manuscript matters now.** The DESI DR2 BAO measurements (arXiv:2503.14738) have made the case for dynamical dark energy the central question in cosmology. Our work provides, in one place: (i) an inverse-distance-ladder determination H₀ = 68.17 ± 0.28 km s⁻¹ Mpc⁻¹ from DESI DR2 + compressed Planck CMB within flat ΛCDM; (ii) a 2.8σ–4.2σ case for evolving dark energy (w₀ = −0.838 ± 0.055, wₐ = −0.62⁺⁰·²²₋₀.₁₉ with Pantheon+) with a phantom divide crossing at z_c = 0.42 ± 0.09; (iii) a resolution of the "negative neutrino mass" anomaly (∑m_ν < 0.0642 eV in ΛCDM, relaxed to < 0.163 eV in w₀wₐCDM); and (iv) a galaxy-by-galaxy JWST–HST distance cross-check (Δμ = −0.02 ± 0.03 mag) demonstrating that the CCHP–SH0ES divergence stems from small-sample host selection, not Cepheid crowding.
 
