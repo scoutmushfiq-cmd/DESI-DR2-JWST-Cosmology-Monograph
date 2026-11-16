@@ -1,4 +1,4 @@
-# The Architecture of the Cosmos — Research Monograph (62 Pages)
+# The Architecture of the Cosmos — Research Monograph (63 Pages)
 
 **Model-Independent Constraints on the Hubble Constant and Dark Energy Equation of State from DESI DR2 BAO, Pantheon+ Supernovae, and JWST Distance-Ladder Calibrations**
 
@@ -12,12 +12,12 @@
   1. AI & Systems Researcher; SOO & Lead AI/ML Engineer, Craftly (`@Craftly-Robot`), Bogura, Bangladesh
   2. Department of Computer Science, University of the People, Pasadena, California, USA
   3. Science Division (HSC '28), Govt. Azizul Haque College, Bogura, Bangladesh
-- **Edition:** Unabridged 62-Page Monograph Edition (November 2026)
+- **Edition:** Unabridged 63-Page Monograph Edition (November 2026)
 - **License:** Creative Commons Attribution 4.0 International (`CC-BY-4.0`)
 
 ## Overview & Key Findings
 
-This 62-page research monograph synthesizes multi-probe cosmological distance measurements from **DESI DR2 BAO** ($0.295 \le z \le 2.330$), **Pantheon+ / Union3 / DES-Y5 Type Ia Supernovae**, **32 Cosmic Chronometers**, **Planck 2018 / PR4 CMB shift parameters**, **JWST local distance-ladder calibrations (TRGB, JAGB, Cepheids)**, and **TDCOSMO XXVII (2026) JWST strong lensing time delays**:
+This 63-page research monograph synthesizes multi-probe cosmological distance measurements from **DESI DR2 BAO** ($0.295 \le z \le 2.330$), **Pantheon+ / Union3 / DES-Y5 Type Ia Supernovae**, **32 Cosmic Chronometers**, **Planck 2018 / PR4 CMB shift parameters**, **JWST local distance-ladder calibrations (TRGB, JAGB, Cepheids)**, and **TDCOSMO XXVII (2026) JWST strong lensing time delays**:
 
 1. **Hubble Constant ($H_0$) & Local Distance Ladder Cross-Check:** Direct galaxy-by-galaxy JWST vs. HST distance modulus comparisons confirm $\Delta\mu_{\text{JWST}-\text{HST}} = -0.02 \pm 0.03\text{ mag}$, demonstrating that HST Cepheid crowding does not drive the $4.52\sigma\text{--}5.72\sigma$ Hubble tension. Independent one-step geometric probes—including TDCOSMO XXVII JWST strong lensing ($H_0 = 73.50 \pm 2.80\text{ km s}^{-1}\text{ Mpc}^{-1}$), SBF ($73.30 \pm 2.40$), and Water Megamasers ($73.90 \pm 3.00$)—consistently support the elevated local expansion rate.
 2. **Dynamical Dark Energy ($w_0 w_a\text{CDM}$) & Phantom Crossing:** Joint Bayesian MCMC and Gaussian Process reconstructions reveal a $2.8\sigma\text{--}4.2\sigma$ preference for time-evolving dark energy ($w_0 = -0.838 \pm 0.055$, $w_a = -0.62^{+0.22}_{-0.19}$ with Pantheon+; $w_0 = -0.667 \pm 0.088$, $w_a = -1.09^{+0.31}_{-0.27}$ with Union3; $w_0 = -0.752 \pm 0.057$, $w_a = -0.86^{+0.23}_{-0.20}$ with DES-Y5), crossing the phantom divide $w = -1$ at $z_c = 0.50 \pm 0.08$ (DESI DR2 + CMB; $0.35 \pm 0.11$ with Pantheon+; propagated from the CPL posteriors, `verification/zc_derivation.json`).
@@ -26,8 +26,8 @@ This 62-page research monograph synthesizes multi-probe cosmological distance me
 
 ## Repository Contents
 
-- `The_Architecture_of_the_Cosmos_Monograph_Md_Mushfiqur_Rahim.pdf` — Complete 62-page compiled monograph PDF.
-- `cosmology_monograph_full.tex` — Complete LaTeX source code of the 62-page monograph.
+- `The_Architecture_of_the_Cosmos_Monograph_Md_Mushfiqur_Rahim.pdf` — Complete 63-page compiled monograph PDF.
+- `cosmology_monograph_full.tex` — Complete LaTeX source code of the 63-page monograph.
 - `CITATION.cff` & `.zenodo.json` — Official citation and Zenodo DOI archiving metadata linked to ORCID `0009-0003-1021-685X`.
 - `figs/` & `book_assets/` — All 26 high-resolution vector figures (`.pdf` and `.png`).
 
@@ -41,10 +41,13 @@ The full analysis pipeline was independently re-implemented and re-run from scra
 - `verification/model_comparison.json`, `convergence_diagnostics.json`, `rdfree_result.json`, `stage1*.json`, `stage2_checks.json`, `band_min_slaved.json` — machine-readable results.
 - `verification/figure_provenance.md` — per-figure provenance map (data source and generator status for every displayed figure).
 - `verification/pantheon/README.md` — how to fetch the official Pantheon+SH0ES release (1701 SNe, full 33 MB STAT+SYS covariance) used by the full unbinned SN likelihood (`chi2_sn` in `cosmo.py`, M_B marginalized analytically).
+- `verification/sn_extra.py` + `verification/run_sn_extra.py` — re-implementations of the official **Union3** (22-binned μ, released inverse covariance) and **DES-SN5YR** (1820-SN DES-Dovekie HD, released STAT+SYS inverse covariance) likelihoods, validated against the published CPL posteriors; results in `verification/sn_extra_results.json`.
+- `verification/nested_lnB.py` + `verification/nested_lnB.json` — independent ellipsoidal nested-sampling cross-check of every Mirage Bayes factor (128 live points, two seeds per configuration, identical flat priors to the chains).
+- `verification/union3/README.md`, `verification/sn5yr/README.md` — data provenance for the two official SN compilations; raw data files are not committed and are rebuilt by `verification/download_sn_extra_data.py`.
 - `submission/` — Nature cover letter and referee-response template (with pre-drafted answers to the most likely technical queries, grounded in the verification results).
 - `verification/extensions/NATURE_EXTENSIONS.tex` — the new manuscript sections (VII-B … VII-E + corrections appendix), already merged into `cosmology_monograph_full.tex` in this PR.
 
-**Reproduce:** `cd verification && python run_mcmc_all.py && python run_nature_suite.py` (requires `numpy`, `scipy`, `matplotlib`). All 27 posterior chains (~68 MB) are committed under `verification/chains/`, so every table can be re-checked directly from the chains; the scripts regenerate them deterministically from fixed seeds. The manuscript itself was compiled end-to-end with Tectonic (**62 pages, zero errors**) — see `verification/VERIFICATION_REPORT.md` §11.
+**Reproduce:** `cd verification && python run_mcmc_all.py && python run_nature_suite.py` (requires `numpy`, `scipy`, `matplotlib`). All 35 posterior chains (~86 MB) are committed under `verification/chains/`, so every table can be re-checked directly from the chains; the scripts regenerate them deterministically from fixed seeds. The manuscript itself was compiled end-to-end with Tectonic (**63 pages, zero errors**) — see `verification/VERIFICATION_REPORT.md` §11.
 
 ### Key reproduced results (DESI DR2 + CMB)
 
@@ -57,6 +60,8 @@ The full analysis pipeline was independently re-implemented and re-run from scra
 | r_d (km/s) | 146.99 ± 3.44 | 146.77 ± 2.87 | ✓ |
 | Tension matrix (5.43σ / 6.27σ / 6.04σ) | — | exact | ✓ |
 | Mirage: 1-param share of Δχ² | −12.4 of −15.3 | −12.4 of −15.29 | ✓ |
+| **DESI+CMB+Union3 Mirage** Δχ²_MAP / lnB | −16.2 / — (Lodha, no published lnB) | **−19.3 (4.4σ) / +6.75 ± 0.02** (nested) | ✓ (own) |
+| **DESI+CMB+DES-Y5 Mirage** Δχ²_MAP / lnB | −20.7 / — (Lodha, no published lnB) | **−17.0 (4.1σ) / +5.04 ± 0.19** (nested) | ✓ (own) |
 | **DESI+CMB+Pantheon+ CPL** w₀ | −0.838 ± 0.055 | **−0.831 ± 0.053** (full STAT+SYS likelihood) | ✓ |
 | **DESI+CMB+Pantheon+ CPL** H₀ | 67.51 ± 0.59 | 67.65 ± 0.59 | ✓ |
 | **DESI+CMB+Pantheon+ CPL** Δχ²_MAP | −10.7 | −13.27 | ✓ |

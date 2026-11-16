@@ -123,8 +123,8 @@
   },
   {
    "id": "mirage_lnb_own",
-   "claim": "Mirage Savage-Dickey lnB = +3.49 +/- 0.23 (DESI DR2 + CMB) and +3.64 +/- 0.94 (DESI DR2 + CMB + Pantheon+); D_KL = 2.13 / 2.40; Delta-chi2_MAP = -12.4 / -13.2; Delta<lnL> = +5.62 / +6.03. No Mirage evidence is quoted for Union3 / DES-Y5.",
-   "tex_location": "Highlights; Part VIII Mirage bullet; Table tab:model_comparison_full (footnoted); Part X",
+   "claim": "Mirage Savage-Dickey lnB = +3.49 +/- 0.23 (DESI DR2 + CMB) and +3.64 +/- 0.94 (DESI DR2 + CMB + Pantheon+); D_KL = 2.13 / 2.40; Delta-chi2_MAP = -12.4 / -13.2; Delta<lnL> = +5.62 / +6.03. For Union3 / DES-Y5 the official supernova likelihoods are re-implemented and give Mirage Delta-chi2_MAP = -19.3 (4.4 sigma) / -17.0 (4.1 sigma), Delta-AIC = -17.3 / -15.0, Delta-DIC = -17.4 / -15.2, Delta<lnL> = +9.17 / +8.03, with nested-sampling lnB = +6.75 +/- 0.02 (Union3) and +5.04 +/- 0.19 (DES-Y5); Savage-Dickey cross-checks +8.71 +/- 3.03 and +5.21 +/- 1.93.",
+   "tex_location": "Highlights; Part VIII Mirage bullet; Table tab:model_comparison_full (footnoted); Part VII-B validation; Part X",
    "value": {
     "lnB_desi_cmb": 3.49,
     "lnB_desi_cmb_pantheon": 3.64,
@@ -133,13 +133,67 @@
     "dchi2_map_desi_cmb": -12.4,
     "dchi2_map_desi_cmb_pantheon": -13.2,
     "dlnL_desi_cmb": 5.62,
-    "dlnL_desi_cmb_pantheon": 6.03
+    "dlnL_desi_cmb_pantheon": 6.03,
+    "dchi2_map_union3": -19.3,
+    "dchi2_map_desy5": -17.0,
+    "dAIC_union3": -17.3,
+    "dAIC_desy5": -15.0,
+    "dDIC_union3": -17.4,
+    "dDIC_desy5": -15.2,
+    "dlnL_union3": 9.17,
+    "dlnL_desy5": 8.03,
+    "lnB_nested_union3": 6.75,
+    "lnB_nested_desy5": 5.04,
+    "lnB_SD_union3": 8.71,
+    "lnB_SD_desy5": 5.21
    },
-   "source": "Own pipeline: Mirage MCMC chains (w_a = -3.66(1+w_0), flat prior w_0 ~ U[-2.5,0.5], V = 3.0, 48 walkers x 2500 steps x 2 seeds per dataset) run with verification/run_mirage_sd.py; Savage-Dickey KDE density ratio at w_0 = -1; bounded MAP re-optimization; Delta-D = 30 trim decomposition",
-   "locator": "verification/mirage_sd.json; chains/chain_mirage_*.npy; verification/dlnL_decomposition.json",
+   "source": "Own pipeline: Mirage MCMC chains (w_a = -3.66(1+w_0), flat prior w_0 ~ U[-2.5,0.5], V = 3.0, 48 walkers x 2500 steps x 2 seeds per dataset) run with verification/run_mirage_sd.py; Savage-Dickey KDE density ratio at w_0 = -1; bounded MAP re-optimization; Delta-D = 30 trim decomposition. Union3/DES-Y5: official released data products (Union3 mu_mat FITS; DES-SN5YR DES-Dovekie HD + STAT+SYS inverse covariance) re-implemented in verification/sn_extra.py, validated against published CPL posteriors; lnB from an independent ellipsoidal nested sampler (verification/nested_lnB.py)",
+   "locator": "verification/mirage_sd.json; verification/sn_extra_results.json; verification/nested_lnB.json; chains/chain_mirage_*.npy; verification/dlnL_decomposition.json",
    "verification_status": "own-pipeline",
    "artifact": "verification/mirage_sd.json",
-   "note": "Round-6 M1: the previously quoted values +1.85/+4.60/+6.65 had no artifact backing (absent from every released chain and script) and have been replaced by the computed values above; Union3/DES-Y5 entries replaced by '---'."
+   "note": "Round-6 M1: the previously quoted values +1.85/+4.60/+6.65 had no artifact backing (absent from every released chain and script) and have been replaced by the computed values above; Union3/DES-Y5 entries were '---' until the official likelihoods were re-implemented and validated (nested-sampling lnB adopted as primary for those rows because the Union3 KDE estimate sits 3.8 sigma in the tail of the half-chain scatter)."
+  },
+  {
+   "id": "mirage_lnb_nested_own",
+   "claim": "Independent ellipsoidal nested-sampling cross-check of all Mirage Bayes factors: lnB = +3.65 +/- 0.35 (DESI DR2 + CMB), +3.40 +/- 0.35 (+ Pantheon+), +6.75 +/- 0.02 (Union3), +5.04 +/- 0.19 (DES-Y5); CPL calibration on DESI DR2 + CMB gives +2.37 vs the canonical Savage-Dickey +2.60. Nested claims are scoped to the 1-parameter Mirage axis (for 2-parameter CPL on SN compilations the w_a -> -4 prior tail defeats both single-ellipsoid nested and 2-D KDE estimators), and our CPL Bayes factors on SN compilations are systematically weaker than the published full-Planck PolyChord values, consistent with our compressed-CMB Delta-chi2_MAP differences.",
+   "tex_location": "Part VII-B nested-sampling validation paragraph; Table tab:model_comparison_full caption; Part X",
+   "value": {
+    "mirage_desi_cmb": 3.65,
+    "mirage_desi_cmb_pantheon": 3.4,
+    "mirage_union3": 6.75,
+    "mirage_desy5": 5.04,
+    "cpl_desi_cmb": 2.37,
+    "cpl_pantheon_published": -0.66,
+    "cpl_union3_published": 3.03,
+    "cpl_desy5_published": 4.88
+   },
+   "source": "Own pipeline: verification/nested_lnB.py (pure-numpy ellipsoidal nested sampler, 128 live points, expansion factor 1.5, target dlnZ = 0.1, two seeds per configuration), identical flat priors to the MCMC chains",
+   "locator": "verification/nested_lnB.json",
+   "verification_status": "own-pipeline",
+   "artifact": "verification/nested_lnB.json"
+  },
+  {
+   "id": "sn_extra_likelihood_validation",
+   "claim": "Re-implemented official Union3 and DES-SN5YR supernova likelihoods validated against published posteriors: CPL MAP (w0, wa) = (-0.665, -1.093) vs published (-0.667, -1.09) on DESI DR2 + CMB + Union3, and (-0.802, -0.749) vs published (-0.752 +/- 0.057, -0.86) on DESI DR2 + CMB + DES-Y5; Delta-chi2_MAP = -20.6 (Union3) and -17.1 (DES-Y5) vs published -17.4 and -21.0 (compressed-CMB differences reported, all Mirage-vs-CPL comparisons made within our own pipeline).",
+   "tex_location": "Part VII-B official-likelihood validation paragraph; Part VIII Mirage bullet",
+   "value": {
+    "w0_cpl_union3_own": -0.665,
+    "wa_cpl_union3_own": -1.093,
+    "w0_cpl_union3_published": -0.667,
+    "wa_cpl_union3_published": -1.09,
+    "w0_cpl_desy5_own": -0.802,
+    "wa_cpl_desy5_own": -0.749,
+    "w0_cpl_desy5_published": -0.752,
+    "wa_cpl_desy5_published": -0.86,
+    "dchi2_map_cpl_union3_own": -20.6,
+    "dchi2_map_cpl_desy5_own": -17.1,
+    "dchi2_map_cpl_union3_published": -17.4,
+    "dchi2_map_cpl_desy5_published": -21.0
+   },
+   "source": "Own pipeline: verification/sn_extra.py reading the official released data products (verification/union3/, verification/sn5yr/; caches rebuilt by verification/download_sn_extra_data.py, raw data not committed)",
+   "locator": "verification/sn_extra_results.json",
+   "verification_status": "own-pipeline",
+   "artifact": "verification/sn_extra_results.json"
   },
   {
    "id": "dkl_cpl_own",

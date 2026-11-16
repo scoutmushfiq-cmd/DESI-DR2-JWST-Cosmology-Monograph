@@ -6,8 +6,6 @@
     "mcmc": "Goodman-Weare ensemble, 48 walkers, 2500 steps, 500 burn-in, 2 seeds per dataset",
     "dlnL_semantics": "posterior mean chi2 within Delta-D = 30 of chi2_min (likelihood-dominated region), thin factor 16, identical to dlnL_decomposition.json",
     "D_KL": "D_KL = Delta<lnL>_trim - lnB_SD",
-    "DIC": "DIC = chi2(theta_bar) + 2 p_D, p_D = mean chi2 (Delta-D=30 trim) - chi2(theta_bar), thin 16; dAIC = dchi2_MAP + 2*dk with dk=+1",
-    "lnB_uncertainty": "half-chain scatter (4 half-chains, 96000 samples each)",
     "ESS_note": "ESS in this artifact is reported by a lag-1 autocorrelation cutoff: ess() returns the full retained sample count (192000 = 2 chains x 96000) when lag-1 autocorrelation < 0.05, so the exact value 192000 means 'autocorrelation below detection', not an estimated effective sample size. These ESS values are not quoted in the manuscript."
   },
   "mirage_desi_cmb": {
@@ -76,11 +74,6 @@
       "chain_lcdm_desi_cmb_s101.npy",
       "chain_lcdm_desi_cmb_s202.npy"
     ],
-    "DIC": 17.191404862840997,
-    "p_D": 2.8205588688663816,
-    "lcdm_DIC": 27.60305367000539,
-    "dDIC": -10.411648807164394,
-    "dAIC": -14.354066965314725,
     "lnB_SD_halfspread_err": 0.23
   },
   "mirage_desi_cmb_pantheon": {
@@ -149,11 +142,6 @@
       "chain_lcdm_sn_s1.npy",
       "chain_lcdm_sn_s2.npy"
     ],
-    "DIC": 1406.2829044084876,
-    "p_D": 2.9831067947736756,
-    "lcdm_DIC": 1417.2627055982825,
-    "dDIC": -10.979801189794898,
-    "dAIC": -15.158765110166314,
     "lnB_SD_halfspread_err": 0.94
   },
   "cross_checks": {
@@ -165,14 +153,6 @@
       "mirage": -12.34495772877726,
       "cpl": -15.249114910537994
     },
-    "note": "Mirage should recover most of the CPL Delta-chi2 with one parameter; CPL lnB recomputation validates the KDE pipeline against the canonical Savage-Dickey artifact.",
-    "cpl_sn_chi2_MAP_opt": 1400.2006130159343,
-    "lcdm_sn_chi2_MAP_opt": 1413.4723842204414,
-    "cpl_sn_dchi2_MAP_opt_vs_lcdm": -13.271771204507104,
-    "cpl_sn_lnB_SD_V15": 0.22812603168502626,
-    "cpl_sn_dlnL_trim": 5.675623370514813,
-    "cpl_sn_DIC": 1407.7823791231554,
-    "lcdm_sn_DIC": 1417.2627055982825,
-    "cpl_sn_dDIC": -9.480326475127185
+    "note": "Mirage should recover most of the CPL Delta-chi2 with one parameter; CPL lnB recomputation validates the KDE pipeline against the canonical Savage-Dickey artifact."
   }
 }

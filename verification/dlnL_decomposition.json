@@ -51,5 +51,19 @@
     "n_trimmed": 12000,
     "n": 12000,
     "dlnL_trim_vs_lcdm": 6.034245536834078
+  },
+  "mirage_union3": {
+    "chi2_min": 32.61644352658139,
+    "mean_chi2_trim30": 35.56744883080575,
+    "n_trimmed": 12000,
+    "n": 12000,
+    "dlnL_trim_vs_lcdm": 9.166328356344398
+  },
+  "mirage_desy5": {
+    "chi2_min": 1641.5503549701755,
+    "mean_chi2_trim30": 1644.5335500915473,
+    "n_trimmed": 12000,
+    "n": 12000,
+    "dlnL_trim_vs_lcdm": 8.034427524485864
   }
 }

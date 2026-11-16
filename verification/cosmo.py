@@ -300,9 +300,10 @@ class Joint:
     """Slaved parametrization: params (H0, w_bc[, w0, wa][, rd]);
     Omega_m = (w_bc + w_nu) / h^2. Flags select likelihood terms."""
     def __init__(self, w0wa=False, rd_free=False, bao=True, cmb=True, cc=False,
-                 sn=False, h0_prior=None, rd_prior=None, de=None):
+                 sn=False, h0_prior=None, rd_prior=None, de=None, sn_set=None):
         self.w0wa, self.rd_free = w0wa, rd_free
         self.bao, self.cmb, self.cc, self.sn = bao, cmb, cc, sn
+        self.sn_set = sn_set
         self.h0_prior = h0_prior
         self.rd_prior = rd_prior
         self.de = de or DE_MODEL
@@ -351,7 +352,12 @@ class Joint:
             x2 += ((wbc - X_CMB_OBS[2]) / SIG_WBC) ** 2
             x2 += ((W_B_FID - X_CMB_OBS[1]) / SIG_WB) ** 2
         if self.cc:  x2 += chi2_cc(H0, Om, w0, wa)
-        if self.sn:  x2 += chi2_sn(H0, Om, w0, wa)
+        if self.sn:
+            if self.sn_set is None:
+                x2 += chi2_sn(H0, Om, w0, wa)
+            else:
+                import sn_extra
+                x2 += sn_extra.chi2_sn_set(self.sn_set, H0, Om, w0, wa)
         if self.h0_prior is not None:
             m, s = self.h0_prior
             x2 += ((H0 - m) / s) ** 2

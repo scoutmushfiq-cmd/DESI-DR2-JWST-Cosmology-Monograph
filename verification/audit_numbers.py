@@ -265,9 +265,9 @@ check("0.42 \\pm 0.09" not in readme,
 check("0.50 \\pm 0.08" in readme and "0.35 \\pm 0.11" in readme,
       "README missing dataset-specific z_c values (0.50 +- 0.08 / 0.35 +- 0.11)")
 check("58 pages" not in readme, "Round-8 m1: README still claims 58 pages")
-check("62 pages" in readme, "README missing the 62-page compile claim")
+check("63 pages" in readme, "README missing the 63-page compile claim")
 check("~59 MB" not in readme, "Round-8 m1: README still claims ~59 MB of chains")
-check("~68 MB" in readme, "README missing the ~68 MB chain-size claim")
+check("~86 MB" in readme, "README missing the ~86 MB chain-size claim")
 TPL = os.path.join(ROOT, "submission", "referee_response_template.md")
 check(os.path.exists(TPL), "referee_response_template.md missing")
 if os.path.exists(TPL):
@@ -300,6 +300,79 @@ check("Silverman's gives identical values to the quoted precision" not in tex,
 if os.path.exists(msd_path):
     check("ESS_note" in msd.get("method", {}),
           "Round-8 m2: mirage_sd.json missing ESS cutoff-annotation method note")
+
+# 22. Union3 / DES-Y5 Mirage rows vs sn_extra_results.json and nested_lnB.json
+snx_path = os.path.join(VER, "sn_extra_results.json")
+nested_path = os.path.join(VER, "nested_lnB.json")
+if os.path.exists(snx_path):
+    snx = json.load(open(snx_path))
+    # table cells for the dagger-dagger rows
+    for ds, cells in [
+        ("union3", ["-19.3", "4.4", "-17.3", "-17.4", "+9.17", "+6.75 \\pm 0.02"]),
+        ("desy5", ["-17.0", "4.1", "-15.0", "-15.2", "+8.03", "+5.04 \\pm 0.19"]),
+    ]:
+        for cell in cells:
+            check(cell in tex, "Mirage %s row missing table cell %s" % (ds, cell))
+    # numeric agreement between tex cells and the artifact
+    u = snx["mirage_union3"]; d5 = snx["mirage_desy5"]
+    check(abs(u["dchi2_MAP_opt_vs_lcdm"] + 19.3) < 0.06, "union3 dchi2_MAP_opt mismatch vs tex -19.3")
+    check(abs(d5["dchi2_MAP_opt_vs_lcdm"] + 17.0) < 0.06, "desy5 dchi2_MAP_opt mismatch vs tex -17.0")
+    check(abs(u["dAIC_vs_lcdm"] + 17.3) < 0.06, "union3 dAIC mismatch vs tex -17.3")
+    check(abs(d5["dAIC_vs_lcdm"] + 15.0) < 0.06, "desy5 dAIC mismatch vs tex -15.0")
+    check(abs(u["dDIC_vs_lcdm"] + 17.4) < 0.06, "union3 dDIC mismatch vs tex -17.4")
+    check(abs(d5["dDIC_vs_lcdm"] + 15.2) < 0.06, "desy5 dDIC mismatch vs tex -15.2")
+    check(abs(u["dlnL_trim_vs_lcdm"] - 9.17) < 0.006, "union3 dlnL mismatch vs tex +9.17")
+    check(abs(d5["dlnL_trim_vs_lcdm"] - 8.03) < 0.006, "desy5 dlnL mismatch vs tex +8.03")
+    check(abs(u["lnB_SD_scott"] - 8.71) < 0.006 and abs(u["lnB_SD_err_halfchain"] - 3.03) < 0.006,
+          "union3 Savage-Dickey cross-check mismatch vs tex +8.71 +/- 3.03")
+    check(abs(d5["lnB_SD_scott"] - 5.21) < 0.006 and abs(d5["lnB_SD_err_halfchain"] - 1.93) < 0.006,
+          "desy5 Savage-Dickey cross-check mismatch vs tex +5.21 +/- 1.93")
+    # validation-paragraph numbers (own CPL MAP and published comparison)
+    check(abs(u["cpl_chi2_MAP_opt"] - u["lcdm_chi2_MAP_opt"] + 20.6) < 0.06,
+          "union3 own CPL MAP dchi2 mismatch vs tex -20.6")
+    check(abs(d5["cpl_chi2_MAP_opt"] - d5["lcdm_chi2_MAP_opt"] + 17.1) < 0.06,
+          "desy5 own CPL MAP dchi2 mismatch vs tex -17.1")
+    check("(-0.665, -1.093)" in tex and "(-0.802, -0.749)" in tex,
+          "Part VII-B missing own CPL MAP parameters for Union3/DES-Y5")
+    check("(-0.752 \\pm 0.057, -0.86)" in tex, "Part VII-B missing published DES-Y5 CPL posterior")
+    check("94\\%" in tex and "99.6\\%" in tex, "mirage recovery percentages missing")
+if os.path.exists(nested_path):
+    ns = json.load(open(nested_path))["summary"]
+    for key, cell, err in [("mirage_desi_cmb", "+3.65 \\pm 0.35", 0.35),
+                           ("mirage_sn", "+3.40 \\pm 0.35", 0.35),
+                           ("mirage_union3", "+6.75 \\pm 0.02", 0.02),
+                           ("mirage_desy5", "+5.04 \\pm 0.19", 0.19),
+                           ("cpl_desi_cmb", "+2.37", None)]:
+        check(cell in tex, "nested-sampling value %s missing from tex" % key)
+        v = ns[key]["lnB"]
+        quoted = float(re.search(r"([+-][0-9.]+)", cell).group(1))
+        check(abs(v - quoted) < 0.006, "nested lnB for %s (%.3f) disagrees with quoted %s" % (key, v, cell))
+        if err is not None:
+            check(abs(ns[key]["err"] - err) < 0.006, "nested err for %s (%.3f) disagrees with quoted %s" % (key, ns[key]["err"], cell))
+    check("Nested-sampling cross-check of the Mirage Bayes factors" in tex,
+          "Part VII-B missing the nested-sampling cross-check paragraph")
+    check("Official Union3 and DES-SN5YR likelihood validation" in tex,
+          "Part VII-B missing the official-likelihood validation paragraph")
+    check("verification/nested\\_lnB.json" in tex, "tex missing nested_lnB.json artifact pointer")
+# absence of the superseded no-evidence sentences
+check("deliberately quote no Mirage evidence" not in tex,
+      "superseded 'deliberately quote no Mirage evidence' sentence still present")
+check("we quote no Mirage evidence" not in tex,
+      "superseded 'we quote no Mirage evidence' sentence still present")
+check("whose supernova likelihoods our pipeline does not re-implement" not in tex,
+      "superseded 'does not re-implement' caption sentence still present")
+check("$^{\\ddagger}$" in tex, "dagger-dagger marker missing from the table rows")
+# README package metadata: chain count and new artifacts
+chain_files = [f for f in os.listdir(os.path.join(VER, "chains")) if f.endswith(".npy")]
+check(len(chain_files) == 35, "expected 35 chain files, found %d" % len(chain_files))
+check("All 35 posterior chains" in readme, "README chain count not updated to 35")
+check("All 27 posterior chains" not in readme, "README still quotes the stale 27-chain count")
+for art in ["sn_extra.py", "nested_lnB.py", "sn_extra_results.json", "nested_lnB.json", "download_sn_extra_data.py"]:
+    check(art in readme, "README missing new artifact %s" % art)
+for f in ["submission/referee_response_template.md", "submission/cover_letter.md"]:
+    body = open(os.path.join(ROOT, f), encoding="utf-8").read()
+    check("+6.75" in body and "+5.04" in body if f.endswith("referee_response_template.md") else True,
+          "%s missing the Union3/DES-Y5 Mirage evidence values" % f)
 
 # 14. No orphaned figure assets: every figs/ file is referenced by the tex
 figdir = os.path.join(ROOT, "figs")
