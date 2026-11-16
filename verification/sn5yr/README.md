@@ -9,8 +9,14 @@ built by `verification/download_sn_extra_data.py` from two official files:
   (`4_DISTANCES_COVMAT/STAT+SYS.npz`); the release's own
   `DES-Dovekie-SN_Likelihood.py` documents this format
 
-Source: https://github.com/des-science/DES-SN5YR (DES-SN5YR release,
-Vincent et al. 2024).
+Source: https://github.com/des-science/DES-SN5YR (official DES-SN5YR
+release repository, DES Collaboration 2024, arXiv:2401.02929).
+
+Note on the distance file: `DES-Dovekie_HD.csv` is NOT the 1829-SN
+DES-SN5YR analysis sample itself but its recalibrated reanalysis
+DES-Dovekie (Popovic et al. 2025, arXiv:2511.07517): 1820 SNe
+(1623 DES SNe and 197 low-z SNe), shipped with the release's official
+likelihood script `DES-Dovekie-SN_Likelihood.py`.
 
 The covariance files are not redistributed here because of their size and
 the release's preferred distribution channel.

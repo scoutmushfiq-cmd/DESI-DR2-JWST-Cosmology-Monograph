@@ -41,7 +41,7 @@ The full analysis pipeline was independently re-implemented and re-run from scra
 - `verification/model_comparison.json`, `convergence_diagnostics.json`, `rdfree_result.json`, `stage1*.json`, `stage2_checks.json`, `band_min_slaved.json` — machine-readable results.
 - `verification/figure_provenance.md` — per-figure provenance map (data source and generator status for every displayed figure).
 - `verification/pantheon/README.md` — how to fetch the official Pantheon+SH0ES release (1701 SNe, full 33 MB STAT+SYS covariance) used by the full unbinned SN likelihood (`chi2_sn` in `cosmo.py`, M_B marginalized analytically).
-- `verification/sn_extra.py` + `verification/run_sn_extra.py` — re-implementations of the official **Union3** (22-binned μ, released inverse covariance) and **DES-SN5YR** (1820-SN DES-Dovekie HD, released STAT+SYS inverse covariance) likelihoods, validated against the published CPL posteriors; results in `verification/sn_extra_results.json`.
+- `verification/sn_extra.py` + `verification/run_sn_extra.py` — re-implementations of the official **Union3** (22-binned μ, released inverse covariance) and **DES** (1820-SN DES-Dovekie HD — the recalibrated reanalysis of DES-SN5YR, Popovic et al. 2025, arXiv:2511.07517 — with the released STAT+SYS inverse covariance) likelihoods, validated against the published CPL posteriors; results in `verification/sn_extra_results.json`.
 - `verification/nested_lnB.py` + `verification/nested_lnB.json` — independent ellipsoidal nested-sampling cross-check of every Mirage Bayes factor (128 live points, two seeds per configuration, identical flat priors to the chains).
 - `verification/union3/README.md`, `verification/sn5yr/README.md` — data provenance for the two official SN compilations; raw data files are not committed and are rebuilt by `verification/download_sn_extra_data.py`.
 - `submission/` — Nature cover letter and referee-response template (with pre-drafted answers to the most likely technical queries, grounded in the verification results).
@@ -61,7 +61,7 @@ The full analysis pipeline was independently re-implemented and re-run from scra
 | Tension matrix (5.43σ / 6.27σ / 6.04σ) | — | exact | ✓ |
 | Mirage: 1-param share of Δχ² | −12.4 of −15.3 | −12.4 of −15.29 | ✓ |
 | **DESI+CMB+Union3 Mirage** Δχ²_MAP / lnB | −16.2 / — (Lodha, no published lnB) | **−19.3 (4.4σ) / +6.75 ± 0.02** (nested) | ✓ (own) |
-| **DESI+CMB+DES-Y5 Mirage** Δχ²_MAP / lnB | −20.7 / — (Lodha, no published lnB) | **−17.0 (4.1σ) / +5.04 ± 0.19** (nested) | ✓ (own) |
+| **DESI+CMB+DES-Dovekie Mirage** Δχ²_MAP / lnB | −20.7 / — (Lodha, no published lnB) | **−17.0 (4.1σ) / +5.04 ± 0.19** (nested) | ✓ (own) |
 | **DESI+CMB+Pantheon+ CPL** w₀ | −0.838 ± 0.055 | **−0.831 ± 0.053** (full STAT+SYS likelihood) | ✓ |
 | **DESI+CMB+Pantheon+ CPL** H₀ | 67.51 ± 0.59 | 67.65 ± 0.59 | ✓ |
 | **DESI+CMB+Pantheon+ CPL** Δχ²_MAP | −10.7 | −13.27 | ✓ |

@@ -329,3 +329,19 @@ Round-9 review (`submission/hostile_referee_report_round9.md`) audited the Mirag
 | m1: figure_provenance listed fig6 as pure transcription | Entry rewritten to "regenerated" with the own-pipeline Mirage bar sources |
 
 `audit_numbers.py` extended from 283 to **291 checks**. Status: **291/291 pass**. Recompiled: **63 pages, zero errors**; official PDF rebuilt.
+
+## Round 10 (hostile referee, external web verification of the SN provenance) — findings and fixes
+
+Round-10 review (`submission/hostile_referee_report_round10.md`) moved the audit outside the repository: every DES-SN5YR/DES-Dovekie claim was checked against the external literature and official releases. Verdict: MAJOR REVISION — the Round-9 sample reconciliation was factually wrong, and the released 1820-SN file had been mislabeled throughout. All addressed:
+
+| Finding | Fix applied |
+| --- | --- |
+| M1: The released 1820-SN distance file is **DES-Dovekie** (Popovic et al. 2025, arXiv:2511.07517; MNRAS 548, stag632) — the recalibrated reanalysis of DES-SN5YR (1623 DES + 197 low-z) — NOT the 1829-SN DES-SN5YR analysis sample (1635 DES + 194 low-z; DES Collaboration 2024, arXiv:2401.02929). The tex labeled it "DES-SN5YR (1820-SN)" everywhere | All 12 label/wording sites relabeled: table ‡ row → "DESI DR2 + CMB + **DES-Dovekie**", table caption, highlights, abstract, Part VIII bullet and lnB labels, conclusions, nested paragraph, R̂ sentence, fig caption, robust-conclusions |
+| M2: The Round-9 reconciliation sentence ("1829 refers to the upstream sample before the distance-release cuts") is factually wrong — the 1820-vs-1829 difference is a recalibration sample difference, not a cut — and the DES-Y5 Δχ² difference (−17.1 vs −21.0) was misattributed to the compressed CMB | Part III rewritten: Dovekie identified with its full 1820 = 1623 + 197 composition; Part VII-B rewritten: the DES-Y5 difference is dominated by the sample itself (Dovekie 1820 SNe yields a smaller preference than the DES-SN5YR BEAMS 1829-SN analysis), exactly as the Dovekie team's own significance reduction from 4.2σ to 3.2σ corroborates. Bonus: our CPL MAP (−0.802, −0.749) now validates against the published **Dovekie** posterior (−0.803 ± 0.054, −0.72 ± 0.21) to 0.02σ/0.14σ — a far stronger validation than the previous ~1σ SN5YR comparison |
+| M3: tex said low-z SNe span "0.025 < z < 1.13" (conflated the DES and low-z ranges) | Corrected: 1635 DES SNe over 0.10 < z < 1.13 and 194 low-z SNe over 0.025 < z < 0.10 |
+| m1: `verification/sn5yr/README.md` cited "Vincent et al. 2024" (nonexistent) | Now cites DES Collaboration 2024 (arXiv:2401.02929) for DES-SN5YR and Popovic et al. 2025 (arXiv:2511.07517) for the Dovekie distance file |
+| m2: fig6 caption still said "DES-Y5" for the own-pipeline Mirage bar | Caption now reads "for the DES-Dovekie release of DES-Y5 (99.6%)" |
+| m3: `literature_claims.json` `sn_extra_likelihood_validation` compared to SN5YR published values only | Extended with the Dovekie posterior, the 0.02σ/0.14σ agreement, and the sample-difference explanation |
+| Verified, no issue: Cataneo & Koyama arXiv:2512.13691 is real (PRD 113, 122006 (2026), DOI 10.1103/ckns-5ytv); abstract H₀ = 66.74 ± 0.56 (DES-Y5) / 65.91 ± 0.84 (Union3) are published transcribed values (tab:cosmological_constraints) | No change needed |
+
+`audit_numbers.py` extended from 291 to **310 checks** (new Round-10 section: Dovekie presence ≥ 8 sites, Popovic/arXiv:2511.07517 citation, absence of the superseded Round-9 sentence, corrected low-z range, Dovekie posterior and 0.02σ/0.14σ agreement, 4.2σ→3.2σ corroboration, relabeled table row, sn5yr-README citations, README relabel, literature-claims extension). Status: **310/310 pass**. Recompiled: **63 pages, zero errors, zero unresolved references**; official PDF rebuilt.

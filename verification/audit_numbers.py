@@ -381,8 +381,8 @@ check("regenerated" in open(os.path.join(VER, "figure_provenance.md"), encoding=
       "figure_provenance.md fig6 entry not updated to regenerated")
 check("hatched Mirage bars are computed" in tex and "in this work (Table" in tex,
       "fig:bayes_comparison caption missing the hatched this-work note")
-check("both contain exactly 1820 SNe" in tex and "1829-SN count" in tex,
-      "Part III missing the 1820-vs-1829 sample reconciliation")
+check("both contain exactly these 1820 SNe" in tex,
+      "Part III missing the 1820-vs-1829 sample reconciliation (Dovekie wording)")
 check("22 binned distance moduli of the official release" in tex and "(1+z_{\\rm HEL})" in tex,
       "Part III missing the Union3/DES-Y5 operational likelihood spec")
 check("computes its own Mirage-axis evidence for all four dataset combinations" in tex,
@@ -391,6 +391,51 @@ check("recovering $81\\text{--}99.6\\%$ of the CPL" in tex,
       "abstract missing the Mirage CPL-recovery range")
 check("satisfy $\\widehat{R} \\le 1.001$" in tex,
       "Part VII-B missing the new-chain R-hat statement")
+
+# 24. Round-10 fixes: DES-Dovekie identification (the released 1820-SN file is the
+# recalibrated reanalysis of DES-SN5YR, Popovic et al. 2025, arXiv:2511.07517,
+# NOT the 1829-SN DES-SN5YR analysis sample), corrected low-z redshift range,
+# Dovekie-posterior validation, and relabeled table/README rows.
+n_dovekie = tex.count("DES-Dovekie")
+check(n_dovekie >= 8, "tex mentions DES-Dovekie only %d times (expected >= 8)" % n_dovekie)
+check("Popovic et al." in tex and "2511.07517" in tex,
+      "tex missing the Dovekie citation (Popovic et al. 2025, arXiv:2511.07517)")
+check("refers to the upstream sample before the distance-release cuts" not in tex,
+      "superseded Round-9 rationalization sentence still present in tex")
+check("0.025 < z < 0.10" in tex, "tex missing the corrected low-z redshift range 0.025 < z < 0.10")
+check("0.025 < z < 1.13" not in tex, "tex still quotes the wrong low-z range 0.025 < z < 1.13")
+check("(-0.803 \\pm 0.054, -0.72 \\pm 0.21)" in tex,
+      "tex missing the published Dovekie posterior (-0.803 +/- 0.054, -0.72 +/- 0.21)")
+check("0.02\\sigma" in tex and "0.14\\sigma" in tex,
+      "tex missing the 0.02-sigma / 0.14-sigma Dovekie agreement statement")
+check("from $4.2\\sigma$ to $3.2\\sigma$" in tex,
+      "tex missing the Dovekie significance-reduction corroboration (4.2 to 3.2 sigma)")
+check("DESI DR2 + CMB + \\textbf{DES-Dovekie}" in tex,
+      "verification table dagger-dagger row not relabeled to DES-Dovekie")
+check("not the 1829-SN DES-SN5YR analysis sample" in tex,
+      "table caption missing the Dovekie-vs-SN5YR distinction")
+check("via its public DES-Dovekie distance release" in tex,
+      "abstract missing the Dovekie distance-release wording")
+check("recalibrated 1820-SN reanalysis of DES-SN5YR" in tex,
+      "tex missing the recalibrated-reanalysis description")
+sn5yr_readme = open(os.path.join(VER, "sn5yr", "README.md"), encoding="utf-8").read()
+check("2511.07517" in sn5yr_readme and "Popovic" in sn5yr_readme,
+      "sn5yr README missing the Dovekie citation (Popovic et al. 2025, arXiv:2511.07517)")
+check("2401.02929" in sn5yr_readme and "DES Collaboration 2024" in sn5yr_readme,
+      "sn5yr README missing the DES-SN5YR citation (DES Collaboration 2024, arXiv:2401.02929)")
+check("Vincent et al. 2024" not in sn5yr_readme,
+      "sn5yr README still cites the nonexistent 'Vincent et al. 2024'")
+check("DES-Dovekie" in readme and "DESI+CMB+DES-Dovekie Mirage" in readme,
+      "README missing the Dovekie clarification / relabeled Mirage row")
+lit = json.load(open(os.path.join(VER, "literature_claims.json")))
+_slv = [c for c in lit["claims"] if c["id"] == "sn_extra_likelihood_validation"]
+check(len(_slv) == 1, "literature_claims missing sn_extra_likelihood_validation entry")
+if _slv:
+    _blob = json.dumps(_slv[0])
+    check("-0.803" in _blob and "0.054" in _blob and "2511.07517" in _blob,
+          "sn_extra_likelihood_validation claim missing the Dovekie posterior / citation")
+    check("sample itself" in _blob,
+          "sn_extra_likelihood_validation claim missing the sample-difference explanation")
 
 # 14. No orphaned figure assets: every figs/ file is referenced by the tex
 figdir = os.path.join(ROOT, "figs")
