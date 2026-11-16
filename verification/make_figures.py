@@ -24,7 +24,7 @@ ax.axhline(0, color="gray", lw=0.5); ax.axvline(-1, color="gray", lw=0.5)
 ax.set_xlabel(r"$w_0$"); ax.set_ylabel(r"$w_a$")
 ax.set_xlim(-2.2, 0.5); ax.set_ylim(-4, 1)
 ax.legend(loc="lower left", fontsize=9)
-ax.set_title(r"$w_0w_a$CDM posterior (paper Fig.~12 recreation)")
+ax.set_title(r"$w_0w_a$CDM posterior (DESI+CMB vs DESI+CMB+CC)")
 fig.tight_layout(); fig.savefig("fig_w0wa_contours.png", dpi=150); plt.close(fig)
 
 # ---------- Fig 2: GP H(z) ----------
@@ -44,7 +44,7 @@ ax.plot(zl, Hlcdm, "k--", lw=1.2, label=r"$\Lambda$CDM ($\Omega_m$=0.30)")
 is_cc = np.array([zz not in z_b for zz in z]) if False else None
 ax.errorbar(z, y, yerr=sy, fmt="o", ms=3.5, color="gray", alpha=0.8, label="32 CC + 6 DESI $D_H/r_d$")
 ax.set_xlabel("z"); ax.set_ylabel(r"$H(z)$ [km/s/Mpc]")
-ax.set_title(r"GP reconstruction of $H(z)$ (paper Fig.~13c recreation)")
+ax.set_title(r"GP reconstruction of $H(z)$ (32 CC + 6 DESI $D_H/r_d$)")
 ax.legend(fontsize=8)
 fig.tight_layout(); fig.savefig("fig_gp_hz.png", dpi=150); plt.close(fig)
 
@@ -65,7 +65,7 @@ for i, (nm, h, s) in enumerate(rows[::-1]):
 ax.axvspan(66.5, 68.5, alpha=0.08, color="k")
 ax.set_yticks(range(len(rows))); ax.set_yticklabels([r[0] for r in rows[::-1]], fontsize=8)
 ax.set_xlabel(r"$H_0$ [km/s/Mpc]")
-ax.set_title(r"$H_0$ ladder (paper Fig.~15 recreation)")
+ax.set_title(r"$H_0$ ladder ")
 fig.tight_layout(); fig.savefig("fig_h0_forest.png", dpi=150); plt.close(fig)
 
 # ---------- Fig 4: tension heatmap ----------
@@ -81,7 +81,7 @@ for i in range(len(rnames)):
     for j in range(len(cnames)):
         ax.text(j, i, f"{M[i,j]:.2f}", ha="center", va="center", fontsize=8)
 fig.colorbar(im, label=r"$|H_0^{early}-H_0^{late}|/\sigma$")
-ax.set_title("Hubble tension matrix (paper Table 8 recreation)")
+ax.set_title("Hubble tension matrix ")
 fig.tight_layout(); fig.savefig("fig_tension_heatmap.png", dpi=150); plt.close(fig)
 
 print("figures written")

@@ -98,6 +98,61 @@ if os.path.exists(PDF):
     except ImportError:
         print("pypdf unavailable; page-count checks skipped")
 
+# 8. GP hyperparameter search: artifact + released reference in tex
+try:
+    gs = json.load(open(os.path.join(VER, "gp_hyperparameter_search.json")))
+    check(gs["n_starts"] == 30, "gp search n_starts != 30")
+    check(gs["n_converged_to_best"] == 30, "gp search: not all 30 starts converged to best")
+    check(abs(gs["best"]["sf"] - 305.09) < 0.5 and abs(gs["best"]["lf"] - 3.885) < 0.01,
+          "gp search best != (305.09, 3.885)")
+    check("gp\\_hyperparameter\\_search.py" in tex, "tex does not reference released gp_hyperparameter_search.py")
+except FileNotFoundError:
+    check(False, "gp_hyperparameter_search.json missing")
+
+# 9. H-route crossing: artifact + corrected caption claim, stale claim absent
+try:
+    gc = json.load(open(os.path.join(VER, "gp_route_crossing.json")))
+    check("0.38 \\pm 0.49" in tex, "tex missing per-draw H-route crossing 0.38 +- 0.49")
+    check("z_c \\approx 0.14" in tex, "tex missing H-route median crossing z_c ~ 0.14")
+    check("crosses the phantom divide (dashed) at $z_c \\approx 0.5$" not in tex,
+          "stale VII-D claim (median crossing at z_c ~ 0.5) still present")
+    check(abs(gc["per_draw_cross_median"] - 0.381) < 0.02,
+          "gp_route_crossing.json median drift")
+except FileNotFoundError:
+    check(False, "gp_route_crossing.json missing")
+
+# 10. Stale Round-4 claims absent
+check("is not reproduced in the verification suite" not in tex,
+      "stale 'Pantheon+ not reproduced' claim still present")
+check("every two-parameter ansatz prefers $w(z) > -1$ today" not in tex,
+      "stale tab:robustness invariant still present")
+
+# 11. Verification figure scripts carry no working-note titles
+for scr in ["make_figures.py", "make_figures2.py"]:
+    s = open(os.path.join(VER, scr), encoding="utf-8").read()
+    check("paper Fig." not in s and "paper $" not in s,
+          "%s still contains working-note title" % scr)
+
+# 12. cosmo.py gp_hz default = ML hyperparameters (m6)
+cs = open(os.path.join(VER, "cosmo.py"), encoding="utf-8").read()
+check("hyper=(305.10, 3.885)" in cs, "cosmo.py gp_hz default is not the ML hyperparameters")
+check("(5.318, 1.259)" not in cs, "cosmo.py still contains superseded default (5.318, 1.259)")
+
+# 13. figure_provenance.md covers every includegraphics target
+prov_path = os.path.join(VER, "figure_provenance.md")
+check(os.path.exists(prov_path), "figure_provenance.md missing")
+if os.path.exists(prov_path):
+    prov = open(prov_path, encoding="utf-8").read()
+    for target in sorted(figs):
+        base = os.path.basename(target)
+        check(base in prov, "figure_provenance.md missing entry for %s" % target)
+
+# 14. No orphaned figure assets: every figs/ file is referenced by the tex
+figdir = os.path.join(ROOT, "figs")
+if os.path.isdir(figdir):
+    for f in os.listdir(figdir):
+        check(f in tex, "orphaned asset figs/%s not referenced in tex" % f)
+
 print("checks run:", checks)
 if fails:
     print("FAILURES (%d):" % len(fails))

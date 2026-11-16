@@ -504,7 +504,7 @@ def derived_cpl(chain):
 # ----------------------------------------------------------------------------
 # 7. GAUSSIAN PROCESS RECONSTRUCTION OF H(z) (CC + DESI radial)
 # ----------------------------------------------------------------------------
-def gp_hz(hyper=(5.318, 1.259), optimize_hp=True):
+def gp_hz(hyper=(305.10, 3.885), optimize_hp=True):
     """Data: 32 CC + 6 DESI DH/rd -> H(z) using rd = 147.09 Mpc."""
     z_cc, h_cc, s_cc = CC_DATA[:, 0], CC_DATA[:, 1], CC_DATA[:, 2]
     dh = np.array([b[4] for b in DESI_BAO[1:]])
