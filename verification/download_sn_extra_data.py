@@ -1,6 +1,8 @@
-"""Download the official Union3 and DES-SN5YR SN data releases (the two
+"""Download the official Union3 and DES SN data releases (the two
 compilations whose Mirage rows were "---" until their likelihoods were
-implemented) and build the processed caches sn_extra.py reads.
+implemented; the DES distance file is DES-Dovekie, the recalibrated
+1820-SN reanalysis of DES-SN5YR, Popovic et al. 2025, arXiv:2511.07517)
+and build the processed caches sn_extra.py reads.
 
 Run once from verification/:
     python download_sn_extra_data.py

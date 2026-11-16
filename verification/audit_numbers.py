@@ -351,7 +351,7 @@ if os.path.exists(nested_path):
             check(abs(ns[key]["err"] - err) < 0.006, "nested err for %s (%.3f) disagrees with quoted %s" % (key, ns[key]["err"], cell))
     check("Nested-sampling cross-check of the Mirage Bayes factors" in tex,
           "Part VII-B missing the nested-sampling cross-check paragraph")
-    check("Official Union3 and DES-SN5YR likelihood validation" in tex,
+    check("Official Union3 and DES-Dovekie likelihood validation" in tex,
           "Part VII-B missing the official-likelihood validation paragraph")
     check("verification/nested\\_lnB.json" in tex, "tex missing nested_lnB.json artifact pointer")
 # absence of the superseded no-evidence sentences

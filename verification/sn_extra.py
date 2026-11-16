@@ -1,4 +1,4 @@
-"""Union3 and DES-SN5YR supernova likelihoods (official binned/unbinned
+"""Union3 and DES supernova likelihoods (official binned/unbinned
 distance releases), completing the two dataset combinations whose Mirage
 rows were left as "---" in Round 6 because these likelihoods were not
 implemented.
@@ -10,8 +10,10 @@ README.md in each subdirectory):
   (rubind/union3_release; Amber et al. 2025 / Rubin et al., Union3+UNITY1.5)
   23 x 23 float64 FITS: row 0 = redshifts, column 0 = distance moduli,
   the remaining 22 x 22 block is the inverse covariance of the binned mu.
-* DES-SN5YR: verification/sn5yr/DES-Dovekie_HD.csv + STAT+SYS.npz
-  (des-science/DES-SN5YR; the npz stores the upper triangle of the
+* DES (DES-Y5): verification/sn5yr/DES-Dovekie_HD.csv + STAT+SYS.npz
+  (des-science/DES-SN5YR release; the distance file is DES-Dovekie, the
+  recalibrated 1820-SN reanalysis of DES-SN5YR, Popovic et al. 2025,
+  arXiv:2511.07517; the npz stores the upper triangle of the
   INVERSE stat+sys covariance, as documented in the release's
   DES-Dovekie-SN_Likelihood.py).
 

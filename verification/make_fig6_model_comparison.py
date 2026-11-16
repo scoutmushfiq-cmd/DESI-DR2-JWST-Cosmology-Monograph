@@ -2,7 +2,8 @@
 Table tab:model_comparison_full: transcribed published values (Lodha et al.
 2025, DESI DR2 2025a) for the CPL/BA/EXP/LOG/JBP/thawing/emergent rows, and
 this work's own values for the Mirage rows (daggered: DESI DR2 + CMB and
-+ Pantheon+ from mirage_sd.json; double-daggered: Union3 and DES-Y5 from
++ Pantheon+ from mirage_sd.json; double-daggered: Union3 and DES-Dovekie
+--- the released recalibrated reanalysis of DES-SN5YR --- from
 sn_extra_results.json / nested_lnB.json).
 
 Run from verification/:  python make_fig6_model_comparison.py
