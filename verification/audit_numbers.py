@@ -159,7 +159,7 @@ try:
               "claim %s missing source or locator" % c.get("id"))
     # verified external numbers that must appear in the tex
     for frag in ["0.126 \\pm 0.021", "72.34 \\pm 0.72", "-0.132", "69.61 \\pm 0.44",
-                 "10.5\\text{--}20.7", "0.090", "71.96", "Phys.\\ Rev.\\ D 71, 023515",
+                 "16.2\\text{--}20.7", "0.090", "71.96", "Phys.\\ Rev.\\ D 71, 023515",
                  "2505.08051", "2507.12401", "JCAP01(2026)041", "111, 123511"]:
         check(frag in tex, "tex missing verified literature value %r" % frag)
     # superseded / unverifiable numbers must be gone
@@ -175,6 +175,60 @@ try:
           "tex missing Zaldarriaga (2026) author citation")
 except FileNotFoundError:
     check(False, "literature_claims.json missing")
+
+# 16. Round-6 M1: Mirage evidence must be artifact-backed by mirage_sd.json
+msd_path = os.path.join(VER, "mirage_sd.json")
+check(os.path.exists(msd_path), "mirage_sd.json missing")
+if os.path.exists(msd_path):
+    msd = json.load(open(msd_path))
+    for key, frag in [("mirage_desi_cmb", "+3.49 \\pm 0.23"),
+                      ("mirage_desi_cmb_pantheon", "+3.64 \\pm 0.94")]:
+        v = msd[key]["lnB_SD_scott"]
+        check(frag in tex, "Mirage lnB string %r missing in tex" % frag)
+        check(abs(round(v, 2) - float(frag.split("+")[1].split(" ")[0])) < 0.006,
+              "mirage_sd.json lnB %s (%.3f) inconsistent with tex string %r" % (key, v, frag))
+    for key, frag in [("mirage_desi_cmb", "+5.62"),
+                      ("mirage_desi_cmb_pantheon", "+6.03")]:
+        v = round(msd[key]["dlnL_trim_vs_lcdm"], 2)
+        check(("%+.2f" % v) in tex, "Mirage dlnL %s (%+.2f) missing in tex" % (key, v))
+    for key in ["mirage_desi_cmb", "mirage_desi_cmb_pantheon"]:
+        check(msd[key]["D_KL"] < 3.0,
+              "Mirage D_KL %s not below 3 (Occam-halving claim)" % key)
+# unverifiable Mirage values must be gone
+for frag in ["+1.85", "+4.60", "+6.65", "+4.45", "+7.20", "+9.25",
+             "3.2}\\boldsymbol{\\sigma}$ & $-8.5"]:
+    check(frag not in tex, "tex still contains unverifiable Mirage value %r" % frag)
+
+# 17. Round-6 M3: f_DE^max peak value must not be quoted anywhere
+for frag in ["f_{\\rm DE}^{\\max} \\approx 1.09", "f_{\\rm DE} \\approx 1.09"]:
+    check(frag not in tex, "tex still quotes unverifiable f_DE peak value (%r)" % frag)
+
+# 18. Round-6 M2/m1/m2/m4: bibliography authorship and link hygiene
+for frag in ["Sound-Horizon-Free BAO Collaboration", "Critical Review Collaboration",
+             "Sound-Horizon-Free $H_0$ Collaboration",
+             "Evidence for Dynamical Dark Energy Using DESI DR2",
+             "universe-origins", "arxiv.org/html/2512.10585", "arxiv.org/html/2510.21976"]:
+    check(frag not in tex, "tex still contains fabricated/unverified reference %r" % frag)
+for frag in ["Gadbail", "Pantos", "Capozziello, H.\\ Chaudhary",
+             "Wang \\& K.\\ Freese (2026)", "Cataneo \\& K.\\ Koyama (2026)"]:
+    check(frag in tex, "tex missing corrected reference author %r" % frag)
+
+# 19. Round-6 m5/m6: registry artifacts exist on disk; h0rd product artifact
+for c in claims:
+    if c.get("verification_status") == "own-pipeline":
+        art = c.get("artifact")
+        check(bool(art), "own-pipeline claim %s missing artifact field" % c["id"])
+        if art:
+            check(os.path.exists(os.path.join(ROOT, art)),
+                  "own-pipeline artifact missing: %s" % art)
+hrd_path = os.path.join(VER, "h0rd_check.json")
+check(os.path.exists(hrd_path), "h0rd_check.json missing")
+if os.path.exists(hrd_path):
+    hrd = json.load(open(hrd_path))
+    check("10027" in tex and "45" in tex,
+          "tex missing H0*rd = 10027 +/- 45 string")
+    check(abs(hrd["H0_rd"] - 10027.1) < 0.1 and abs(hrd["err_quadrature"] - 44.8) < 0.1,
+          "h0rd_check.json values inconsistent with derivation")
 
 # 14. No orphaned figure assets: every figs/ file is referenced by the tex
 figdir = os.path.join(ROOT, "figs")

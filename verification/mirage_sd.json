@@ -1,0 +1,177 @@
+{
+  "method": {
+    "mirage_definition": "w_a = -3.66 (1 + w_0), one free parameter w_0 (Lodha et al. 2025, arXiv:2503.14743)",
+    "prior": "w_0 ~ U[-2.5, 0.5], prior volume V = 3.0; H0 ~ U[40, 100], omega_bc ~ U[0.130, 0.155] as in all other chains",
+    "savage_dickey": "lnB = ln[(1/V) / KDE(p(w_0 = -1 | data))], nested point w_0 = -1 implies w_a = 0 (flat LambdaCDM)",
+    "mcmc": "Goodman-Weare ensemble, 48 walkers, 2500 steps, 500 burn-in, 2 seeds per dataset",
+    "dlnL_semantics": "posterior mean chi2 within Delta-D = 30 of chi2_min (likelihood-dominated region), thin factor 16, identical to dlnL_decomposition.json",
+    "D_KL": "D_KL = Delta<lnL>_trim - lnB_SD",
+    "DIC": "DIC = chi2(theta_bar) + 2 p_D, p_D = mean chi2 (Delta-D=30 trim) - chi2(theta_bar), thin 16; dAIC = dchi2_MAP + 2*dk with dk=+1",
+    "lnB_uncertainty": "half-chain scatter (4 half-chains, 96000 samples each)"
+  },
+  "mirage_desi_cmb": {
+    "label": "DESI DR2 BAO + CMB",
+    "prior_volume": 3.0,
+    "lnB_SD_scott": 3.4864827693315967,
+    "lnB_SD_silverman": 3.463748905849702,
+    "posterior_density_at_w0_minus1": 0.010202779885803695,
+    "chi2_min": 11.249977622799506,
+    "lcdm_chi2_min": 23.594935351576765,
+    "dchi2_map_vs_lcdm": -12.34495772877726,
+    "chi2_MAP_opt": 11.240833826188744,
+    "MAP_params": {
+      "H0": 66.84508868349344,
+      "wbc": 0.1425239194567161,
+      "w0": -0.7235787892076257
+    },
+    "lcdm_chi2_MAP_opt": 23.59490079150347,
+    "lcdm_MAP_params": {
+      "H0": 68.34545196080899,
+      "wbc": 0.13981084683944234
+    },
+    "dchi2_MAP_opt_vs_lcdm": -12.354066965314725,
+    "mean_chi2_trim30": 14.370845993974616,
+    "dlnL_trim_vs_lcdm": 5.615315572035737,
+    "D_KL": 2.12883280270414,
+    "summary": {
+      "H0": {
+        "mean": 66.68118458962687,
+        "std": 0.7182869801859976,
+        "lo": 65.97206605264263,
+        "med": 66.7260194424977,
+        "hi": 67.390112717895
+      },
+      "wbc": {
+        "mean": 0.14266837227735407,
+        "std": 0.0011963793156723732,
+        "lo": 0.14147298118765683,
+        "med": 0.14267707901294993,
+        "hi": 0.1438638960389955
+      },
+      "w0": {
+        "mean": -0.6978765233605909,
+        "std": 0.10956090263546717,
+        "lo": -0.805669256932229,
+        "med": -0.7068716512706873,
+        "hi": -0.5901570972893797
+      }
+    },
+    "Rhat": [
+      1.0008,
+      1.0011,
+      1.0006
+    ],
+    "ESS": [
+      192000,
+      192000,
+      192000
+    ],
+    "n_samples_kde": 192000,
+    "chains": [
+      "chain_mirage_desi_cmb_s71.npy",
+      "chain_mirage_desi_cmb_s72.npy"
+    ],
+    "lcdm_reference_chains": [
+      "chain_lcdm_desi_cmb_s101.npy",
+      "chain_lcdm_desi_cmb_s202.npy"
+    ],
+    "DIC": 17.191404862840997,
+    "p_D": 2.8205588688663816,
+    "lcdm_DIC": 27.60305367000539,
+    "dDIC": -10.411648807164394,
+    "dAIC": -14.354066965314725,
+    "lnB_SD_halfspread_err": 0.23
+  },
+  "mirage_desi_cmb_pantheon": {
+    "label": "DESI DR2 BAO + CMB + Pantheon+",
+    "prior_volume": 3.0,
+    "lnB_SD_scott": 3.635865200215645,
+    "lnB_SD_silverman": 3.645798419572323,
+    "posterior_density_at_w0_minus1": 0.008787038957994913,
+    "chi2_min": 1400.3173286563583,
+    "lcdm_chi2_min": 1413.472414007393,
+    "dchi2_map_vs_lcdm": -13.155085351034586,
+    "chi2_MAP_opt": 1400.313619110275,
+    "MAP_params": {
+      "H0": 67.49182944758908,
+      "wbc": 0.14152621044886107,
+      "w0": -0.8298447447672217
+    },
+    "lcdm_chi2_MAP_opt": 1413.4723842204414,
+    "lcdm_MAP_params": {
+      "H0": 68.20230342415289,
+      "wbc": 0.14021161927431816
+    },
+    "dchi2_MAP_opt_vs_lcdm": -13.158765110166314,
+    "mean_chi2_trim30": 1403.299797613714,
+    "dlnL_trim_vs_lcdm": 6.034245536834078,
+    "D_KL": 2.398380336618433,
+    "summary": {
+      "H0": {
+        "mean": 67.48258531809593,
+        "std": 0.38771281192200535,
+        "lo": 67.0956843424053,
+        "med": 67.48837698212775,
+        "hi": 67.86724303161813
+      },
+      "wbc": {
+        "mean": 0.141515664011474,
+        "std": 0.0009166815058682114,
+        "lo": 0.14060428358065452,
+        "med": 0.14152000219770067,
+        "hi": 0.14242917951681813
+      },
+      "w0": {
+        "mean": -0.8273580063730406,
+        "std": 0.050372312095887405,
+        "lo": -0.8774271825026344,
+        "med": -0.8288475259095259,
+        "hi": -0.7766164324365546
+      }
+    },
+    "Rhat": [
+      1.0001,
+      1.0001,
+      1.0001
+    ],
+    "ESS": [
+      192000,
+      192000,
+      192000
+    ],
+    "n_samples_kde": 192000,
+    "chains": [
+      "chain_mirage_sn_s71.npy",
+      "chain_mirage_sn_s72.npy"
+    ],
+    "lcdm_reference_chains": [
+      "chain_lcdm_sn_s1.npy",
+      "chain_lcdm_sn_s2.npy"
+    ],
+    "DIC": 1406.2829044084876,
+    "p_D": 2.9831067947736756,
+    "lcdm_DIC": 1417.2627055982825,
+    "dDIC": -10.979801189794898,
+    "dAIC": -15.158765110166314,
+    "lnB_SD_halfspread_err": 0.94
+  },
+  "cross_checks": {
+    "cpl_chi2_min_thin16": 8.345820441038772,
+    "cpl_lnB_SD_recomputed_V15": 3.3552412218201786,
+    "cpl_chi2_MAP_opt": 8.337442209775316,
+    "cpl_lnB_SD_canonical": 2.6,
+    "mirage_dchi2_vs_cpl_dchi2_desi_cmb": {
+      "mirage": -12.34495772877726,
+      "cpl": -15.249114910537994
+    },
+    "note": "Mirage should recover most of the CPL Delta-chi2 with one parameter; CPL lnB recomputation validates the KDE pipeline against the canonical Savage-Dickey artifact.",
+    "cpl_sn_chi2_MAP_opt": 1400.2006130159343,
+    "lcdm_sn_chi2_MAP_opt": 1413.4723842204414,
+    "cpl_sn_dchi2_MAP_opt_vs_lcdm": -13.271771204507104,
+    "cpl_sn_lnB_SD_V15": 0.22812603168502626,
+    "cpl_sn_dlnL_trim": 5.675623370514813,
+    "cpl_sn_DIC": 1407.7823791231554,
+    "lcdm_sn_DIC": 1417.2627055982825,
+    "cpl_sn_dDIC": -9.480326475127185
+  }
+}

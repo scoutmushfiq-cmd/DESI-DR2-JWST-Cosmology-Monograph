@@ -1,0 +1,18 @@
+{
+  "H0": {
+    "value": 68.17,
+    "err": 0.28,
+    "source": "joint DESI DR2 + CMB LambdaCDM chain (verification/chains/chain_lcdm_desi_cmb*.npy)"
+  },
+  "rd": {
+    "value": 147.09,
+    "err": 0.26,
+    "source": "Planck sound horizon (fixed prior mean in all chains)"
+  },
+  "H0_rd": 10027.1,
+  "err_quadrature": 44.8,
+  "err_montecarlo": 44.9,
+  "relative_err": 0.00447,
+  "tex_string": "10027 \\pm 45",
+  "note": "Relative errors 0.41% and 0.18% are independent (CMB chain H0 vs Planck rd), so quadrature addition is exact to Monte Carlo precision."
+}

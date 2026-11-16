@@ -110,7 +110,9 @@ _Z2 = np.geomspace(4.0 + 1e-6, 5.0e4, 3000)
 ZGRID = np.concatenate([_Z1, _Z2])
 DZ = np.diff(ZGRID)
 
-DE_MODEL = "cpl"   # global DE parametrization: "cpl" | "jbp" | "log"
+DE_MODEL = "cpl"   # global DE parametrization: "cpl" | "jbp" | "log" | "mirage"
+
+MIRAGE_SLOPE = -3.66   # Mirage DE: w_a = -3.66 (1 + w_0)  (Lodha et al. 2025)
 
 def f_de(z, w0, wa, de=None):
     """Dark-energy density normalized to today; exact analytic forms.
@@ -131,6 +133,9 @@ def f_de(z, w0, wa, de=None):
     if de == "log":
         lnzp1 = np.log(zp1)
         return zp1 ** (-3.0 * (1.0 + w0)) * np.exp(-1.5 * wa * lnzp1**2)
+    if de == "mirage":
+        wam = MIRAGE_SLOPE * (1.0 + w0)
+        return zp1 ** (3.0 * (1.0 + w0 + wam)) * np.exp(-3.0 * wam * z / zp1)
     raise ValueError(de)
 
 def E2(z, Om, w0=-1.0, wa=0.0, H0=67.0, rd=None):
@@ -301,8 +306,8 @@ class Joint:
         self.h0_prior = h0_prior
         self.rd_prior = rd_prior
         self.de = de or DE_MODEL
-        self.n_de = 0 if self.de == "lcdm" else (1 if self.de == "wcdm" else 2)
-        names = {"lcdm": [], "wcdm": ["w"], "cpl": ["w0", "wa"],
+        self.n_de = 0 if self.de == "lcdm" else (2 if self.de not in ("wcdm", "mirage") else 1)
+        names = {"lcdm": [], "wcdm": ["w"], "mirage": ["w0"], "cpl": ["w0", "wa"],
                  "jbp": ["w0", "wa"], "log": ["w0", "wa"]}
         self.pnames = (["H0", "wbc"] + names[self.de] + (["rd"] if rd_free else []))
 
@@ -313,7 +318,9 @@ class Joint:
         Om = (wbc + W_NU) / h2
         i = 2
         if self.n_de == 0: w0 = np.full(len(p), -1.0); wa = np.zeros(len(p))
-        elif self.n_de == 1: w0 = p[:, 2]; wa = np.zeros(len(p)); i += 1
+        elif self.n_de == 1:
+            w0 = p[:, 2]; i += 1
+            wa = MIRAGE_SLOPE * (1.0 + w0) if self.de == "mirage" else np.zeros(len(p))
         else: w0, wa = p[:, 2], p[:, 3]; i += 2
         rd = p[:, i] if self.rd_free else np.full(len(p), 147.09)
         return H0, Om, w0, wa, rd
@@ -321,6 +328,7 @@ class Joint:
     def bounds(self):
         b = [(40.0, 100.0), (0.130, 0.155)]
         if self.de == "wcdm": b += [(-2.0, 0.5)]
+        elif self.de == "mirage": b += [(-2.5, 0.5)]
         elif self.n_de == 2: b += [(-2.5, 0.5), (-4.0, 1.0)]
         if self.rd_free: b += [(100.0, 200.0)]
         return b
@@ -595,7 +603,8 @@ def init_walkers_on_band(joint, n_walkers, seed=0, jitter=None):
         for _ in range(200):
             Om = rng.uniform(0.20, 0.45)
             w0 = rng.uniform(-1.8, -0.2) if joint.n_de >= 1 else -1.0
-            wa = rng.uniform(-3.0, 0.5) if joint.n_de == 2 else 0.0
+            wa = (-3.66 * (1.0 + w0)) if joint.de == "mirage" else \
+                (rng.uniform(-3.0, 0.5) if joint.n_de == 2 else 0.0)
             h0 = h0_on_band(Om, w0, wa)
             if np.isfinite(h0) and 55.0 < h0 < 90.0:
                 break
