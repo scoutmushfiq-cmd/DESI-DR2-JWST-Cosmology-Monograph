@@ -663,6 +663,59 @@ if os.path.isdir(figdir):
     for f in os.listdir(figdir):
         check(f in tex, "orphaned asset figs/%s not referenced in tex" % f)
 
+# 15. Round-14 fixes: caption-float placement (M1), fig13 gridline redraw (M2),
+# stale-orphan and template cleanup (M3), and the m1-m4 provenance disclosures.
+_tlines = tex.splitlines()
+def _near(anchor, needle, back=0, fwd=4):
+    for i, ln in enumerate(_tlines):
+        if anchor in ln:
+            for j in range(max(0, i - back), min(len(_tlines), i + fwd)):
+                if needle in _tlines[j]:
+                    return True
+    return False
+check(_near("fig8_tension_heatmap_matrix.pdf", "two-tier")
+      and _near("fig8_tension_heatmap_matrix.pdf", "SEVERE"),
+      "Round-14 M1: the two-tier severity labeling is not in the fig8 figure caption itself")
+check(not _near("\\label{tab:tension_matrix}", "two-tier", back=3)
+      and _near("\\label{tab:tension_matrix}", "set in bold", back=3),
+      "Round-14 M1: table caption must use the bold rule, not the two-tier severity labels")
+check(not os.path.exists(os.path.join(VER, "rdfree_result.json")),
+      "Round-14 M3: stale orphan artifact verification/rdfree_result.json still present")
+_tpl = open(os.path.join(ROOT, "submission", "referee_response_template.md"),
+            encoding="utf-8").read()
+check("68.19" in _tpl and "69.24" not in _tpl and "69.21" not in _tpl,
+      "Round-14 M3: referee-response template still validates the superseded r_d-free row")
+_prov = open(os.path.join(VER, "figure_provenance.md"), encoding="utf-8").read()
+check("patch_fig7.py" in _prov and "patch_fig10_fig13.py" in _prov,
+      "Round-14 m3: figure_provenance.md rows do not name the in-place patch scripts")
+_readme = open(os.path.join(ROOT, "README.md"), encoding="utf-8").read()
+check("patch_fig7" in _readme and "patch_fig10_fig13" in _readme
+      and "make_fig1_fig8" in _readme,
+      "Round-14 m4: README reproduce paragraph does not name the figure patch scripts")
+check("V15\\_scott\\_2chains" in tex and "+0.76" in tex,
+      "Round-14 m2: tex does not disclose the Savage-Dickey chain-subset systematic")
+check("not the transcribed official values" in tex,
+      "Round-14 m1: Mirage-recovery sentence still lacks the basis qualifier")
+try:
+    import pymupdf as _pm14
+    _f13 = _pm14.open(os.path.join(ROOT, "figs",
+                                   "fig13_non_cepheid_lensing_lowz_sn.pdf"))
+    _GRID = (0.6901198029518127, 0.6902418732643127, 0.6901045441627502)
+    _hits = []
+    for _g in _f13[0].get_drawings():
+        _c = _g.get("color")
+        if _c is None or _g.get("fill") is not None:
+            continue
+        if all(abs(_c[i] - _GRID[i]) < 0.01 for i in range(3)):
+            _r = _g["rect"]
+            if _r.y0 < 251.82 < _r.y1 and abs(_r.height - 9.4) < 1.5:
+                _hits.append(round(_r.x0, 2))
+    _f13.close()
+    check(all(any(abs(h - gx) < 0.1 for h in _hits) for gx in (293.74, 348.77)),
+          "Round-14 M2: fig13 gridlines still cut across the patched H0pe row band")
+except ImportError:
+    print("pymupdf unavailable; fig13 gridline check skipped")
+
 print("checks run:", checks)
 if fails:
     print("FAILURES (%d):" % len(fails))

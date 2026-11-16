@@ -24,7 +24,7 @@
 | CPL w₀ (DESI+CMB) | −0.43 ± 0.22 | −0.48 ± 0.31 | ✓ |
 | CPL wₐ (DESI+CMB) | −1.72 ± 0.64 | −1.71 ± 0.72 | ✓ |
 | CPL w₀ (DESI+CMB+Pantheon+) | −0.838 ± 0.055 | −0.831 ± 0.053 | ✓ |
-| r_d-free H₀ | 69.24 ± 1.82 | 69.21 ± 1.44 | ✓ |
+| r_d-free H₀ | 68.19 ± 1.45 | 68.19 ± 1.45 (committed chains `chain_rdfree_cpl_desi_cc_pp.npy`) | ✓ |
 | Tension matrix | 5.43σ / 6.27σ / 6.04σ | exact | ✓ |
 
 ### Comment 1.2 — [paste]
