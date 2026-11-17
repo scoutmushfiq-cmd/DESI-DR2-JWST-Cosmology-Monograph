@@ -555,3 +555,24 @@ Two new submission assets, both audit-enforced:
 One transcription defect caught and fixed before commit: an unbalanced superscript (`Mpc$^{-1$`) in the Sec. VIII JAGB sentence; a regression check of the `s$^{-1$` typo class is now in the audit.
 
 `audit_numbers.py` extended from 536 to **561 checks** (full paper: REVTeX two-column class, new-title fragments, 18 headline fragments incl. 10027 ± 45 and 2.60, attribution phrases, Round-21 misattribution absence, ≥20 references, unbalanced-superscript regression guard). Status: **561/561 pass**. Monograph unchanged (66 pages); full paper compiled with Tectonic (8 pages).
+
+## Plan C, track 3 (expanded) — full paper grown to full length (Round-24 additions, continued)
+
+`submission/full_paper.tex` expanded from 8 to **12 pages (~9,200 words, 25 references)** with every addition drawn from the audited monograph content:
+
+| Addition | Content |
+| --- | --- |
+| Introduction | New DESI-era literature paragraph citing the DR1 baseline, the critical-review and Lyman-α confirmations, model-independent reconstructions, the Ωm-discrepancy driver, and the sound-horizon-free programs (Pantos & Perivolaropoulos; Gadbail & Bamba) |
+| Sec. II | Quadrature-convergence statement (4,001 linear + 3,000 log grid points, Δχ² < 10⁻³); CC systematics caveat (1–2% per point); expanded SN subsection with the full sample bookkeeping (Pantheon+ 1,701/1,550/1,580; Union3 2,087 SNe → 22 UNITY1.5 nodes; DES-Dovekie 1,820 = 1,623 + 197), the analytic ℳ-marginalization equation, and the four-variant sample-convention scan (77 calibrator rows bias w₀ ≈ +0.10, wₐ ≈ −0.27; z_CMB selection Δw₀ ≈ +0.06, Δwₐ ≈ −0.15) |
+| Sec. III | Convergence-diagnostics table (R̂ per parameter, ESS ≥ 85,811; seed stability H₀ = 68.343–68.351); the Savage–Dickey equation; the exact evidence decomposition ln Z = ⟨ln L⟩_P − D_KL with the tail-trim semantics (⟨χ²⟩ = 53.8 untrimmed vs 12.3 trimmed; per-model Δ⟨lnL⟩_P = +1.30/+6.66/+4.16/+6.57; Mirage +5.62/+6.03); prior-volume robustness (V = 13.5 → 15 shifts lnB by 0.11); the full nested-sampling cross-check paragraph (+3.65/+3.40/+6.74/+5.04; CPL +2.78 ± 0.42) with both scope limitations and the compressed-CMB CPL-vs-PolyChord comparison |
+| Sec. IV | New subsection "Why joint fits lower H₀": θ* = 0.0104110 ± 0.0000031 lock, wCDM phantom raise vs SN-forced lowering (67.51/66.74/65.91), the +SH0ES geometric lock (68.51 ± 0.20 pivoted / 69.00 ± 0.52 unbinned, residual 4.3σ/3.5σ), and the Ωm discrepancy paragraph (Planck 0.3153 ± 0.0073 vs DESI BAO alone 0.2975 ± 0.0086; LRG1/LRG2 1.5–2.5% below the Planck trajectory) |
+| Sec. V | Alternative two-parameter families equation (JBP, Log with exact forms) + Barboza–Alcaniz/exponential mention; the two invariant cross-parametrization statements; the Vikman no-go theorem with the thawing-quintessence caveat |
+| Sec. VI | Full GP formalism (SE kernel equation, GIG hyperprior p = 3, b = 2), the 30-start hyperparameter search (−119.0 vs −904.6 at (5.318, 1.259)), f_DE^max ≈ 1.01 at z ≈ 0.16, the Lodha peak caveat, and the q₀ reference values (−0.53 at Ωm = 0.3114; −0.549 at our chain Ωm) |
+| Sec. VII/VIII/X | Non-Cepheid probe paragraph (TDCOSMO 73.50 ± 2.80); Appendix pointer for the host table; Chebat et al. neutrino cite |
+| Conclusions | New observational-outlook paragraph (full-CMB tests of the compression, the −0.04 mag cross-calibration discipline, the lnB ≈ +3.5 to +6.7 target for microphysical models) |
+| Appendix A | The complete 32-point cosmic-chronometer table (generated from `cosmo.py`, machine-checked point by point) |
+| Appendix B | The ten-host JWST–HST distance-modulus table (NGC 4258 anchor μ = 29.398 ± 0.025) |
+| Appendix C | Savage–Dickey systematics (chain-subset scatter, prior-volume and KDE-bandwidth robustness, the Union3 tail case) |
+| Bibliography | 25 references; the previously uncited ten bibliography entries are now all cited in the text |
+
+`audit_numbers.py` extended from 561 to **612 checks** (new: θ*, Ωm-discrepancy, decomposition, nested-cross-check, TDCOSMO, convergence, and CC-table fragments — the 32 CC points are now asserted verbatim in the full paper's Appendix A table, plus the JBP/Log model-definition fragments and the three appendix labels). Status: **612/612 pass**. Monograph unchanged (66 pages); full paper recompiled with Tectonic (**12 pages, zero errors, zero unresolved references**).
