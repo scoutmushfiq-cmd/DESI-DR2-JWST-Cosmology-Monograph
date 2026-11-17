@@ -2,7 +2,7 @@
   "H0": {
     "value": 68.17,
     "err": 0.28,
-    "source": "joint DESI DR2 + CMB LambdaCDM chain (verification/chains/chain_lcdm_desi_cmb*.npy)"
+    "source": "official DESI DR2 + CMB LambdaCDM determination (DESI Collaboration 2025a, arXiv:2503.14738); the committed chains chain_lcdm_desi_cmb*.npy give 68.35 +/- 0.33 -- the hyperbola anchors on the published value"
   },
   "rd": {
     "value": 147.09,
