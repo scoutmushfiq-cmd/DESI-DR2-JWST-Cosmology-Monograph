@@ -266,7 +266,7 @@ check("0.42 \\pm 0.09" not in readme,
 check("0.50 \\pm 0.08" in readme and "0.35 \\pm 0.11" in readme,
       "README missing dataset-specific z_c values (0.50 +- 0.08 / 0.35 +- 0.11)")
 check("58 pages" not in readme, "Round-8 m1: README still claims 58 pages")
-check("65 pages" in readme, "README missing the 65-page compile claim")
+check("66 pages" in readme, "README missing the 66-page compile claim")
 check("~59 MB" not in readme and "~92 MB" not in readme,
       "README still claims a stale chain size (~59 MB / ~92 MB)")
 check("~97 MB" in readme, "README missing the ~97 MB chain-size claim")
@@ -754,6 +754,70 @@ if os.path.exists(_scs_path):
 _vr = open(os.path.join(VER, "VERIFICATION_REPORT.md"), encoding="utf-8").read()
 check("legacy computation" in _vr and "zc" in _vr,
       "Round-15 m2: VERIFICATION_REPORT does not document the legacy z_c block")
+
+# 17. Round-16 fixes: tex-quoted scatter fragments enforced against the
+# artifact, the 'every subset' overstatement removed, and the intro-summary
+# attribution clarified.
+if os.path.exists(_scs_path):
+    check("standard deviation $0.90$" in tex and "standard deviation $0.51$" in tex
+          and "mean $2.54$" in tex and "+1.78$ to $+3.90" in tex
+          and "+2.08$ to $+3.36" in tex,
+          "Round-16 m1: tex does not quote the artifact-derived scatter numbers")
+check("every subset of the four" not in tex
+      and "four single chains and the six two-chain subsets" in tex,
+      "Round-16 m2: tex still overstates the subset coverage ('every subset')")
+check("official DESI DR2 values --- our committed chains give $68.35" in tex,
+      "Round-16 m3: intro summary still presents the published 68.17 without our-chain attribution")
+
+# 18. Round-17 fixes: submission-package staleness (VERIFICATION_REPORT §12
+# chain counts, cover-letter attribution).
+_nch = len([f for f in os.listdir(os.path.join(VER, "chains")) if f.endswith(".npy")])
+check(_nch == 39, "Round-17: expected 39 committed chains, found %d" % _nch)
+check("39 posterior chains (~97 MB)" in _readme,
+      "Round-17: README chain count/size stale")
+check("Round-17 update" in _vr and "39 posterior chains (~97 MB)" in _vr
+      and "removed in Round 14" in _vr,
+      "Round-17: VERIFICATION_REPORT section 12 not updated (17 chains / ~51 MB snapshot, orphan named)")
+_cl = open(os.path.join(ROOT, "submission", "cover_letter.md"), encoding="utf-8").read()
+check("reproduction of the official DESI DR2 inverse-distance-ladder determination" in _cl
+      and "68.35 ± 0.33" in _cl and "68.19 ± 1.45" in _cl
+      and "an inverse-distance-ladder determination H₀ = 68.17" not in _cl,
+      "Round-17: cover letter still presents the published 68.17 as an own determination")
+check("85 811" in _cl and "1.0037" in _cl and "1.014" in _cl,
+      "Round-17: cover letter convergence claims missing")
+_conv = json.load(open(os.path.join(VER, "convergence_diagnostics.json")))
+check(any(abs(v - 85811) < 1 for _l in [_conv["ess_cpl_per_chain"], _conv["ess_lcdm_per_chain"]]
+          for _seg in _l for v in (_seg if isinstance(_seg, list) else [_seg])),
+      "Round-17: ESS 85811 not found in convergence_diagnostics.json")
+
+# 19. Round-18 fixes: cross-reference integrity (the two headline figures and
+# the convergence table were never referenced in the running text).
+_all_labels = set(re.findall(r"\\label\{([^}]+)\}", tex))
+_all_labels |= set(re.findall(r"label=\{([^}]+)\}", tex))
+_all_refs = set(re.findall(r"\\ref\{([^}]+)\}", tex))
+check(not (_all_refs - _all_labels),
+      "Round-18: unresolved \\ref targets: %s" % sorted(_all_refs - _all_labels))
+check(not [l for l in _all_labels if len(re.findall(r"\\label\{%s\}" % re.escape(l), tex)) > 1],
+      "Round-18: duplicate labels in tex")
+for _req in ["fig:hubble_whisker", "fig:tension_heatmap", "tab:convergence"]:
+    check("\\ref{%s}" % _req in tex,
+          "Round-18: %s never referenced in the running text" % _req)
+
+# 20. Round-19 fixes: reproducibility drill (generator re-runs) + patch_fig7
+# idempotency guard.
+_rhat = json.load(open(os.path.join(VER, "rhat_new_chains.json")))
+check(abs(_rhat["max_rhat"] - 1.00371) < 5e-6,
+      "Round-19: rhat_new_chains.json max_rhat drifted: %s" % _rhat["max_rhat"])
+check("1.0037" in tex, "Round-19: tex no longer quotes split-Rhat 1.0037")
+_h0rd = json.load(open(os.path.join(VER, "h0rd_check.json")))
+check(_h0rd["tex_string"] == "10027 \\pm 45" and "10027 \\pm 45" in tex,
+      "Round-19: h0rd tex string drifted")
+_p7 = open(os.path.join(VER, "patch_fig7.py"), encoding="utf-8").read()
+check("already patched" in _p7 and "sys.exit(0)" in _p7,
+      "Round-19: patch_fig7.py lost the idempotency guard")
+_mff = open(os.path.join(VER, "make_fig1_fig8.py"), encoding="utf-8").read()
+check("36" in _mff and "rdfree_results.json" in _mff,
+      "Round-19: make_fig1_fig8.py 36-cell assertion missing")
 
 print("checks run:", checks)
 if fails:

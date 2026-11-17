@@ -135,6 +135,8 @@ This repository now contains the complete verification package under `verificati
 - `chains/` — all 17 posterior chains (`chain_*.npy`, ~51 MB) with fixed seeds, so every table in this report is reproducible without re-running the samplers.
 - All results JSON, driver scripts, recreated figures, and `extensions/NATURE_EXTENSIONS.tex`.
 
+**Round-17 update:** the counts above are the Round-1 snapshot; the repository now commits **39 posterior chains (~97 MB)** — including the four Mirage pairs, the Union3/Dovekie CPL+ΛCDM chains, the +TRGB/+SH0ES pipeline chains, and the two sound-horizon-free chains — plus the released generators (`make_fig1_fig8.py`, `run_sd_canonical.py`) and patch scripts (`patch_fig7.py`, `patch_fig10_fig13.py`). The stale orphan `rdfree_result.json` (singular) named in the historical sandbox list below was removed in Round 14 (superseded by `rdfree_results.json`); the sandbox-era PNG figures were superseded by the released `figs/*.pdf` set.
+
 ### Artifacts (sandbox, `/workspace/cosmos_reverify/`)
 `cosmo.py` (pipeline), `mcmc_results.json`, `stage2_checks.json`, `band_min_slaved.json`, `rdfree_result.json`, six `chain_*.npy` posterior chains, and four recreated figures: `fig_w0wa_contours.png`, `fig_gp_hz.png`, `fig_h0_forest.png`, `fig_tension_heatmap.png`.
 
@@ -441,3 +443,62 @@ Verified-clean in the same pass: the four own-pipeline CPL Δχ²_MAP values (�
 `audit_numbers.py` extended from 432 to **441 checks** (new Round-15 section: caption attribution fragments, severity-boundary alignment, chain-direct ΛCDM/w0wa values, scatter artifact values vs tex, generator + artifact existence, z_c documentation). Status: **441/441 pass**. Recompiled: **65 pages, zero errors**; official PDF rebuilt.
 
 **Limitations §8 addition (Round 15):** the z_c block of `savage_dickey_canonical.json` (medians 0.495/0.345, quoted in the tex) predates the committed scripts and is retained as a legacy computation; the lnB rows of the same artifact are fully reproducible via `run_sd_canonical.py`.
+
+## Round 16 (hostile referee, audit of the Round-15 fixes + external DESI DR2 verification) — findings and fixes
+
+Round-16 review (`submission/hostile_referee_report_round16.md`). Verdict: MINOR REVISION. All addressed:
+
+| Finding | Fix applied |
+| --- | --- |
+| m1: the audit checked `sd_chain_scatter.json` against hardcoded values but never enforced the tex-quoted scatter numbers | Audit extended: the tex fragments (standard deviation $0.90$ / $0.51$, mean $2.54$, ranges +1.78–3.90 and +2.08–3.36) are now enforced |
+| m2: the tex said "every subset of the four released chains" but only the 4 singles and 6 pairs were computed (triples omitted as complement-redundant) | Reworded to the exact coverage |
+| m3: the intro foundational-results sentence presented the published 68.17 ± 0.28 / Ωm 0.3027 ± 0.0036 without attribution, indistinguishable from an own-pipeline claim | Explicit parenthetical: official DESI DR2 values; our committed chains give 68.35 ± 0.33 / 0.3007 ± 0.0049 (Part VII-B) |
+
+External verification (published record): arXiv:2503.14738 (v3 = PRD 112, 083515) abstract — 3.1σ for DESI BAO + CMB, 2.8–4.2σ with SNe, Σmν < 0.064/0.16 eV — all matching the monograph's transcriptions; headline DESI DR2 values (68.17 ± 0.28, 0.3027 ± 0.0036; w0 −0.42 ± 0.21, wa −1.75 ± 0.58) consistent with the published record, with the compressed-baseline pair (−0.43 ± 0.22, −1.72 ± 0.64) < 0.1σ from the full-CamSpec pair as stated.
+
+`audit_numbers.py` extended from 441 to **444 checks**. Status: **444/444 pass**. Recompiled: **65 pages, zero errors**; official PDF rebuilt.
+
+## Round 17 (hostile referee, submission-package audit) — findings and fixes
+
+Round-17 review (`submission/hostile_referee_report_round17.md`). Verdict: MINOR REVISION. All addressed:
+
+| Finding | Fix applied |
+| --- | --- |
+| M1: VERIFICATION_REPORT §12 was a stale Round-1 snapshot (17 chains / ~51 MB) that named the Round-14-deleted orphan `rdfree_result.json` and sandbox-era PNG figures | Round-17 update note added: current state (39 chains, ~97 MB), generators and patch scripts named, orphan removal recorded |
+| m1: the cover letter presented the published 68.17 ± 0.28 as an own determination | Rewritten as an explicit reproduction (official value; our chains 68.35 ± 0.33, 0.4σ) plus the own sound-horizon-free determination (68.19 ± 1.45, r_d 146.36 ± 2.88) |
+| m2: the cover letter's convergence claims (R̂ ≤ 1.014, ESS ≥ 85 811, split-R̂ 1.0037) were not audit-enforced | Verified against `convergence_diagnostics.json` and the split-R̂ artifact; audit checks added (chain count 39, README/§12/cover-letter consistency) |
+
+`audit_numbers.py` extended from 444 to **450 checks**. Status: **450/450 pass**. Manuscript unchanged (65 pages).
+
+## Round 18 (hostile referee, cross-reference integrity and headline-value sweep) — findings and fixes
+
+Round-18 review (`submission/hostile_referee_report_round18.md`). Verdict: MINOR REVISION. All addressed:
+
+| Finding | Fix applied |
+| --- | --- |
+| M1: fig1 (`fig:hubble_whisker`), fig8 (`fig:tension_heatmap`), and `tab:convergence` were never referenced in the running text | Textual references added at their natural anchors; audit extended with a full label/ref integrity check (unresolved refs incl. the listings `label={...}` form, duplicate labels, mandatory references for the three floats) |
+| m2: ~15 schematic book illustrations are never `\ref`-ed | Recorded as a known presentational choice of the monograph format; the three load-bearing floats fixed in M1 |
+
+Verified-clean: zero unresolved references in the compiled 66-page PDF; no duplicate labels; no stale values; headline values consistent across abstract/intro/body.
+
+`audit_numbers.py` extended from 450 to **455 checks**. Status: **455/455 pass**. Recompiled: **66 pages, zero errors** — the three added cross-references pushed the manuscript one page past 65; page counts synced (README ×5, `.zenodo.json`, cover letter). The initial duplicate-label check counted `{label}` occurrences including `\ref{...}` matches and was corrected to count only `\label{...}` occurrences before the final audit run.
+
+## Round 19 (hostile referee, reproducibility drill) — findings and fixes
+
+Round-19 review (`submission/hostile_referee_report_round19.md`). Every re-runnable generator executed against the committed inputs:
+
+| Generator | Result |
+| --- | --- |
+| `make_fig1_fig8.py` | 36-cell assertion passes; regenerated fig1/fig8 text-identical to committed PDFs (byte diff = PDF CreationDate only) |
+| `patch_fig7.py` | **M1: not idempotent** — crashed on the already-patched figure before saving (figure never corrupted, but a reproducer hits a hard assertion). Fixed with a step-0 idempotency guard; re-run now exits 0 with "already patched", figure byte-unchanged |
+| `rhat_new_chains.py` | JSON byte-identical; max split-R̂ 1.00371 (tex: 1.0037) |
+| `h0rd_check.py` | JSON byte-identical; `10027 \pm 45` |
+| Chain inventory | 39 chains, 97 MB — matches §12 / cover letter / audit |
+
+Verdict: MINOR REVISION → fixed. The released pipeline is deterministic at the artifact level.
+
+`audit_numbers.py` extended from 455 to **460 checks** (new Round-19 section: max split-R̂ vs artifact and tex, h0rd tex string, patch_fig7 idempotency guard, make_fig1_fig8 36-cell assertion). Status: **460/460 pass**. Manuscript unchanged (66 pages).
+
+## Round 20 (final package verdict) — release readiness
+
+Round-20 review (`submission/hostile_referee_report_round20.md`). No new scientific findings; ship/no-ship sweep of the complete package: manuscript 66 pages / zero errors / zero unresolved references, both committed PDFs verified at 66 pages, audit **460/460 pass**, reproducibility drill clean (Round 19), submission kit complete (cover letter + referee template + 12 round reports), hygiene clean (160 tracked files, no secret-like paths, exclusions honored), page counts consistent everywhere. Verdict: **SHIP**. Residual documented limitations unchanged (nested lnB on SN compilations scoped to the Mirage axis; legacy z_c block; fig2 generator deferred; unreferenced schematics by design).
