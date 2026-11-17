@@ -516,3 +516,17 @@ Round-21 review (`submission/hostile_referee_report_round21.md`). Verdict: MINOR
 Verified-clean: the 73-entry reference list covers every arXiv ID cited in the running text; the abstract attributes 68.17 ± 0.28 to DESI correctly; cover letter / README / `.zenodo.json` carry no hyperbola provenance claim.
 
 `audit_numbers.py` extended from 460 to **465 checks**. Status: **465/465 pass**. Recompiled: **66 pages, zero errors**; official PDF rebuilt (caption edit did not change the page count).
+
+## Round 22 (hostile referee, data-layer transcription integrity) — findings and fixes
+
+Round-22 review (`submission/hostile_referee_report_round22.md`). Verdict: MINOR REVISION. All addressed:
+
+| Finding | Fix applied |
+| --- | --- |
+| m1: the summary's GP sentence claimed consistency with $z_c = 0.50 \pm 0.08$ without the qualifier that `gp_route_crossing.json`'s own note demands (the H(z)-route median crosses near $z \approx 0.14$; consistency holds only at the level of the wide 68% band) | Qualifier added to the summary sentence, matching the fig5 caption and the abstract bullet (which already carried it) |
+| m2: the 5.72σ figure pairs the 4-anchor ladder (73.17 ± 0.86) with Planck, but neither site stated the pairing (naive pairing with the quoted 73.04 gives 4.85σ) | "(using the 4-anchor ladder $73.17 \pm 0.86$)" added at both sites (abstract bullet + closing summary) |
+| m3: no audit check machine-compared the CC/BAO tex tables against the likelihood's data | New audit section imports `cosmo.py`, and asserts every CC point (32 × 2 checks: `H ± σ` fragment in `tab:cc_data` and the `H & σ` columns in `tab:cc_full_32`) and every BAO observable (BGS DV/rd + 6 tracers × (DM/rd, DH/rd, r_MH)) appears in the tex tables; whitespace-normalized matching |
+
+Verified-clean: 32/32 CC cells and 13/13 BAO observables match exactly between the tex tables and `cosmo.py`; GP hyperparameters (σ_f 305.09, ℓ_f 3.8853, nll 119.01), w(0) −0.9748 ± 0.0941, z_t 0.765 ± 0.083, q₀ −0.512 ± 0.131 all artifact-backed; 4.52σ and 5.53σ pairings correct.
+
+`audit_numbers.py` extended from 465 to **508 checks**. Status: **508/508 pass**. Recompiled: **66 pages, zero errors**; official PDF rebuilt (page count unchanged).

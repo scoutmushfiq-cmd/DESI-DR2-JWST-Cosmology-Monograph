@@ -837,6 +837,33 @@ check("CERT_NONE" not in _dsn and "check_hostname = False" not in _dsn,
 check("downloaded manually" in readme or "downloaded manually per" in readme,
       "Round-21: README reproduce path does not state the manual Pantheon+ fetch")
 
+# 22. Round-22 fixes: data-layer transcription integrity -- every number the
+# likelihood consumes must appear in the tex data tables (and the abstract's
+# GP/tension sentences must carry the artifact-level qualifiers).
+check("at the level of the wide $68\\%$ band" in tex
+      and "$z \\approx 0.14$" in tex,
+      "Round-22: GP route-consistency qualifier missing from the summary")
+check(tex.count("using the 4-anchor ladder $73.17 \\pm 0.86$") >= 2,
+      "Round-22: 5.72-sigma pairing not stated at both sites")
+import importlib.util as _ilu
+_spec = _ilu.spec_from_file_location("_cosmo_audit", os.path.join(VER, "cosmo.py"))
+_mod = _ilu.module_from_spec(_spec)
+_spec.loader.exec_module(_mod)
+_tex_ws = re.sub(r"\s+", " ", tex)
+for _z, _h, _s in _mod.CC_DATA:
+    check("%.1f \\pm %.1f" % (_h, _s) in _tex_ws
+          and "$%.1f$ & $%.1f$" % (_h, _s) in _tex_ws,
+          "Round-22: CC point (%.4f, %.1f +/- %.1f) missing from the tex CC tables"
+          % (_z, _h, _s))
+check(len(_mod.CC_DATA) == 32, "Round-22: CC_DATA is not 32 points")
+check("%.3f \\pm %.3f" % _mod.DV_BGS in tex,
+      "Round-22: BGS DV/rd missing from the tex BAO table")
+for _name, _z, _dm, _sm, _dh, _sh, _r in _mod.DESI_BAO[1:]:
+    check("%.3f \\pm %.3f" % (_dm, _sm) in tex and "%.3f \\pm %.3f" % (_dh, _sh) in tex
+          and ("%.3f" % _r) in tex,
+          "Round-22: BAO tracer %s values missing from the tex BAO table" % _name)
+check(len(_mod.DESI_BAO) == 7, "Round-22: DESI_BAO is not 7 tracers (13 observables)")
+
 print("checks run:", checks)
 if fails:
     print("FAILURES (%d):" % len(fails))
