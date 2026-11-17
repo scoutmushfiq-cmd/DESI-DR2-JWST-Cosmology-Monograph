@@ -900,6 +900,32 @@ if os.path.exists(_pm_path):
     check(_pm.count("\\bibitem") >= 20,
           "Round-23: prd_manuscript.tex reference list too short")
 
+# 24. Plan C, track 3: full-paper rewrite under the new title (the journal-format
+# research paper must carry the same audited values and attribution discipline).
+_fp_path = os.path.join(ROOT, "submission", "full_paper.tex")
+check(os.path.exists(_fp_path), "Round-24: full_paper.tex missing")
+if os.path.exists(_fp_path):
+    _fp = open(_fp_path, encoding="utf-8").read()
+    check("revtex4-2" in _fp and "twocolumn" in _fp,
+          "Round-24: full_paper.tex is not REVTeX two-column")
+    check("mirage axis" in _fp and "sound-horizon-free" in _fp,
+          "Round-24: full_paper.tex title fragments missing")
+    for _frag in ["68.35 \\pm 0.33", "68.19 \\pm 1.45", "146.36 \\pm 2.88",
+                  "+3.49 \\pm 0.23", "+6.74 \\pm 0.03", "10027 \\pm 45",
+                  "4.52", "5.72", "official DESI DR2", "0.3027 \\pm 0.0036",
+                  "0.126", "69.61", "0.117", "0.043", "0.365", "2.60",
+                  "0.77", "63.60 \\pm 1.91"]:
+        check(_frag in _fp, "Round-24: full_paper.tex missing %r" % _frag)
+    check("our joint DESI DR2 + CMB chain" not in _fp,
+          "Round-24: full_paper.tex repeats the Round-21 misattribution")
+    check("computed from the official DESI DR2 + CMB" in _fp
+          and "our committed chains give" in _fp,
+          "Round-24: full_paper.tex hyperbola attribution missing")
+    check(_fp.count("\\bibitem") >= 20,
+          "Round-24: full_paper.tex reference list too short")
+    check(not re.search(r"\$\^-1\$", _fp),
+          "Round-24: full_paper.tex has an unbalanced superscript (s$^{-1$ typo class)")
+
 print("checks run:", checks)
 if fails:
     print("FAILURES (%d):" % len(fails))
