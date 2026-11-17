@@ -135,6 +135,8 @@ This repository now contains the complete verification package under `verificati
 - `chains/` — all 17 posterior chains (`chain_*.npy`, ~51 MB) with fixed seeds, so every table in this report is reproducible without re-running the samplers.
 - All results JSON, driver scripts, recreated figures, and `extensions/NATURE_EXTENSIONS.tex`.
 
+**Round-17 update:** the counts above are the Round-1 snapshot; the repository now commits **39 posterior chains (~97 MB)** — including the four Mirage pairs, the Union3/Dovekie CPL+ΛCDM chains, the +TRGB/+SH0ES pipeline chains, and the two sound-horizon-free chains — plus the released generators (`make_fig1_fig8.py`, `run_sd_canonical.py`) and patch scripts (`patch_fig7.py`, `patch_fig10_fig13.py`). The stale orphan `rdfree_result.json` (singular) named in the historical sandbox list below was removed in Round 14 (superseded by `rdfree_results.json`); the sandbox-era PNG figures were superseded by the released `figs/*.pdf` set.
+
 ### Artifacts (sandbox, `/workspace/cosmos_reverify/`)
 `cosmo.py` (pipeline), `mcmc_results.json`, `stage2_checks.json`, `band_min_slaved.json`, `rdfree_result.json`, six `chain_*.npy` posterior chains, and four recreated figures: `fig_w0wa_contours.png`, `fig_gp_hz.png`, `fig_h0_forest.png`, `fig_tension_heatmap.png`.
 
@@ -455,3 +457,15 @@ Round-16 review (`submission/hostile_referee_report_round16.md`). Verdict: MINOR
 External verification (published record): arXiv:2503.14738 (v3 = PRD 112, 083515) abstract — 3.1σ for DESI BAO + CMB, 2.8–4.2σ with SNe, Σmν < 0.064/0.16 eV — all matching the monograph's transcriptions; headline DESI DR2 values (68.17 ± 0.28, 0.3027 ± 0.0036; w0 −0.42 ± 0.21, wa −1.75 ± 0.58) consistent with the published record, with the compressed-baseline pair (−0.43 ± 0.22, −1.72 ± 0.64) < 0.1σ from the full-CamSpec pair as stated.
 
 `audit_numbers.py` extended from 441 to **444 checks**. Status: **444/444 pass**. Recompiled: **65 pages, zero errors**; official PDF rebuilt.
+
+## Round 17 (hostile referee, submission-package audit) — findings and fixes
+
+Round-17 review (`submission/hostile_referee_report_round17.md`). Verdict: MINOR REVISION. All addressed:
+
+| Finding | Fix applied |
+| --- | --- |
+| M1: VERIFICATION_REPORT §12 was a stale Round-1 snapshot (17 chains / ~51 MB) that named the Round-14-deleted orphan `rdfree_result.json` and sandbox-era PNG figures | Round-17 update note added: current state (39 chains, ~97 MB), generators and patch scripts named, orphan removal recorded |
+| m1: the cover letter presented the published 68.17 ± 0.28 as an own determination | Rewritten as an explicit reproduction (official value; our chains 68.35 ± 0.33, 0.4σ) plus the own sound-horizon-free determination (68.19 ± 1.45, r_d 146.36 ± 2.88) |
+| m2: the cover letter's convergence claims (R̂ ≤ 1.014, ESS ≥ 85 811, split-R̂ 1.0037) were not audit-enforced | Verified against `convergence_diagnostics.json` and the split-R̂ artifact; audit checks added (chain count 39, README/§12/cover-letter consistency) |
+
+`audit_numbers.py` extended from 444 to **450 checks**. Status: **450/450 pass**. Manuscript unchanged (65 pages).

@@ -769,6 +769,27 @@ check("every subset of the four" not in tex
 check("official DESI DR2 values --- our committed chains give $68.35" in tex,
       "Round-16 m3: intro summary still presents the published 68.17 without our-chain attribution")
 
+# 18. Round-17 fixes: submission-package staleness (VERIFICATION_REPORT §12
+# chain counts, cover-letter attribution).
+_nch = len([f for f in os.listdir(os.path.join(VER, "chains")) if f.endswith(".npy")])
+check(_nch == 39, "Round-17: expected 39 committed chains, found %d" % _nch)
+check("39 posterior chains (~97 MB)" in _readme,
+      "Round-17: README chain count/size stale")
+check("Round-17 update" in _vr and "39 posterior chains (~97 MB)" in _vr
+      and "removed in Round 14" in _vr,
+      "Round-17: VERIFICATION_REPORT section 12 not updated (17 chains / ~51 MB snapshot, orphan named)")
+_cl = open(os.path.join(ROOT, "submission", "cover_letter.md"), encoding="utf-8").read()
+check("reproduction of the official DESI DR2 inverse-distance-ladder determination" in _cl
+      and "68.35 ± 0.33" in _cl and "68.19 ± 1.45" in _cl
+      and "an inverse-distance-ladder determination H₀ = 68.17" not in _cl,
+      "Round-17: cover letter still presents the published 68.17 as an own determination")
+check("85 811" in _cl and "1.0037" in _cl and "1.014" in _cl,
+      "Round-17: cover letter convergence claims missing")
+_conv = json.load(open(os.path.join(VER, "convergence_diagnostics.json")))
+check(any(abs(v - 85811) < 1 for _l in [_conv["ess_cpl_per_chain"], _conv["ess_lcdm_per_chain"]]
+          for _seg in _l for v in (_seg if isinstance(_seg, list) else [_seg])),
+      "Round-17: ESS 85811 not found in convergence_diagnostics.json")
+
 print("checks run:", checks)
 if fails:
     print("FAILURES (%d):" % len(fails))
