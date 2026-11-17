@@ -482,3 +482,19 @@ Round-18 review (`submission/hostile_referee_report_round18.md`). Verdict: MINOR
 Verified-clean: zero unresolved references in the compiled 66-page PDF; no duplicate labels; no stale values; headline values consistent across abstract/intro/body.
 
 `audit_numbers.py` extended from 450 to **455 checks**. Status: **455/455 pass**. Recompiled: **66 pages, zero errors** — the three added cross-references pushed the manuscript one page past 65; page counts synced (README ×5, `.zenodo.json`, cover letter). The initial duplicate-label check counted `{label}` occurrences including `\ref{...}` matches and was corrected to count only `\label{...}` occurrences before the final audit run.
+
+## Round 19 (hostile referee, reproducibility drill) — findings and fixes
+
+Round-19 review (`submission/hostile_referee_report_round19.md`). Every re-runnable generator executed against the committed inputs:
+
+| Generator | Result |
+| --- | --- |
+| `make_fig1_fig8.py` | 36-cell assertion passes; regenerated fig1/fig8 text-identical to committed PDFs (byte diff = PDF CreationDate only) |
+| `patch_fig7.py` | **M1: not idempotent** — crashed on the already-patched figure before saving (figure never corrupted, but a reproducer hits a hard assertion). Fixed with a step-0 idempotency guard; re-run now exits 0 with "already patched", figure byte-unchanged |
+| `rhat_new_chains.py` | JSON byte-identical; max split-R̂ 1.00371 (tex: 1.0037) |
+| `h0rd_check.py` | JSON byte-identical; `10027 \pm 45` |
+| Chain inventory | 39 chains, 97 MB — matches §12 / cover letter / audit |
+
+Verdict: MINOR REVISION → fixed. The released pipeline is deterministic at the artifact level.
+
+`audit_numbers.py` extended from 455 to **460 checks** (new Round-19 section: max split-R̂ vs artifact and tex, h0rd tex string, patch_fig7 idempotency guard, make_fig1_fig8 36-cell assertion). Status: **460/460 pass**. Manuscript unchanged (66 pages).

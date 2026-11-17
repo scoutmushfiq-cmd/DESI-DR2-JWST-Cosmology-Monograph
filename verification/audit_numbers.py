@@ -803,6 +803,22 @@ for _req in ["fig:hubble_whisker", "fig:tension_heatmap", "tab:convergence"]:
     check("\\ref{%s}" % _req in tex,
           "Round-18: %s never referenced in the running text" % _req)
 
+# 20. Round-19 fixes: reproducibility drill (generator re-runs) + patch_fig7
+# idempotency guard.
+_rhat = json.load(open(os.path.join(VER, "rhat_new_chains.json")))
+check(abs(_rhat["max_rhat"] - 1.00371) < 5e-6,
+      "Round-19: rhat_new_chains.json max_rhat drifted: %s" % _rhat["max_rhat"])
+check("1.0037" in tex, "Round-19: tex no longer quotes split-Rhat 1.0037")
+_h0rd = json.load(open(os.path.join(VER, "h0rd_check.json")))
+check(_h0rd["tex_string"] == "10027 \\pm 45" and "10027 \\pm 45" in tex,
+      "Round-19: h0rd tex string drifted")
+_p7 = open(os.path.join(VER, "patch_fig7.py"), encoding="utf-8").read()
+check("already patched" in _p7 and "sys.exit(0)" in _p7,
+      "Round-19: patch_fig7.py lost the idempotency guard")
+_mff = open(os.path.join(VER, "make_fig1_fig8.py"), encoding="utf-8").read()
+check("36" in _mff and "rdfree_results.json" in _mff,
+      "Round-19: make_fig1_fig8.py 36-cell assertion missing")
+
 print("checks run:", checks)
 if fails:
     print("FAILURES (%d):" % len(fails))

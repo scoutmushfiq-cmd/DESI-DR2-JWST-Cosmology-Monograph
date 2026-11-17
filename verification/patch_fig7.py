@@ -16,6 +16,8 @@ expected data coordinate, so any drift in the legacy figure is caught.
 Run from verification/:  python patch_fig7.py
 """
 import os
+import sys
+
 import pymupdf
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -40,6 +42,26 @@ def from_page(px, py):
 
 doc = pymupdf.open(FIG)
 page = doc[0]
+
+# --- 0. idempotency guard: skip cleanly if the patch is already applied -----
+SHF_COL = (0.745, 0.071, 0.235)
+def _patched_state():
+    _txt = page.get_text()
+    if "\u00b1 65" in _txt or "0.092" in _txt:
+        return False
+    _moved = []
+    for g in page.get_drawings():
+        r = g["rect"]
+        if 1.5 < r.width < 9 and 1.5 < r.height < 9 and abs(r.width - r.height) < 2.5 \
+                and r.y1 < 250 and r.x0 > 35 and g.get("fill") \
+                and all(abs(c - s) < 0.01 for c, s in zip(g["fill"], SHF_COL)):
+            _moved.append(from_page((r.x0 + r.x1) / 2, (r.y0 + r.y1) / 2))
+    return bool(_moved) and abs(_moved[-1][0] - 146.36) < 0.05 \
+        and abs(_moved[-1][1] - 68.19) < 0.05
+if _patched_state():
+    print("fig7 already patched (SHF marker at 146.36/68.19, labels corrected); nothing to do")
+    doc.close()
+    sys.exit(0)
 
 # --- 1. assert every marker position before touching anything -------------
 EXPECTED = {
@@ -66,7 +88,6 @@ print("all four legacy markers verified at their expected coordinates")
 # --- 2. move the Sound-Horizon-Free marker ---------------------------------
 SHF_OLD = to_page(146.99, 69.25)
 SHF_NEW = to_page(146.36, 68.19)
-SHF_COL = (0.745, 0.071, 0.235)
 page.draw_rect(pymupdf.Rect(SHF_OLD[0] - 4, SHF_OLD[1] - 4,
                             SHF_OLD[0] + 4, SHF_OLD[1] + 4),
                color=None, fill=(1, 1, 1), width=0)
