@@ -4,7 +4,10 @@ Round-6 minor m6: the quadrature error derivation for H0 r_d = 10027 +/- 45
 was previously given only in prose; this script makes it a released artifact.
 
 Inputs (both from released artifacts / canonical values used throughout):
-  H0  = 68.17 +/- 0.28 km/s/Mpc  (our joint DESI DR2 + CMB LambdaCDM chain)
+  H0  = 68.17 +/- 0.28 km/s/Mpc  (official DESI DR2 + CMB LambdaCDM
+        determination, DESI Collaboration 2025a, arXiv:2503.14738; note the
+        committed chains give 68.35 +/- 0.33 -- the hyperbola anchors on the
+        published value)
   r_d = 147.09 +/- 0.26 Mpc      (Planck sound horizon, fixed in all chains)
 
 Independent factors -> relative errors add in quadrature:
@@ -30,7 +33,7 @@ mc = rng.normal(H0, H0_ERR, 2_000_000) * rng.normal(RD, RD_ERR, 2_000_000)
 
 OUT = {
     "H0": {"value": H0, "err": H0_ERR,
-           "source": "joint DESI DR2 + CMB LambdaCDM chain (verification/chains/chain_lcdm_desi_cmb*.npy)"},
+           "source": "official DESI DR2 + CMB LambdaCDM determination (DESI Collaboration 2025a, arXiv:2503.14738); the committed chains chain_lcdm_desi_cmb*.npy give 68.35 +/- 0.33 -- the hyperbola anchors on the published value"},
     "rd": {"value": RD, "err": RD_ERR,
            "source": "Planck sound horizon (fixed prior mean in all chains)"},
     "H0_rd": round(prod, 1),

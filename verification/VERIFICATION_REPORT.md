@@ -502,3 +502,17 @@ Verdict: MINOR REVISION → fixed. The released pipeline is deterministic at the
 ## Round 20 (final package verdict) — release readiness
 
 Round-20 review (`submission/hostile_referee_report_round20.md`). No new scientific findings; ship/no-ship sweep of the complete package: manuscript 66 pages / zero errors / zero unresolved references, both committed PDFs verified at 66 pages, audit **460/460 pass**, reproducibility drill clean (Round 19), submission kit complete (cover letter + referee template + 12 round reports), hygiene clean (160 tracked files, no secret-like paths, exclusions honored), page counts consistent everywhere. Verdict: **SHIP**. Residual documented limitations unchanged (nested lnB on SN compilations scoped to the Mirage axis; legacy z_c block; fig2 generator deferred; unreferenced schematics by design).
+
+## Round 21 (hostile referee, provenance cross-check of figure-anchor numbers) — findings and fixes
+
+Round-21 review (`submission/hostile_referee_report_round21.md`). Verdict: MINOR REVISION. All addressed:
+
+| Finding | Fix applied |
+| --- | --- |
+| M1: the fig7 caption attributed the $H_0 r_d = 10027 \pm 45$ hyperbola to "our joint DESI DR2 + CMB chain, $H_0 = 68.17 \pm 0.28$" — but the committed chain gives 68.35 ± 0.33 (68.17 ± 0.28 is the official DESI DR2 value), contradicting the manuscript's own Part VII-B; the same false chain provenance sat in the `h0rd_check.py` docstring and the `h0rd_check.json` `H0.source` field | Caption rewritten to "computed from the official DESI DR2 + CMB $\Lambda$CDM determination ... (DESI Collaboration 2025a) ... our committed chains give $H_0 = 68.35 \pm 0.33$, Part VII-B"; `h0rd_check.py` docstring and the JSON source field now cite the published determination with the chain value noted; `h0rd_check.json` regenerated (all derived values unchanged: 10027.1 / 44.8 / 44.9) |
+| m1: the audit verified the hyperbola values but never the caption's attribution claim | New audit checks: "our joint DESI DR2 + CMB chain" absent from tex, official-value attribution + chain-value pointer present, `h0rd_check.json` source field cites the published determination |
+| m2: `download_sn_extra_data.py` disabled TLS verification (`CERT_NONE`); README reproduce path silently assumed manually fetched Pantheon+ files | Default verified SSL context restored; README reproduce paragraph now states the Union3/DES-Dovekie rebuild step and the manual Pantheon+ fetch per `verification/pantheon/README.md` |
+
+Verified-clean: the 73-entry reference list covers every arXiv ID cited in the running text; the abstract attributes 68.17 ± 0.28 to DESI correctly; cover letter / README / `.zenodo.json` carry no hyperbola provenance claim.
+
+`audit_numbers.py` extended from 460 to **465 checks**. Status: **465/465 pass**. Recompiled: **66 pages, zero errors**; official PDF rebuilt (caption edit did not change the page count).

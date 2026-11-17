@@ -819,6 +819,24 @@ _mff = open(os.path.join(VER, "make_fig1_fig8.py"), encoding="utf-8").read()
 check("36" in _mff and "rdfree_results.json" in _mff,
       "Round-19: make_fig1_fig8.py 36-cell assertion missing")
 
+# 21. Round-21 fixes: the fig7 hyperbola anchors on the official DESI DR2
+# published value, not our chain (68.35 +/- 0.33) -- provenance enforced in
+# caption, generator docstring, and artifact source field.
+check("our joint DESI DR2 + CMB chain" not in tex,
+      "Round-21: tex still attributes the fig7 hyperbola to our chain")
+check("computed from the official DESI DR2 + CMB" in tex
+      and "our committed chains give $H_0 = 68.35 \\pm 0.33" in tex,
+      "Round-21: fig7 caption missing the official-value attribution")
+_h0rdsrc = _h0rd["H0"]["source"]
+check("official DESI DR2 + CMB LambdaCDM determination" in _h0rdsrc
+      and "chain_lcdm_desi_cmb" in _h0rdsrc and "68.35 +/- 0.33" in _h0rdsrc,
+      "Round-21: h0rd_check.json H0 source still claims chain provenance for the published value")
+_dsn = open(os.path.join(VER, "download_sn_extra_data.py"), encoding="utf-8").read()
+check("CERT_NONE" not in _dsn and "check_hostname = False" not in _dsn,
+      "Round-21: download_sn_extra_data.py still disables TLS verification")
+check("downloaded manually" in readme or "downloaded manually per" in readme,
+      "Round-21: README reproduce path does not state the manual Pantheon+ fetch")
+
 print("checks run:", checks)
 if fails:
     print("FAILURES (%d):" % len(fails))
