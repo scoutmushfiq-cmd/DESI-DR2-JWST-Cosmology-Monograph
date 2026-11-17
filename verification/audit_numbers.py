@@ -914,8 +914,18 @@ if os.path.exists(_fp_path):
                   "+3.49 \\pm 0.23", "+6.74 \\pm 0.03", "10027 \\pm 45",
                   "4.52", "5.72", "official DESI DR2", "0.3027 \\pm 0.0036",
                   "0.126", "69.61", "0.117", "0.043", "0.365", "2.60",
-                  "0.77", "63.60 \\pm 1.91"]:
+                  "0.77", "63.60 \\pm 1.91",
+                  "0.0104110 \\pm 0.0000031", "0.2975 \\pm 0.0086",
+                  "0.3153 \\pm 0.0073", "29.398 \\pm 0.025",
+                  "+5.62", "+2.78 \\pm 0.42", "53.8", "+1.30", "+6.66",
+                  "73.50 \\pm 2.80", "85{,}811", "1.0037", "403{,}200",
+                  "app:cc", "app:hosts", "app:sd", "Vikman2005",
+                  "w_{\\rm JBP}(z) &= w_0 + w_a", "w_{\\rm Log}(z) = w_0 + w_a \\ln(1+z)"]:
         check(_frag in _fp, "Round-24: full_paper.tex missing %r" % _frag)
+    for _z, _h, _s in _mod.CC_DATA:
+        check("$%.4f$ & $%.1f$ & $%.1f$" % (_z, _h, _s) in _fp,
+              "Round-24: full_paper.tex CC table missing point (%.4f, %.1f +/- %.1f)"
+              % (_z, _h, _s))
     check("our joint DESI DR2 + CMB chain" not in _fp,
           "Round-24: full_paper.tex repeats the Round-21 misattribution")
     check("computed from the official DESI DR2 + CMB" in _fp

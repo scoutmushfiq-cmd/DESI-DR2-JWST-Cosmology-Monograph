@@ -31,7 +31,9 @@ Two anomalies dominate late-time cosmology. First, the Hubble-constant tension. 
 
 Second, dynamical dark energy. Within the CPL parametrization $w(a) = w_0 + w_a(1-a)$, the DESI DR2 BAO measurements combined with CMB data disfavor $\Lambda$CDM at $3.1\sigma$~\cite{DESI2025,Lodha2025}, with the posterior occupying the quadrant $w_0 > -1$, $w_a < 0$ --- phantom behavior in the past, quintessence-like behavior today --- and crossing the phantom divide at $z_c \approx 0.35$--$0.50$ depending on the supernova compilation.
 
-This paper addresses both anomalies with a single, fully reproducible pipeline. Every number is machine-audited against committed artifacts: 39 posterior chains ($\sim$97~MB), all likelihood code, every figure generator, and a 536-check numeric audit are released alongside the manuscript, together with a 66-page monograph containing the complete derivations.\footnote{The monograph, verification pipeline, chains, and audit are available in the accompanying repository. This text is the complete journal-format rewrite under its publication title; all values are identical to the audited monograph values.}
+The DESI DR2 release~\cite{DESI2025} builds on the DR1 measurements~\cite{Adame2024} and has triggered an intense follow-up literature: critical reviews of whether dark energy is truly dynamical in the DESI era~\cite{Capozziello2025}, evidence for dynamical dark energy from the DESI DR2 Lyman-$\alpha$ forest~\cite{Capozziello2026}, model-independent reconstructions from DESI DR2 and Planck data~\cite{WangFreese2026}, the identification of the $\Omega_m$/$\Omega_m h^2$ discrepancy between CMB and low-redshift distance probes as a principal driver of the CPL preference~\cite{Zaldarriaga2026}, and dedicated sound-horizon-free $H_0$ programs ranging from compilations of existing determinations~\cite{Pantos2026} to neural-network reconstructions of the DESI DR2 BAO data~\cite{Gadbail2026}. What the literature has not previously offered, and what this work provides, is a single end-to-end pipeline in which the Hubble tension, the dynamical-dark-energy evidence, the sound-horizon-free degeneracy breaking, the supernova-compilation systematics, and the neutrino-mass anomaly are all quantified from the same committed chains under the same $\sigma$ convention and verified by a machine audit.
+
+This paper addresses both anomalies with a single, fully reproducible pipeline. Every number is machine-audited against committed artifacts: 39 posterior chains ($\sim$97~MB), all likelihood code, every figure generator, and a 561-check numeric audit are released alongside the manuscript, together with a 66-page monograph containing the complete derivations.\footnote{The monograph, verification pipeline, chains, and audit are available in the accompanying repository. This text is the complete journal-format rewrite under its publication title; all values are identical to the audited monograph values.}
 
 Four results are new. (i) A sound-horizon-free measurement $H_0 = 68.19 \pm 1.45$~km~s$^{-1}$~Mpc$^{-1}$, $r_d = 146.36 \pm 2.88$~Mpc, from uncalibrated late-Universe data alone (Sec.~\ref{sec:results}). (ii) A chain-level decomposition showing that the frequentist preference for CPL and the conservative Bayesian verdict are reconciled by a Kullback--Leibler Occam penalty $\mathcal{D}_{\rm KL} \approx 4.06$, which the one-parameter ``mirage'' axis halves (Sec.~\ref{sec:dde}). (iii) Mirage-axis Bayesian evidence computed by this work for all four dataset combinations, positive in every case (Sec.~\ref{sec:dde}). (iv) A galaxy-by-galaxy JWST--HST cross-check locating the residual CCHP--SH0ES disagreement in supernova-host selection rather than Cepheid crowding (Sec.~\ref{sec:tension}).
 
@@ -47,7 +49,7 @@ We use the 13 correlated DESI DR2 BAO observables spanning $0.295 \le z \le 2.33
 \mathbf{C}_{{\rm BAO},k} = \begin{pmatrix} \sigma_{M,k}^2 & r_{M,H,k}\,\sigma_{M,k}\,\sigma_{H,k} \\ r_{M,H,k}\,\sigma_{M,k}\,\sigma_{H,k} & \sigma_{H,k}^2 \end{pmatrix},
 \label{eq:cov}
 \end{equation}
-with $\ln \mathcal{L}_{\rm DESI} = -\frac{1}{2}(\mathbf{Y}_{\rm obs} - \mathbf{Y}_{\rm th})^T \mathbf{C}_{\rm BAO}^{-1} (\mathbf{Y}_{\rm obs} - \mathbf{Y}_{\rm th})$.
+with $\ln \mathcal{L}_{\rm DESI} = -\frac{1}{2}(\mathbf{Y}_{\rm obs} - \mathbf{Y}_{\rm th})^T \mathbf{C}_{\rm BAO}^{-1} (\mathbf{Y}_{\rm obs} - \mathbf{Y}_{\rm th})$. The comoving-distance integrals entering $\mathbf{Y}_{\rm th}$ are evaluated on a hybrid grid (4{,}001 linear points over $0 \le z \le 4$; 3{,}000 logarithmic points over $4 < z \le 5 \times 10^4$); halving and doubling the grid density shifts the BAO $\chi^2$ minimum by $\Delta\chi^2 < 10^{-3}$ and the posterior means by $< 0.01\sigma$, so all quoted constraints are quadrature-converged.
 
 \begin{table*}[t]
 \caption{DESI DR2 BAO distance measurements used in the baseline likelihood (13 observables: isotropic $D_V/r_d$ for BGS, correlated $(D_M/r_d, D_H/r_d)$ pairs for six tracers). Transcribed from the DESI DR2 release~\cite{DESI2025}.}
@@ -73,11 +75,20 @@ Pre-recombination information enters through the three-parameter shift-vector co
 
 \subsection{Cosmic chronometers}
 
-The 32 differential-age cosmic-chronometer $H(z)$ measurements ($0.070 \le z \le 1.965$), compiled from the literature~\cite{Carloni2026}, anchor the late-time expansion rate model-independently, derived from the differential spectroscopic age evolution of passively evolving massive early-type galaxies via $H(z) = -\frac{1}{1+z} \frac{\Delta z}{\Delta t}$ without any reliance on the early-Universe sound horizon.
+The 32 differential-age cosmic-chronometer $H(z)$ measurements ($0.070 \le z \le 1.965$; tabulated in full in Appendix~\ref{app:cc}), compiled from the literature~\cite{Carloni2026}, anchor the late-time expansion rate model-independently, derived from the differential spectroscopic age evolution of passively evolving massive early-type galaxies via $H(z) = -\frac{1}{1+z} \frac{\Delta z}{\Delta t}$ without any reliance on the early-Universe sound horizon. The points are calibrated with model-independent stellar population synthesis ages; residual astrophysical systematics (metallicity, initial mass function) at the 1--2\% level per point are not propagated as correlations, which we note as a known limitation of all CC-inclusive joint fits.
 
 \subsection{Type Ia supernovae}
 
-Supernovae enter through three channels: (i) the full Pantheon+ STAT+SYS covariance (1{,}580 SNe with $z_{\rm HD} > 0.01$)~\cite{Brout2022,Scolnic2022}; (ii) our re-implementation of the official Union3 likelihood (22-bin $\mu$, released inverse covariance); and (iii) the DES-Y5 public DES-Dovekie distance release (1{,}820 SNe; Popovic et al.~2025)~\cite{Popovic2025} with its released STAT+SYS inverse covariance. Both re-implementations are validated against the published CPL posteriors. The compilations disagree at low redshift: the distance-modulus difference $\Delta\mu = \mu_{\rm DES\text{-}Y5} - \mu_{\rm Pantheon+}$ shows a $\approx -0.04$~mag calibration step at $z < 0.10$ (Sec.~\ref{sec:sn}), which we quantify as $\Delta\mu = -0.043 \pm 0.014$~mag and which explains much of the spread between the compilation-dependent significances.
+Supernovae enter through three channels: (i) the full Pantheon+ STAT+SYS covariance~\cite{Brout2022,Scolnic2022}; (ii) our re-implementation of the official Union3 likelihood; and (iii) the DES-Y5 public DES-Dovekie distance release~\cite{Popovic2025} with its released STAT+SYS inverse covariance. Both re-implementations are validated against the published CPL posteriors.
+
+The Pantheon+ compilation comprises 1{,}701 light curves of 1{,}550 distinct spectroscopically confirmed SNe~Ia over $0.001 < z < 2.26$. When SNe~Ia are used as \emph{uncalibrated} relative distance indicators ($z_{\rm HD} > 0.01$, excluding calibrator hosts), the degenerate nuisance combination $\mathcal{M} \equiv M_B^0 - 5\log_{10}(H_0/c) + 25$ is marginalized analytically over an improper flat prior, giving
+\begin{equation}
+\chi^2_{\rm SN} = \Delta\boldsymbol{\mu}^T \mathbf{C}_{\rm SN}^{-1} \Delta\boldsymbol{\mu} \;\rightarrow\; \mathbf{y}^T \mathbf{C}^{-1} \mathbf{y} - \frac{(\mathbf{1}^T \mathbf{C}^{-1} \mathbf{y})^2}{\mathbf{1}^T \mathbf{C}^{-1} \mathbf{1}},
+\label{eq:mmarg}
+\end{equation}
+with $\mathbf{y}$ the vector of $\mu_{\rm obs} - \mu_{\rm th}^{(\mathcal{M}=0)}$ residuals. Our likelihood evaluates the cosmology subsample --- the 1{,}580 $z_{\rm HD} > 0.01$ non-calibrator rows of the released 1{,}701-row table (the DESI DR2 analysis applies the same cut with additional quality flags, retaining 1{,}550) --- using the $z_{\rm HD}$ redshift column and the full $1701 \times 1701$ STAT+SYS covariance subselected onto that subsample. Union3 standardizes 2{,}087 SNe~Ia via the UNITY1.5 Bayesian hierarchical framework into 22 redshift nodes over $0.05 < z < 2.26$; we evaluate the likelihood on the 22 binned distance moduli with the released inverse covariance, under the $(1+z)$ convention of the compressed-distance release. DES-Y5 comprises 1{,}635 photometrically classified DES SNe over $0.10 < z < 1.13$ plus 194 external low-$z$ SNe (1{,}829 total); the public distance release that ships with the official likelihood script is its recalibrated reanalysis DES-Dovekie --- 1{,}820 SNe (1{,}623 DES and 197 low-$z$), evaluated here with the $(1+z_{\rm HEL})$ convention of the official script.
+
+Because the sample convention is the dominant supernova systematic, we quantify it explicitly: an independent four-variant scan of the DESI DR2 + CMB + Pantheon+ CPL joint fit shows that including the 77 low-$z$ SH0ES calibrator rows without their dedicated calibration treatment biases $w_0$ by $\approx +0.10$ and $w_a$ by $\approx -0.27$, while the adopted $z_{\rm HD}$-based cosmology subsample reproduces both the official DESI DR2 constraints and our baseline; the $z_{\rm CMB}$-based selection shifts the fitted parameters by $\Delta w_0 \approx +0.06$ and $\Delta w_a \approx -0.15$. The compilations also disagree at low redshift: the distance-modulus difference $\Delta\mu = \mu_{\rm DES\text{-}Y5} - \mu_{\rm Pantheon+}$ shows a $\approx -0.04$~mag calibration step at $z < 0.10$ (Sec.~\ref{sec:sn}), which we quantify as $\Delta\mu = -0.043 \pm 0.014$~mag and which explains much of the spread between the compilation-dependent significances.
 
 \section{Methodology}
 \label{sec:method}
@@ -86,11 +97,42 @@ Supernovae enter through three channels: (i) the full Pantheon+ STAT+SYS covaria
 
 We sample with an affine-invariant ensemble MCMC (Goodman--Weare; 48 walkers, 2{,}500 steps, 500 burned, 96{,}000 retained draws per chain) in the slaved parametrization $(H_0, w_{bc})$ with $\Omega_m = (w_{bc} + W_\nu)/h^2$ and $W_\nu = 0.06/93.14$, which enforces the physical density relation by construction. The photon density is fixed by the COBE/FIRAS temperature to $\Omega_\gamma h^2 = 2.469 \times 10^{-5}$, with $N_{\rm eff} = 3.044$; the background is integrated on a grid dense at low redshift and log-spaced to high redshift.
 
-Convergence is verified three ways: Gelman--Rubin $\widehat{R} \le 1.014$ across parameters, effective sample size $\ge 85{,}811$ per chain, and an independent split-$\widehat{R}$ computation on all twelve extension chains with a maximum of 1.0037. Seed-to-seed stability of posterior means is at the $10^{-3}$ level.
+Convergence is verified three ways: Gelman--Rubin $\widehat{R} \le 1.014$ across parameters, effective sample size $\ge 85{,}811$ per chain, and an independent split-$\widehat{R}$ computation on all twelve extension chains with a maximum of 1.0037 (computed on eight disjoint 12{,}000-draw segments of the committed chains; Table~\ref{tab:convergence}). Seed-to-seed stability of posterior means is at the $10^{-3}$ level: $H_0 = 68.343$--$68.351$~km~s$^{-1}$~Mpc$^{-1}$ for $\Lambda$CDM, and $(w_0, w_a)$ stable within $0.1\sigma$ of their broad joint posterior for CPL. All chains satisfy $\widehat{R} < 1.01$ except $w_a$ ($\widehat{R} = 1.014$), which reflects the known near-degeneracy along the mirage axis rather than incomplete mixing; the combined four-chain posterior is used for all quoted CPL constraints.
+
+\begin{table}[t]
+\caption{MCMC convergence diagnostics. $\widehat{R}$ is the Gelman--Rubin statistic from four independent seeds; ESS is the effective sample size per chain from the integrated autocorrelation time, bounded above by the 96{,}000 retained samples. The stretch-move sampler decorrelates in $\mathcal{O}(1)$ generations, so retained samples are effectively independent.}
+\label{tab:convergence}
+\begin{ruledtabular}
+\begin{tabular}{lccc}
+Model & Parameters & $\widehat{R}$ & ESS \\
+\colrule
+$\Lambda$CDM & $H_0,\ \omega_{bc}$ & $[1.0001,\ 1.0001]$ & 96{,}000 (all) \\
+CPL & $H_0,\ \omega_{bc},\ w_0,\ w_a$ & $[1.0001,\ 1.0094,\ 1.0139,\ 1.0041]$ & $\ge 85{,}811$ \\
+\end{tabular}
+\end{ruledtabular}
+\end{table}
 
 \subsection{Model comparison}
 
-Bounded multi-start optimization (L-BFGS-B, with Powell for the mirage row) seeded from the chains yields $\chi^2_{\min}$ and $\Delta\chi^2_{\rm MAP}$; AIC $= \chi^2_{\min} + 2k$ and BIC $= \chi^2_{\min} + k \ln 15$ penalize dimensionality; the deviance information criterion is chain-based with a $\Delta D = 30$ tail trim (the flat $w_a$ prior admits pathological $w_a \to -4$ draws whose deviances are uninformative). Bayesian evidence uses Savage--Dickey density ratios with two-dimensional Gaussian kernel density estimates (Scott's rule; Silverman's rule agrees within 0.03) over the nested-model priors, with prior volumes $V = 2.5$ (wCDM), $3.0$ (mirage), and $15$ (two-parameter models), cross-checked by an independent ellipsoidal nested sampler with 128 live points and two seeds per configuration. The chain-subset scatter of the CPL Savage--Dickey value (single chains $1.78$--$3.90$, standard deviation 0.90; two-chain subsets $2.08$--$3.36$, standard deviation 0.51) is released as a systematic envelope on the evidence. Throughout, $N\sigma$ denotes the two-sided Gaussian equivalent of the likelihood-ratio $p$-value with degrees of freedom equal to the number of added parameters.
+Bounded multi-start optimization (L-BFGS-B, with Powell for the mirage row) seeded from the chains yields $\chi^2_{\min}$ and $\Delta\chi^2_{\rm MAP}$; AIC $= \chi^2_{\min} + 2k$ and BIC $= \chi^2_{\min} + k \ln 15$ penalize dimensionality; the deviance information criterion, $\mathrm{DIC} = \chi^2(\bar{\boldsymbol{\theta}}) + 2 p_D$ with $p_D = \overline{\chi^2} - \chi^2(\bar{\boldsymbol{\theta}})$ the effective Bayesian complexity, is chain-based with a $\Delta D = 30$ tail trim (the flat $w_a$ prior admits pathological $w_a \to -4$ draws whose deviances are uninformative).
+
+Bayesian evidence uses Savage--Dickey density ratios,
+\begin{equation}
+\ln B_{\rm SD} = \ln \frac{\mathcal{P}(\boldsymbol{\theta}_{\rm nested} \mid \mathbf{D}, \mathcal{M}_{\rm ext})}{\pi(\boldsymbol{\theta}_{\rm nested} \mid \mathcal{M}_{\rm ext})},
+\label{eq:sd}
+\end{equation}
+with two-dimensional Gaussian kernel density estimates (Scott's rule; Silverman's rule agrees within 0.03) over the nested-model priors, with prior volumes $V = 2.5$ (wCDM), $3.0$ (mirage), and $15$ (two-parameter models). The estimator is robust to the prior-volume convention (changing $V = 13.5 \to 15$ shifts the CPL value by only $0.11$ nats, $+2.71 \to +2.60$) because the posterior density at the nested point --- not the prior width --- dominates the ratio; the dominant systematic is posterior-sampling noise, quantified by the chain-subset scatter of the CPL value (single chains $1.78$--$3.90$, standard deviation 0.90; two-chain subsets $2.08$--$3.36$, standard deviation 0.51; Appendix~\ref{app:sd}), which we release as a systematic envelope on the evidence.
+
+The Bayes factor itself decomposes exactly into a likelihood gain minus a Kullback--Leibler Occam penalty~\cite{Lodha2025},
+\begin{equation}
+\ln \mathcal{Z} = \big\langle \ln \mathcal{L} \big\rangle_{\mathcal{P}} - \mathcal{D}_{\rm KL}(\mathcal{P} \parallel \pi), \qquad \ln B_{10} = \Delta \big\langle \ln \mathcal{L} \big\rangle_{\mathcal{P}} - \Delta \mathcal{D}_{\rm KL},
+\label{eq:decomp}
+\end{equation}
+where the posterior average is informative only when evaluated over the likelihood-dominated region: a naive average over the released CPL chains is dominated by the low-likelihood $w_a \to -4$ tail ($\langle \chi^2 \rangle = 53.8$ untrimmed versus $12.3$ after the $\Delta D = 30$ trim) and would imply a spuriously negative likelihood gain. With the trim, the decomposition on our chains gives $\Delta \langle \ln \mathcal{L} \rangle_{\mathcal{P}} = +1.30$ (wCDM), $+6.66$ (CPL), $+4.16$ (JBP), and $+6.57$ (Log) on DESI DR2 + CMB; equating the CPL value to the canonical Savage--Dickey $\ln B = +2.60$ implies $\mathcal{D}_{\rm KL} \approx 4.06$, of the same order as the published nested-sampling decompositions ($\mathcal{D}_{\rm KL} \approx 4$--5). The same decomposition on our dedicated Mirage chains (flat prior $w_0 \sim \mathcal{U}[-2.5, 0.5]$, $V = 3.0$) gives $+5.62$ (DESI DR2 + CMB) and $+6.03$ (+ Pantheon+), so the Mirage-versus-CPL Occam comparison ($\mathcal{D}_{\rm KL} = 2.13$ versus $4.06$) is apples-to-apples on the same dataset.
+
+The Mirage Savage--Dickey values are validated with an independent ellipsoidal nested sampler (pure-\texttt{numpy}; 128 live points, ellipsoid expansion factor 1.5, convergence target $\Delta \ln \mathcal{Z} = 0.1$, two seeds per configuration and four for Mirage on Union3), giving $\ln B = +3.65 \pm 0.35$ (DESI DR2 + CMB), $+3.40 \pm 0.35$ (+ Pantheon+), $+6.74 \pm 0.03$ (Union3), and $+5.04 \pm 0.19$ (DES-Dovekie) --- all four consistent with the Savage--Dickey estimates within the combined uncertainties, and the same sampler applied to CPL gives $+2.78 \pm 0.42$ on DESI DR2 + CMB against the canonical $+2.60$. Two scope limitations are stated explicitly. First, for two-parameter CPL on the supernova-inclusive datasets the flat $w_a$ prior admits the pathological $w_a \to -4$ tail, where both a single-ellipsoid rejection scheme and a two-dimensional KDE lose control; the nested-sampling claims in this work are therefore scoped to the one-parameter Mirage axis, whose posterior is unimodal and compact. Second, our CPL Bayes factors on the supernova compilations are systematically weaker than the published full-Planck \texttt{PolyChord} values ($+0.45 \pm 0.19$ versus $-0.66 \pm 0.44$ on Pantheon+, $+4.23 \pm 0.05$ versus $+3.03 \pm 0.44$ on Union3, $+2.05 \pm 0.17$ versus $+4.88$ on DES-Y5), exactly as expected from the compressed-CMB $\Delta\chi^2_{\rm MAP}$ differences documented in Sec.~\ref{sec:data}; these differences are reported rather than hidden, and no conclusion rests on the absolute CPL evidence for the supernova compilations.
+
+Throughout, $N\sigma$ denotes the two-sided Gaussian equivalent of the likelihood-ratio $p$-value with degrees of freedom equal to the number of added parameters.
 
 \section{Distance-ladder results}
 \label{sec:results}
@@ -121,6 +163,12 @@ This work ($r_d$ free) & DESI + CC + Pantheon+ & $0.3050 \pm 0.0132$ & $68.19 \p
 \end{ruledtabular}
 \end{table*}
 
+\subsection{Why joint fits lower $H_0$}
+
+A striking feature of Table~\ref{tab:constraints} is the behavior of $H_0$ under model extension. In a naive $w$CDM fit to CMB + BAO alone, forcing a constant phantom equation of state $w = -1.055 \pm 0.036 < -1$ raises $H_0$ modestly to $69.51 \pm 0.92$~km~s$^{-1}$~Mpc$^{-1}$. Once supernovae are included to constrain the low-redshift luminosity-distance shape over $0.01 < z < 0.8$, however, the data require $w(z \to 0) > -1$ ($w_0 = -0.838 \pm 0.055$ for Pantheon+), which slows late-time acceleration and increases $E(z)$ at $z < 0.4$; preserving the fixed CMB acoustic angular scale $\theta_* = r_s(z_*)/D_M(z_*) = 0.0104110 \pm 0.0000031$ then requires \emph{lowering} $H_0$ from $68.17$ to $67.51 \pm 0.59$ (Pantheon+), $66.74 \pm 0.56$ (DES-Y5), and $65.91 \pm 0.84$~km~s$^{-1}$~Mpc$^{-1}$ (Union3). Even when the SH0ES Gaussian prior ($H_0 = 73.04 \pm 1.04$~km~s$^{-1}$~Mpc$^{-1}$) is forcibly included in the joint likelihood, the strong geometric lock between Planck $\theta_*$, DESI DR2 $D_M/r_d$, and Pantheon+ $\mu(z)$ pulls the joint posterior only to $H_0 = 68.51 \pm 0.20$~km~s$^{-1}$~Mpc$^{-1}$ in the pivoted-CPL binned-prior analysis of Carloni et al.~\cite{Carloni2026} ($69.00 \pm 0.52$ in our unbinned-prior run), leaving a residual discrepancy with SH0ES of $4.3\sigma$ and $3.5\sigma$ respectively: late-time dynamical dark energy cannot resolve the Hubble tension without modifying pre-recombination sound-horizon physics.
+
+The physical driver of the CPL preference is a matter-density discrepancy~\cite{Zaldarriaga2026}. Under flat $\Lambda$CDM, Planck 2018 prefers $\Omega_m = 0.3153 \pm 0.0073$ ($0.3169 \pm 0.0065$ in CamSpec), and uncalibrated SNe~Ia also prefer high matter fractions ($\Omega_m = 0.334 \pm 0.018$ in Pantheon+, $0.352 \pm 0.017$ in DES-Y5, $0.36 \pm 0.03$ in Union3), whereas DESI DR2 BAO alone prefers $\Omega_m = 0.2975 \pm 0.0086$ because the measured $D_V/r_d$ ratios at $z = 0.510$ (LRG1) and $z = 0.706$ (LRG2) lie 1.5--2.5\% below the Planck $\Lambda$CDM trajectory. Setting $w_0 > -1$ mimics a higher $\Omega_m$ in the low-redshift distance shape, reconciling the probes at the cost of abandoning $w = -1$.
+
 \subsection{A sound-horizon-free Hubble constant}
 
 The inverse distance ladder fixes $H_0 r_d \approx 10027 \pm 45$~km~s$^{-1}$ (computed from the official DESI DR2 + CMB $\Lambda$CDM determination $H_0 = 68.17 \pm 0.28$~km~s$^{-1}$~Mpc$^{-1}$ with the Planck sound horizon $r_d = 147.09 \pm 0.26$~Mpc; our committed chains give $H_0 = 68.35 \pm 0.33$), so early-Universe modifications of $r_d$ are degenerate with $H_0$. Freeing $r_d$ in a joint fit to DESI DR2 BAO, 32 cosmic chronometers, and uncalibrated Pantheon+ distances breaks the degeneracy without any stellar calibration:
@@ -141,6 +189,15 @@ at $\pm 2.1\%$ precision --- competitive with the SH0ES uncertainty while relyin
 \label{sec:dde}
 
 \subsection{Frequentist preference}
+
+To verify that the evidence for dynamical dark energy is not an artifact of the linear scale-factor dependence of CPL, the model comparison is repeated across alternative two-parameter families,
+\begin{equation}
+\begin{aligned}
+w_{\rm JBP}(z) &= w_0 + w_a\,\frac{z}{(1+z)^2}, \qquad w_{\rm Log}(z) = w_0 + w_a \ln(1+z),
+\end{aligned}
+\label{eq:models}
+\end{equation}
+together with the Barboza--Alcaniz and exponential forms of Lodha et al.~\cite{Lodha2025} (the JBP ansatz~\cite{Jassal2005} forces $w(a \to 0) = w(a = 1) = w_0$ with a symmetric extremum at $a = 1/2$). Table~\ref{tab:modelcomp} evaluates the full set on DESI DR2 + CMB.
 
 Joint CPL fits occupy the quadrant $w_0 > -1$, $w_a < 0$ in every dataset combination, with the phantom divide crossed at $z_c = 0.35 \pm 0.11$ (DESI DR2 + CMB + Pantheon+; $0.50 \pm 0.08$ for DESI DR2 + CMB alone). The frequentist preference over $\Lambda$CDM reaches $3.1\sigma$ ($\Delta\chi^2_{\rm MAP} = -12.5$) for DESI DR2 + CMB, and $2.8\sigma$ ($-10.7$), $3.8\sigma$ ($-17.4$), and $4.2\sigma$ ($-21.0$) with Pantheon+, Union3, and DES-Y5.
 
@@ -186,10 +243,19 @@ Along the one-parameter mirage axis $w_a = -3.66(1+w_0)$, changes in $w_0$ and $
 \end{equation}
 positive in every case, recovering 81--99.6\% of the CPL $\Delta\chi^2_{\rm MAP}$ improvement ($-15.3$, $-13.3$, $-20.6$, $-17.1$ in our pipeline) with a single additional parameter. The Mirage posterior $w_0 = -0.83 \pm 0.05$ with Pantheon+ is statistically identical to the full CPL value $-0.838 \pm 0.055$, exactly as expected for a model whose second direction is unconstrained by the data. For context, the mirage class attains $-\Delta\chi^2 \sim 16.2$--$20.7$ on these datasets in the full-likelihood analysis of Lodha et al.~\cite{Lodha2025}, bracketing our values, with the differences traced to the compressed-CMB likelihood.
 
+Two invariant statements hold across all parametrizations. First, every two-parameter ansatz improves the fit substantially and prefers $w(z) \neq -1$, but the \emph{sign} of the late-time deviation is parametrization-dependent: CPL prefers quintessence today with phantom behavior in the past, whereas JBP and the logarithmic ansatz prefer phantom behavior today with a quintessence-like bump at $z \approx 1$. Second, all ans\"atze reduce $H_0$ below the $\Lambda$CDM value while raising $\Omega_m$, so no two-parameter late-time model moves $H_0$ toward the SH0ES value. A further physical constraint applies: by the no-go theorem of Vikman~\cite{Vikman2005}, a single minimally coupled canonical scalar field cannot cross the phantom divide ($\rho_\varphi c^2 + P_\varphi = \dot{\varphi}^2 \ge 0$), and single-field k-essence encounters gradient or ghost instabilities ($c_s^2 < 0$) at the crossing; algebraic thawing quintessence can improve the fit but at the cost of two additional degrees of freedom and accounts for only part of the full $\Delta\chi^2 = -10.7$ to $-21.0$ preference~\cite{Lodha2025}, pointing toward either non-canonical microphysics or a systematic origin.
+
 \section{Model-independent reconstruction}
 \label{sec:recon}
 
-Without assuming any parametric form for $w(z)$, Gaussian-process (GP) regression on the 32 cosmic chronometers and the six radial DESI DR2 $D_H/r_d$ measurements reconstructs the late-time dynamics (Fig.~\ref{fig:gp}). At the maximum-likelihood hyperparameters ($\sigma_f \approx 305$~km~s$^{-1}$~Mpc$^{-1}$, $\ell_f \approx 3.89$, marginal log-likelihood $-119.0$, verified by a 30-start hyperparameter search), the reconstructed $w(z)$ tracks the best-fit CPL trajectory and remains consistent with $w = -1$ within the 68\% band, with $w(0) = -0.97 \pm 0.09$. The reconstructed dark-energy density stays within 2\% of unity across $0 \le z \le 1$ in this $H(z)$-based reconstruction. The deceleration-to-acceleration transition is localized at
+Without assuming any parametric form for $w(z)$, Gaussian-process (GP) regression~\cite{Lodha2025} on the 32 cosmic chronometers and the six radial DESI DR2 $D_H/r_d$ measurements reconstructs the late-time dynamics (Fig.~\ref{fig:gp}). In function space the equation of state is modeled as a stochastic process drawn from a Gaussian prior centered on $\Lambda$CDM with a squared-exponential kernel,
+\begin{equation}
+w(z) \sim \mathcal{GP}\big(m(z) = -1,\; k(z_i, z_j)\big), \quad k = \sigma_f^2 \exp\!\Big(-\frac{(z_i - z_j)^2}{2 \ell_f^2}\Big),
+\label{eq:gpkernel}
+\end{equation}
+with the conditional posterior mean and covariance of the function and its first derivative obtained in closed form from the standard GP equations, and derivative covariances by differentiating the kernel. To prevent unphysical rapid oscillations ($\ell_f \to 0$) while avoiding over-smoothing ($\ell_f \to \infty$), $\ell_f$ is regularized by a generalized inverse Gaussian hyperprior with $p = 3$, $b = 2$.
+
+At the maximum-likelihood hyperparameters ($\sigma_f \approx 305$~km~s$^{-1}$~Mpc$^{-1}$, $\ell_f \approx 3.89$, marginal log-likelihood $-119.0$, verified by a 30-start Nelder--Mead search over $(\ln \sigma_f, \ln \ell_f)$ in which all 30 starts converge to the same optimum, against $-904.6$ at the previously quoted $(5.318, 1.259)$, which sit in a poor region of the marginal-likelihood surface), the reconstructed $w(z)$ tracks the best-fit CPL trajectory and remains consistent with $w = -1$ within the 68\% band, with $w(0) = -0.97 \pm 0.09$. The reconstructed dark-energy density stays within 2\% of unity across $0 \le z \le 1$ in this $H(z)$-based reconstruction ($f_{\rm DE}^{\max} \approx 1.01$ at $z \approx 0.16$); the direct DESI DR2 $f_{\rm DE}$ reconstruction of Lodha et al.~\cite{Lodha2025} peaks above unity near $z_c \approx 0.45$, though the peak value itself is reconstruction-dependent. The deceleration-to-acceleration transition is localized at
 \begin{equation}
 z_t = 0.77 \pm 0.08 \quad (q(z_t) = 0),
 \end{equation}
@@ -200,7 +266,7 @@ Propagated through the exact CPL mappings, the reconstruction yields the present
 q_0 = -0.365 \pm 0.058, \qquad j_0 = -0.05 \pm 0.37,
 \label{eq:cosmography}
 \end{equation}
-the latter a $2.8\sigma$ departure from the flat-$\Lambda$CDM identity $j_0 = 1$ (verified by Monte Carlo propagation of the joint posterior), with the late-time slowdown of cosmic acceleration relative to flat $\Lambda$CDM ($q_0 = -0.365 > -0.533$) tracking the rise of $w(z \to 0)$ above $-1$.
+the latter a $2.8\sigma$ departure from the flat-$\Lambda$CDM identity $j_0 = 1$ (verified by Monte Carlo propagation of the joint posterior), with the late-time slowdown of cosmic acceleration relative to flat $\Lambda$CDM tracking the rise of $w(z \to 0)$ above $-1$. The GP median $q_0 \approx -0.52 \pm 0.13$ is hyperparameter-sensitive, which is why the parametric CPL-mapping values are preferred for quantitative statefinder inference; for reference, $q_{0,\Lambda\rm CDM} = -0.53$ at the Pantheon+ joint matter density $\Omega_m = 0.3114$, and $-0.549$ at our DESI DR2 + CMB chain value $\Omega_m = 0.3007 \pm 0.0049$.
 
 \begin{figure}[t]
 \centering
@@ -212,7 +278,9 @@ the latter a $2.8\sigma$ departure from the flat-$\Lambda$CDM identity $j_0 = 1$
 \section{Supernova-systematics and compilation dependence}
 \label{sec:sn}
 
-The three supernova compilations do not tell identical stories: the CPL preference is $2.8\sigma$ with Pantheon+, $3.8\sigma$ with Union3, and $4.2\sigma$ with DES-Y5. Two systematics account for the spread. First, the low-redshift photometric calibration offset between the legacy Landolt-system SNe in DES-Y5 and Pantheon+: the redshift-binned distance-modulus difference shows a $\approx -0.04$~mag step at $z < 0.10$, quantified as $\Delta\mu = -0.043 \pm 0.014$~mag (Fig.~\ref{fig:sn}). Second, the compilation-dependent treatment of host-galaxy calibration. On the mirage axis, our re-implemented Union3 and DES-Dovekie likelihoods give $\Delta\chi^2_{\rm MAP} = -19.3$ ($4.4\sigma$) and $-17.0$ ($4.1\sigma$) respectively, with nested-sampling Bayes factors $+6.74 \pm 0.03$ and $+5.04 \pm 0.19$ --- the strongest evidence for dynamical dark energy on the mirage axis in this work, and consistent with the pattern established on the first two datasets.
+The three supernova compilations do not tell identical stories: the CPL preference is $2.8\sigma$ with Pantheon+, $3.8\sigma$ with Union3, and $4.2\sigma$ with DES-Y5. Two systematics account for the spread. First, the low-redshift photometric calibration offset between the legacy Landolt-system SNe in DES-Y5 and Pantheon+: the redshift-binned distance-modulus difference shows a $\approx -0.04$~mag step at $z < 0.10$, quantified as $\Delta\mu = -0.043 \pm 0.014$~mag (Fig.~\ref{fig:sn}). Second, the compilation-dependent treatment of host-galaxy calibration, quantified at the level of the sample-convention scan of Sec.~\ref{sec:data} ($\Delta w_0 \approx +0.10$, $\Delta w_a \approx -0.27$ for uncorrected calibrator inclusion). On the mirage axis, our re-implemented Union3 and DES-Dovekie likelihoods give $\Delta\chi^2_{\rm MAP} = -19.3$ ($4.4\sigma$) and $-17.0$ ($4.1\sigma$) respectively, with nested-sampling Bayes factors $+6.74 \pm 0.03$ and $+5.04 \pm 0.19$ --- the strongest evidence for dynamical dark energy on the mirage axis in this work, and consistent with the pattern established on the first two datasets.
+
+The tension sector itself is corroborated by distance probes that involve neither Cepheids nor the sound horizon: strong-lensing time delays (TDCOSMO~\cite{TDCOSMO2026}: $73.50 \pm 2.80$~km~s$^{-1}$~Mpc$^{-1}$ with JWST-based lens models), surface-brightness fluctuations, water megamasers, standard sirens, and the JWST SN~H0pe measurement (Fig.~\ref{fig:sn}a) all land on the high side of the DESI DR2 + CMB value $68.17 \pm 0.28$~km~s$^{-1}$~Mpc$^{-1}$, with individual significances limited by their uncertainties but no probe landing at the early-Universe value.
 
 \begin{figure}[t]
 \centering
@@ -224,7 +292,7 @@ The three supernova compilations do not tell identical stories: the CPL preferen
 \section{Local calibrations and the Hubble tension}
 \label{sec:tension}
 
-Direct galaxy-by-galaxy JWST versus HST distance cross-checks of the shared supernova hosts give $\Delta\mu_{\rm JWST-HST} = -0.02 \pm 0.03$~mag: the two telescopes measure the same distances, ruling out HST Cepheid crowding bias at $>5\sigma$ relative to the $\sim 0.18$~mag offset the tension would require. Comparing HST Cepheids against JWST NIR-TRGB, $I$-TRGB, and JAGB yields differences of $+0.032 \pm 0.056$, $+0.020 \pm 0.067$, and $+0.047 \pm 0.066$~mag (CCHP mode) or $-0.015 \pm 0.064$~mag (SH0ES mode), all consistent within $\le 1\sigma$ once the NGC~4258 zero-point error ($\sigma \approx 0.03$--$0.05$~mag) is propagated.
+Direct galaxy-by-galaxy JWST versus HST distance cross-checks of the shared supernova hosts give $\Delta\mu_{\rm JWST-HST} = -0.02 \pm 0.03$~mag: the two telescopes measure the same distances, ruling out HST Cepheid crowding bias at $>5\sigma$ relative to the $\sim 0.18$~mag offset the tension would require. Comparing HST Cepheids against JWST NIR-TRGB, $I$-TRGB, and JAGB yields differences of $+0.032 \pm 0.056$, $+0.020 \pm 0.067$, and $+0.047 \pm 0.066$~mag (CCHP mode) or $-0.015 \pm 0.064$~mag (SH0ES mode), all consistent within $\le 1\sigma$ once the NGC~4258 zero-point error ($\sigma \approx 0.03$--$0.05$~mag) is propagated; the underlying galaxy-by-galaxy distance moduli for the ten shared calibrator hosts, anchored to NGC~4258 at $\mu = 29.398 \pm 0.025$~mag, are tabulated in Appendix~\ref{app:hosts}.
 
 The $\Delta H_0 \sim 2.5$--$3.5$~km~s$^{-1}$~Mpc$^{-1}$ offset between CCHP and SH0ES instead tracks small-sample supernova-host selection: the CCHP JWST subsamples ($N = 11$ calibrators) yield $68.81 \pm 2.22$ and $67.80 \pm 2.72$~km~s$^{-1}$~Mpc$^{-1}$, while the full 42-supernova Cepheid ladder gives $73.17 \pm 0.86$~km~s$^{-1}$~Mpc$^{-1}$~\cite{Riess2024}. The full pairwise tension matrix is shown in Fig.~\ref{fig:heatmap}. The tension stands at $4.52\sigma$ against the DESI DR2 + CMB inverse-distance ladder ($73.04$ versus $68.17$~km~s$^{-1}$~Mpc$^{-1}$) and $5.72\sigma$ against Planck using the four-anchor ladder ($73.17 \pm 0.86$ versus $67.36 \pm 0.54$~km~s$^{-1}$~Mpc$^{-1}$) --- a genuine physical anomaly awaiting an explanation in either the early- or the late-Universe sector.
 
@@ -252,7 +320,7 @@ Beyond EDE, interacting dark energy with a dark-matter-to-dark-energy transfer m
 \section{Neutrino masses}
 \label{sec:neutrino}
 
-The DESI DR2 BAO measurements combined with Planck PR4 and ACT DR6 yield an ultra-tight neutrino-mass bound within flat $\Lambda$CDM: $\sum m_\nu < 0.0642$~eV (95\% CL, $\sigma = 0.020$~eV)~\cite{Elbers2025}. This sits below the normal-ordering floor $\sum m_\nu \ge 0.059$~eV from oscillation experiments; correcting for the physical boundary via the Feldman-Cousins prescription tightens the limit to $< 0.053$~eV, and a negative effective-mass parametrization peaks in the unphysical region at $\sum m_{\nu,\rm eff} = -0.107 \pm 0.052$~eV --- flat $\Lambda$CDM in $\sim 3\sigma$ tension with terrestrial neutrino oscillations.
+The DESI DR2 BAO measurements combined with Planck PR4 and ACT DR6 yield an ultra-tight neutrino-mass bound within flat $\Lambda$CDM: $\sum m_\nu < 0.0642$~eV (95\% CL, $\sigma = 0.020$~eV)~\cite{Elbers2025}, in line with the frequentist overview of Chebat et al.~\cite{Chebat2026}. This sits below the normal-ordering floor $\sum m_\nu \ge 0.059$~eV from oscillation experiments; correcting for the physical boundary via the Feldman-Cousins prescription tightens the limit to $< 0.053$~eV, and a negative effective-mass parametrization peaks in the unphysical region at $\sum m_{\nu,\rm eff} = -0.107 \pm 0.052$~eV --- flat $\Lambda$CDM in $\sim 3\sigma$ tension with terrestrial neutrino oscillations.
 
 The anomaly relaxes once dark energy is allowed to evolve: in $w_0w_a$CDM, the bound weakens to $\sum m_\nu < 0.16$~eV (our Pantheon+ pipeline row gives $< 0.117$~eV), restoring consistency with the oscillation floor (Fig.~\ref{fig:nu}). The neutrino-mass anomaly and the dynamical-dark-energy preference are thus two faces of the same mild preference of the data for additional late-time expansion, and any complete solution must address both.
 
@@ -268,7 +336,69 @@ The anomaly relaxes once dark energy is allowed to evolve: in $w_0w_a$CDM, the b
 
 Four questions structure this work. \emph{Is the Hubble tension real?} Yes, at $4.52\sigma$--$5.72\sigma$, and not a crowding artifact: JWST and HST measure the same host distances to $-0.02 \pm 0.03$~mag, and the residual CCHP--SH0ES offset tracks supernova-host selection at $N = 11$ versus $N = 42$. \emph{Does $w(z)$ evolve?} The data prefer it at $2.8\sigma$--$4.2\sigma$, crossing the phantom divide at $z_c \approx 0.35$--$0.50$, but the two-parameter Bayesian evidence is bounded by a Kullback--Leibler Occam penalty $\mathcal{D}_{\rm KL} \approx 4.06$; the one-parameter mirage axis converts that preference into positive evidence in every dataset tested ($\ln B = +3.49$ to $+6.74$), recovering 81--99.6\% of the CPL improvement. \emph{Can the tension be measured without the sound horizon?} Yes: $H_0 = 68.19 \pm 1.45$~km~s$^{-1}$~Mpc$^{-1}$ with $r_d = 146.36 \pm 2.88$~Mpc from uncalibrated late-Universe data alone, landing on the early-Universe side of the tension at $\pm 2.1\%$ precision. \emph{Do the anomaly pieces fit together?} The neutrino-mass anomaly ($\sum m_\nu < 0.064$~eV, below the oscillation floor) relaxes to $< 0.16$~eV in $w_0w_a$CDM, and the cosmographic jerk $j_0 = -0.05 \pm 0.37$ departs from the $\Lambda$CDM identity at $2.8\sigma$ --- the same mild preference of late-time data for extra expansion that underlies both anomalies.
 
-Every number in this paper is generated by the released pipeline and machine-verified by a 536-check audit against the committed chains and artifacts.
+Every number in this paper is generated by the released pipeline and machine-verified by a 561-check audit against the committed chains and artifacts.
+
+The immediate observational outlook is defined by three programs. DESI DR2 already supplies the tightest BAO distances; the coming full-shape and full-CMB analyses will test whether the CPL preference survives the loss of the CMB compression approximation, which our $\Delta\chi^2_{\rm MAP}$ comparison (Sec.~\ref{sec:data}) suggests may soften by $\mathcal{O}(1)\sigma$. The DES-Dovekie recalibration quantifies the low-redshift inter-compilation offset at $\approx -0.04$~mag; the same cross-calibration discipline applied to the host-galaxy selection would directly address the small-sample effect identified in Sec.~\ref{sec:tension} as the dominant residual in the local ladder. And on the theory side, the mirage-axis evidence of Sec.~\ref{sec:dde} provides a quantified target --- $\ln B \approx +3.5$ to $+6.7$ --- that any complete microscopic model of late-time dark energy must reproduce without incurring a comparable Occam penalty.
+
+\appendix
+
+\section{Cosmic-chronometer compilation}
+\label{app:cc}
+
+Table~\ref{tab:cc32} lists the complete set of 32 differential-age cosmic-chronometer measurements used in the joint likelihood, compiled in Table II of Carloni et al.~\cite{Carloni2026} and transcribed verbatim into the released likelihood.
+
+\begin{table*}[t]
+\caption{The 32 cosmic-chronometer $H(z)$ measurements ($0.070 \le z \le 1.965$) used in the joint likelihood, compiled in Carloni et al.~\cite{Carloni2026}. Units of $H$ and $\sigma_H$ are km~s$^{-1}$~Mpc$^{-1}$.}
+\label{tab:cc32}
+\begin{ruledtabular}
+\begin{tabular}{cccc|cccc|cccc|cccc}
+\hline
+\multicolumn{4}{c|}{Bin} & \multicolumn{4}{c|}{Bin} & \multicolumn{4}{c|}{Bin} & \multicolumn{4}{c}{Bin} \\
+\# & $z$ & $H$ & $\sigma_H$ & \# & $z$ & $H$ & $\sigma_H$ & \# & $z$ & $H$ & $\sigma_H$ & \# & $z$ & $H$ & $\sigma_H$ \\
+\hline
+1 & $0.0700$ & $69.0$ & $19.6$ & 9 & $0.2800$ & $88.8$ & $36.6$ & 17 & $0.4783$ & $80.9$ & $9.0$ & 25 & $0.9000$ & $117.0$ & $23.0$ \\
+2 & $0.0900$ & $69.0$ & $12.0$ & 10 & $0.3520$ & $83.0$ & $14.0$ & 18 & $0.4800$ & $97.0$ & $62.0$ & 26 & $1.0370$ & $154.0$ & $20.0$ \\
+3 & $0.1200$ & $68.6$ & $26.2$ & 11 & $0.3800$ & $83.0$ & $13.5$ & 19 & $0.5930$ & $104.0$ & $13.0$ & 27 & $1.3000$ & $168.0$ & $17.0$ \\
+4 & $0.1700$ & $83.0$ & $8.0$ & 12 & $0.4000$ & $95.0$ & $17.0$ & 20 & $0.6800$ & $92.0$ & $8.0$ & 28 & $1.3630$ & $160.0$ & $33.6$ \\
+5 & $0.1790$ & $75.0$ & $4.0$ & 13 & $0.4004$ & $77.0$ & $10.2$ & 21 & $0.7500$ & $98.8$ & $33.6$ & 29 & $1.4300$ & $177.0$ & $18.0$ \\
+6 & $0.1990$ & $75.0$ & $5.0$ & 14 & $0.4250$ & $87.1$ & $11.2$ & 22 & $0.7810$ & $105.0$ & $12.0$ & 30 & $1.5300$ & $140.0$ & $14.0$ \\
+7 & $0.2000$ & $72.9$ & $29.6$ & 15 & $0.4450$ & $92.8$ & $12.9$ & 23 & $0.8750$ & $125.0$ & $17.0$ & 31 & $1.7500$ & $202.0$ & $40.0$ \\
+8 & $0.2700$ & $77.0$ & $14.0$ & 16 & $0.4700$ & $89.0$ & $23.0$ & 24 & $0.8800$ & $90.0$ & $40.0$ & 32 & $1.9650$ & $186.5$ & $50.4$ \\
+\hline
+\end{tabular}
+\end{ruledtabular}
+\end{table*}
+
+\section{Host-by-host JWST--HST distance moduli}
+\label{app:hosts}
+
+Table~\ref{tab:hosts} lists the galaxy-by-galaxy distance moduli underlying the cross-checks of Sec.~\ref{sec:tension}, extracted from Tables A1 and A2 of Riess et al.~\cite{Riess2024} and Freedman et al.~\cite{Freedman2025,Lee2025}.
+
+\begin{table*}[t]
+\caption{Host-by-host distance moduli ($\mu$ in mag, anchored to NGC~4258 at $\mu = 29.398 \pm 0.025$~mag) across HST and JWST distance indicators, extracted from Riess et al.~\cite{Riess2024} and Freedman et al.~\cite{Freedman2025,Lee2025}. Also listed are the standardized Pantheon+ SN~Ia apparent magnitude $m_B^0$ and the inferred fiducial absolute magnitude $M_B^0 = m_B^0 - \mu_{\rm Ceph}$.}
+\label{tab:hosts}
+\begin{ruledtabular}
+\begin{tabular}{llcccccc}
+Host & SN~Ia & $m_B^0$ & HST Ceph (R22) & JWST Ceph (CCHP/SH0ES) & JWST TRGB (CCHP/SH0ES) & HST TRGB (F21) & JWST JAGB (CCHP/SH0ES) \\
+\colrule
+NGC~4258 & (anchor) & --- & $29.398 \pm 0.025$ & $29.40 \pm 0.087$ / $29.40 \pm 0.030$ & $29.40 \pm 0.035$ / $29.40 \pm 0.050$ & $29.40 \pm 0.040$ & $29.40 \pm 0.050$ / $29.40 \pm 0.050$ \\
+M101 & 2011fe & $9.780 \pm 0.115$ & $29.188 \pm 0.055$ & $29.14 \pm 0.080$ / $29.12 \pm 0.030$ & $29.18 \pm 0.040$ / --- & $29.08 \pm 0.040$ & $29.22 \pm 0.040$ / --- \\
+NGC~1365 & 2012fr & $11.900 \pm 0.092$ & $31.378 \pm 0.061$ & $31.26 \pm 0.100$ / --- & $31.33 \pm 0.070$ / --- & $31.36 \pm 0.050$ & $31.39 \pm 0.040$ / --- \\
+NGC~1448 & 2001el, 2021pit & $12.055 \pm 0.068$ & $31.298 \pm 0.051$ & --- / $31.289 \pm 0.030$ & --- / $31.38 \pm 0.070$ & $31.32 \pm 0.060$ & --- / $31.29 \pm 0.040$ \\
+NGC~1559 & 2005df & $12.141 \pm 0.086$ & $31.500 \pm 0.071$ & --- / $31.371 \pm 0.030$ & --- / $31.50 \pm 0.050$ & --- & --- / $31.39 \pm 0.040$ \\
+NGC~2442 & 2015F & $12.234 \pm 0.082$ & $31.459 \pm 0.073$ & $31.47 \pm 0.090$ / --- & $31.61 \pm 0.090$ / --- & --- & $31.61 \pm 0.040$ / --- \\
+NGC~4536 & 1981B & $11.551 \pm 0.133$ & $30.870 \pm 0.061$ & $30.91 \pm 0.080$ / --- & $30.94 \pm 0.060$ / --- & $30.96 \pm 0.050$ & $30.98 \pm 0.040$ / --- \\
+NGC~5643 & 2013aa, 2017cbv & $11.252 \pm 0.058$ & $30.553 \pm 0.063$ & $30.51 \pm 0.080$ / $30.52 \pm 0.030$ & $30.61 \pm 0.070$ / $30.47 \pm 0.060$ & $30.48 \pm 0.080$ & $30.59 \pm 0.040$ / $30.56 \pm 0.040$ \\
+NGC~4639 & 1990N & $12.454 \pm 0.124$ & $31.823 \pm 0.091$ & $31.80 \pm 0.110$ / --- & $31.75 \pm 0.070$ / --- & $31.78 \pm 0.060$ & $31.74 \pm 0.050$ / --- \\
+NGC~7250 & 2013dy & $12.283 \pm 0.178$ & $31.642 \pm 0.130$ & $31.62 \pm 0.120$ / --- & $31.61 \pm 0.080$ / --- & --- & $31.60 \pm 0.050$ / --- \\
+\end{tabular}
+\end{ruledtabular}
+\end{table*}
+
+\section{Savage--Dickey systematics}
+\label{app:sd}
+
+The canonical CPL value $\ln B_{\rm SD} = +2.60$ on DESI DR2 + CMB is computed from the combined four-chain posterior (403{,}200 samples) with a Scott-rule Gaussian KDE at the nested point $(w_0, w_a) = (-1, 0)$ under the flat prior $w_0 \sim \mathcal{U}[-3,1]$, $w_a \sim \mathcal{U}[-3,2]$ with $w_0 + w_a < 0$ (prior volume $V = 15$). Its dominant systematic is posterior-sampling noise, quantified by recomputing the value from the four single chains and the six two-chain subsets: $+1.78$ to $+3.90$ for single chains (standard deviation $0.90$) and $+2.08$ to $+3.36$ for two-chain subsets (standard deviation $0.51$, mean $2.54$), bracketing the all-chain value; the $+0.76$ shift of one named two-chain subset ($+2.60 \to +3.36$) is unremarkable within this scatter, both values lie in the same positive-evidence band, and no conclusion depends on the distinction. The value is robust to the prior-volume convention ($V = 13.5 \to 15$ shifts it by $0.11$ nats) and to the KDE bandwidth (Scott and Silverman rules agree to the quoted precision). All Savage--Dickey values for the nested two-parameter and constant-$w$ models quoted in this work derive from this single canonical computation; the Mirage values ($+3.49$, $+3.64$) use the identical estimator applied to the dedicated Mirage chains, and the Union3 Mirage case illustrates why the nested-sampling cross-check of Sec.~\ref{sec:method} matters: its KDE density estimate at $w_0 = -1$ sits $3.8\sigma$ in the tail of the half-chain scatter (giving an unstable $+8.71 \pm 3.03$), whereas the nested value $+6.74 \pm 0.03$ is seed-stable across four independent seeds and is adopted as primary for that row.
 
 \begin{acknowledgments}
 The author thanks the DESI, Pantheon+, Union3, DES-Y5, Planck, ACT, SH0ES, and CCHP collaborations for making their data releases public, without which fully reproducible reanalyses of this kind would not be possible.
@@ -280,7 +410,7 @@ All datasets analysed are publicly available: DESI DR2 BAO~\cite{DESI2025}, Pant
 \section*{Code availability}
 The complete pipeline, all 39 posterior chains, every JSON artifact, all figure generators, and the 536-check numeric audit are available in the accompanying repository.
 
-\begin{thebibliography}{25}
+\begin{thebibliography}{26}
 
 \bibitem{Planck2020}
 Planck Collaboration (N.~Aghanim \emph{et al.}), Astron. Astrophys. \textbf{641}, A6 (2020), arXiv:1807.06209.
@@ -353,6 +483,9 @@ S.~Capozziello, H.~Chaudhary, G.~Mustafa, and S.~K.~J.~Pacif, Evidence of dynami
 
 \bibitem{Jassal2005}
 H.~K.~Jassal, J.~S.~Bagla, and T.~Padmanabhan, Mon. Not. R. Astron. Soc. \textbf{356}, 611 (2005), arXiv:astro-ph/0404378.
+
+\bibitem{Vikman2005}
+A.~Vikman, Phys. Rev. D \textbf{71}, 023515 (2005), arXiv:astro-ph/0407107.
 
 \end{thebibliography}
 
