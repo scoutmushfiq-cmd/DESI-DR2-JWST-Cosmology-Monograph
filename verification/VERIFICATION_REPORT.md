@@ -530,3 +530,14 @@ Round-22 review (`submission/hostile_referee_report_round22.md`). Verdict: MINOR
 Verified-clean: 32/32 CC cells and 13/13 BAO observables match exactly between the tex tables and `cosmo.py`; GP hyperparameters (σ_f 305.09, ℓ_f 3.8853, nll 119.01), w(0) −0.9748 ± 0.0941, z_t 0.765 ± 0.083, q₀ −0.512 ± 0.131 all artifact-backed; 4.52σ and 5.53σ pairings correct.
 
 `audit_numbers.py` extended from 465 to **508 checks**. Status: **508/508 pass**. Recompiled: **66 pages, zero errors**; official PDF rebuilt (page count unchanged).
+
+## Plan C executed — Nature distillation + PRD/JCAP conversion plan (Round-23 additions)
+
+Two new submission assets, both audit-enforced:
+
+| Asset | Content | Audit |
+| --- | --- | --- |
+| `submission/nature_letter.tex` | ~2,400-word Letter distillation (compiles to 5 pages, 4 figures: fig1 forest, fig8 heatmap, fig3 contours, fig7 EDE): reproducibility baseline (official 68.17 ± 0.28 vs our chains 68.35 ± 0.33 at 0.4σ), sound-horizon-free H₀ = 68.19 ± 1.45 / r_d = 146.36 ± 2.88, frequentist-vs-Bayesian decomposition with the KL Occam penalty, Mirage-axis evidence (+3.49 to +6.74, 81–99.6% CPL recovery), JWST–HST host cross-check, condensed Methods | 13 new checks: every headline fragment present, hyperbola attribution correct, Round-21 misattribution phrase absent |
+| `submission/prd_jcap_conversion_plan.md` | Section-by-section monograph→PRD mapping (Parts I–X → PRD §I–XI + appendix), readiness assessment (content ~95%, figures ~90%, structure ~40%), REVTeX 4.2 class, figure/table/bibliography checklists, audit re-baselining plan, 4–5-session effort estimate | existence + revtex4-2 check |
+
+`audit_numbers.py` extended from 508 to **521 checks**. Status: **521/521 pass**. Monograph unchanged (66 pages); letter compiled with Tectonic (5 pages, zero errors).
