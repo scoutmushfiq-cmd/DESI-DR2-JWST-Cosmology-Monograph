@@ -1,0 +1,32 @@
+{
+ "estimator": "cosmo.savage_dickey, 2-D KDE on (w0, wa), V = 15, nested point (w0, wa) = (-1, 0)",
+ "cpl_files": [
+  "chain_w0wa_desi_cmb.npy",
+  "chain_w0wa_desi_cmb_s111.npy",
+  "chain_w0wa_desi_cmb_s222.npy",
+  "chain_w0wa_desi_cmb_s333.npy"
+ ],
+ "n_all4chains": 403200,
+ "all4chains_lnB": 2.60049454900242,
+ "singles": {
+  "chain_w0wa_desi_cmb.npy": 1.7840750973128081,
+  "chain_w0wa_desi_cmb_s111.npy": 3.8980012219935865,
+  "chain_w0wa_desi_cmb_s222.npy": 2.7435459456837497,
+  "chain_w0wa_desi_cmb_s333.npy": 2.30839387055915
+ },
+ "pairs": {
+  "chain_w0wa_desi_cmb.npy+chain_w0wa_desi_cmb_s111.npy": 2.189610530461315,
+  "chain_w0wa_desi_cmb.npy+chain_w0wa_desi_cmb_s222.npy": 2.076584167949151,
+  "chain_w0wa_desi_cmb.npy+chain_w0wa_desi_cmb_s333.npy": 2.1304616275296464,
+  "chain_w0wa_desi_cmb_s111.npy+chain_w0wa_desi_cmb_s222.npy": 3.3552412218201786,
+  "chain_w0wa_desi_cmb_s111.npy+chain_w0wa_desi_cmb_s333.npy": 2.9170583722473333,
+  "chain_w0wa_desi_cmb_s222.npy+chain_w0wa_desi_cmb_s333.npy": 2.592519259817689
+ },
+ "singles_std": 0.8996829992965749,
+ "singles_mean": 2.6835040338873233,
+ "pairs_std": 0.5127809214238943,
+ "pairs_mean": 2.543579196637552,
+ "pairs_min": 2.076584167949151,
+ "pairs_max": 3.3552412218201786,
+ "note": "posterior-sampling systematic of the Savage-Dickey density ratio, quantified as the scatter of the lnB estimate across chain subsets of the four committed DESI DR2 + CMB CPL chains"
+}
