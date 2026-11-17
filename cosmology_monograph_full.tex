@@ -651,6 +651,8 @@ A critical insight emerges from comparing Tables~\ref{tab:host_galaxy_distances}
     \item \textbf{Origin of the CCHP vs.\ SH0ES Offset (Subsample Selection Fluctuation):} Because the intrinsic dispersion of standardized SNe Ia is $\sigma_{\rm SN} \approx 0.13\text{--}0.15\text{ mag}$ ($\sim 6.5\%$ in distance per SN), any small subsample of $N_{\rm SN} = 7\text{--}11$ calibrators exhibits an irreducible sample-mean fluctuation of $\sigma(H_0) \approx 70 \times \frac{0.065}{\sqrt{10}} \approx 1.5\text{ km s}^{-1}\text{ Mpc}^{-1}$ plus anchor shift. Using the empirical Pantheon+ calibration scaling $5\log_{10}(H_0/72.5) = M_B^0 - (-19.28)$ (Eq.~6 of \href{https://arxiv.org/abs/2408.11770}{Riess et al.\ 2024}), evaluating \emph{HST Cepheids alone} on the 11 SNe Ia selected by CCHP yields $H_0^{\text{HST,sub}} = 71.2\text{ km s}^{-1}\text{ Mpc}^{-1}$ (or $70.3\text{ km s}^{-1}\text{ Mpc}^{-1}$ on the 8 CCHP JAGB SNe), whereas evaluating HST Cepheids on the 9 SNe Ia selected by SH0ES yields $H_0^{\text{HST,sub}} = 73.6\text{ km s}^{-1}\text{ Mpc}^{-1}$. Furthermore, anchoring exclusively to NGC~4258 rather than all 4 geometric anchors lowers $H_0$ by $-0.63\text{ km s}^{-1}\text{ Mpc}^{-1}$ ($72.54$ vs.\ $73.17$). When CCHP expand their TRGB sample from 11 JWST-only calibrators to 24 HST+JWST calibrators (\href{https://arxiv.org/abs/2408.06153}{Freedman et al.\ 2025 v3}), their TRGB estimate reverts upward toward the mean from $68.81$ to $70.39 \pm 1.94\text{ km s}^{-1}\text{ Mpc}^{-1}$. When all JWST observations from both teams are combined into a nearly complete volume-limited sample of 16 SNe Ia at $D \le 25\text{ Mpc}$, JWST Cepheids ($73.4 \pm 2.1$), JWST JAGB ($72.2 \pm 2.2$), and JWST TRGB ($72.1 \pm 2.2$) converge to a joint three-method JWST value of $H_0 = 72.60 \pm 2.00\text{ km s}^{-1}\text{ Mpc}^{-1}$ (\href{https://arxiv.org/abs/2408.11770}{Riess et al.\ 2024}).
 \end{itemize}
 
+Figure~\ref{fig:hubble_whisker} assembles every determination discussed in this Part --- the early-Universe and inverse-distance-ladder fits of Parts IV--VI, our sound-horizon-free late-Universe fit, and the full set of JWST/HST local calibrations --- into a single forest comparison, making the $\sim 2.5\text{--}3.5\text{ km s}^{-1}\text{ Mpc}^{-1}$ calibration gap and its overlap structure directly visible.
+
 \begin{figure}[!htbp]
     \centering
     \includegraphics[width=0.94\textwidth]{fig1_hubble_tension_whisker.pdf}
@@ -815,7 +817,7 @@ To answer rigorously whether the Hubble tension is real across every combination
     T_{H_0}(A, B) \equiv \frac{\left| H_{0,A} - H_{0,B} \right|}{\sqrt{\sigma_{H_0,A}^2 + \sigma_{H_0,B}^2}},
     \label{eq:tension_metric}
 \end{equation}
-and present the full $5 \times 8$ cross-comparison matrix in Table~\ref{tab:tension_matrix}.
+and present the full $5 \times 8$ cross-comparison matrix in Table~\ref{tab:tension_matrix}; Figure~\ref{fig:tension_heatmap} displays the corresponding $7 \times 6$ heatmap for the six local calibrations, with the two-tier severity labeling described in its caption.
 
 \begin{table}[!htbp]
 \centering
@@ -933,7 +935,7 @@ Nature-grade claims require demonstrated numerical control of every link in the 
     \end{tabular}
 \end{table}
 
-Seed-to-seed stability of the posterior means is at the $10^{-3}$ level: $H_0 = 68.343$--$68.351~\text{km~s}^{-1}\text{Mpc}^{-1}$ for $\Lambda$CDM, and $(w_0, w_a)$ stable within $0.1\sigma$ of their (broad) joint posterior for $w_0 w_a$CDM. All chains satisfy $\widehat{R} < 1.01$ except $w_a$ ($\widehat{R} = 1.014$), which reflects the known near-degeneracy along the mirage axis $w_a = -3.66(1+w_0)$ rather than incomplete mixing; the combined four-chain posterior is used for all quoted $w_0 w_a$ constraints.
+Seed-to-seed stability of the posterior means is at the $10^{-3}$ level (Table~\ref{tab:convergence}): $H_0 = 68.343$--$68.351~\text{km~s}^{-1}\text{Mpc}^{-1}$ for $\Lambda$CDM, and $(w_0, w_a)$ stable within $0.1\sigma$ of their (broad) joint posterior for $w_0 w_a$CDM. All chains satisfy $\widehat{R} < 1.01$ except $w_a$ ($\widehat{R} = 1.014$), which reflects the known near-degeneracy along the mirage axis $w_a = -3.66(1+w_0)$ rather than incomplete mixing; the combined four-chain posterior is used for all quoted $w_0 w_a$ constraints.
 
 \begin{figure}[!htbp]
     \centering

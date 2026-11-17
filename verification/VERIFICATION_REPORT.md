@@ -469,3 +469,16 @@ Round-17 review (`submission/hostile_referee_report_round17.md`). Verdict: MINOR
 | m2: the cover letter's convergence claims (R̂ ≤ 1.014, ESS ≥ 85 811, split-R̂ 1.0037) were not audit-enforced | Verified against `convergence_diagnostics.json` and the split-R̂ artifact; audit checks added (chain count 39, README/§12/cover-letter consistency) |
 
 `audit_numbers.py` extended from 444 to **450 checks**. Status: **450/450 pass**. Manuscript unchanged (65 pages).
+
+## Round 18 (hostile referee, cross-reference integrity and headline-value sweep) — findings and fixes
+
+Round-18 review (`submission/hostile_referee_report_round18.md`). Verdict: MINOR REVISION. All addressed:
+
+| Finding | Fix applied |
+| --- | --- |
+| M1: fig1 (`fig:hubble_whisker`), fig8 (`fig:tension_heatmap`), and `tab:convergence` were never referenced in the running text | Textual references added at their natural anchors; audit extended with a full label/ref integrity check (unresolved refs incl. the listings `label={...}` form, duplicate labels, mandatory references for the three floats) |
+| m2: ~15 schematic book illustrations are never `\ref`-ed | Recorded as a known presentational choice of the monograph format; the three load-bearing floats fixed in M1 |
+
+Verified-clean: zero unresolved references in the compiled 66-page PDF; no duplicate labels; no stale values; headline values consistent across abstract/intro/body.
+
+`audit_numbers.py` extended from 450 to **455 checks**. Status: **455/455 pass**. Recompiled: **66 pages, zero errors** — the three added cross-references pushed the manuscript one page past 65; page counts synced (README ×5, `.zenodo.json`, cover letter). The initial duplicate-label check counted `{label}` occurrences including `\ref{...}` matches and was corrected to count only `\label{...}` occurrences before the final audit run.

@@ -266,7 +266,7 @@ check("0.42 \\pm 0.09" not in readme,
 check("0.50 \\pm 0.08" in readme and "0.35 \\pm 0.11" in readme,
       "README missing dataset-specific z_c values (0.50 +- 0.08 / 0.35 +- 0.11)")
 check("58 pages" not in readme, "Round-8 m1: README still claims 58 pages")
-check("65 pages" in readme, "README missing the 65-page compile claim")
+check("66 pages" in readme, "README missing the 66-page compile claim")
 check("~59 MB" not in readme and "~92 MB" not in readme,
       "README still claims a stale chain size (~59 MB / ~92 MB)")
 check("~97 MB" in readme, "README missing the ~97 MB chain-size claim")
@@ -789,6 +789,19 @@ _conv = json.load(open(os.path.join(VER, "convergence_diagnostics.json")))
 check(any(abs(v - 85811) < 1 for _l in [_conv["ess_cpl_per_chain"], _conv["ess_lcdm_per_chain"]]
           for _seg in _l for v in (_seg if isinstance(_seg, list) else [_seg])),
       "Round-17: ESS 85811 not found in convergence_diagnostics.json")
+
+# 19. Round-18 fixes: cross-reference integrity (the two headline figures and
+# the convergence table were never referenced in the running text).
+_all_labels = set(re.findall(r"\\label\{([^}]+)\}", tex))
+_all_labels |= set(re.findall(r"label=\{([^}]+)\}", tex))
+_all_refs = set(re.findall(r"\\ref\{([^}]+)\}", tex))
+check(not (_all_refs - _all_labels),
+      "Round-18: unresolved \\ref targets: %s" % sorted(_all_refs - _all_labels))
+check(not [l for l in _all_labels if len(re.findall(r"\\label\{%s\}" % re.escape(l), tex)) > 1],
+      "Round-18: duplicate labels in tex")
+for _req in ["fig:hubble_whisker", "fig:tension_heatmap", "tab:convergence"]:
+    check("\\ref{%s}" % _req in tex,
+          "Round-18: %s never referenced in the running text" % _req)
 
 print("checks run:", checks)
 if fails:
