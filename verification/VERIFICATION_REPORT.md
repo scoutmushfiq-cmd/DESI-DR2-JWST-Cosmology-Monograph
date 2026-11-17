@@ -498,3 +498,7 @@ Round-19 review (`submission/hostile_referee_report_round19.md`). Every re-runna
 Verdict: MINOR REVISION → fixed. The released pipeline is deterministic at the artifact level.
 
 `audit_numbers.py` extended from 455 to **460 checks** (new Round-19 section: max split-R̂ vs artifact and tex, h0rd tex string, patch_fig7 idempotency guard, make_fig1_fig8 36-cell assertion). Status: **460/460 pass**. Manuscript unchanged (66 pages).
+
+## Round 20 (final package verdict) — release readiness
+
+Round-20 review (`submission/hostile_referee_report_round20.md`). No new scientific findings; ship/no-ship sweep of the complete package: manuscript 66 pages / zero errors / zero unresolved references, both committed PDFs verified at 66 pages, audit **460/460 pass**, reproducibility drill clean (Round 19), submission kit complete (cover letter + referee template + 12 round reports), hygiene clean (160 tracked files, no secret-like paths, exclusions honored), page counts consistent everywhere. Verdict: **SHIP**. Residual documented limitations unchanged (nested lnB on SN compilations scoped to the Mirage axis; legacy z_c block; fig2 generator deferred; unreferenced schematics by design).
