@@ -541,3 +541,9 @@ Two new submission assets, both audit-enforced:
 | `submission/prd_jcap_conversion_plan.md` | Section-by-section monograph→PRD mapping (Parts I–X → PRD §I–XI + appendix), readiness assessment (content ~95%, figures ~90%, structure ~40%), REVTeX 4.2 class, figure/table/bibliography checklists, audit re-baselining plan, 4–5-session effort estimate | existence + revtex4-2 check |
 
 `audit_numbers.py` extended from 508 to **521 checks**. Status: **521/521 pass**. Monograph unchanged (66 pages); letter compiled with Tectonic (5 pages, zero errors).
+
+## Plan C, track 2 — PRD-format manuscript (Round-23 additions, continued)
+
+`submission/prd_manuscript.tex`: the journal-format distillation in **REVTeX 4.2, two-column** (compiles to 6 pages, zero errors, zero unresolved references, ~3,900 words with 22 references). Structure: I. Introduction · II. Data and likelihoods (BAO table*) · III. Methodology · IV. Distance-ladder results (constraints table* incl. the sound-horizon-free row) · V. Dynamical dark energy (model-comparison table, mirage evidence equation) · VI. Local calibrations and the tension · VII. Early-Universe solutions · VIII. Conclusions. Four figures (fig1*, fig8*, fig3, fig7). Every value is the audited monograph value with the attribution discipline enforced (official 68.17 ± 0.28 vs our chains 68.35 ± 0.33; hyperbola anchored on the official determination).
+
+`audit_numbers.py` extended from 521 to **536 checks** (PRD manuscript: REVTeX two-column class, headline fragments incl. 10027 ± 45, attribution phrases, Round-21 misattribution absence, ≥20 references). Status: **536/536 pass**. Monograph unchanged (66 pages).

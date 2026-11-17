@@ -882,6 +882,23 @@ if os.path.exists(_nl_path):
 _pp = os.path.join(ROOT, "submission", "prd_jcap_conversion_plan.md")
 check(os.path.exists(_pp) and "revtex4-2" in open(_pp, encoding="utf-8").read(),
       "Round-23: prd_jcap_conversion_plan.md missing or incomplete")
+_pm_path = os.path.join(ROOT, "submission", "prd_manuscript.tex")
+check(os.path.exists(_pm_path), "Round-23: prd_manuscript.tex missing")
+if os.path.exists(_pm_path):
+    _pm = open(_pm_path, encoding="utf-8").read()
+    check("revtex4-2" in _pm and "twocolumn" in _pm,
+          "Round-23: prd_manuscript.tex is not REVTeX two-column")
+    for _frag in ["68.35 \\pm 0.33", "68.19 \\pm 1.45", "146.36 \\pm 2.88",
+                  "+3.49 \\pm 0.23", "+6.74 \\pm 0.03", "10027 \\pm 45",
+                  "4.52", "5.72", "official DESI DR2", "0.3027 \\pm 0.0036"]:
+        check(_frag in _pm, "Round-23: prd_manuscript.tex missing %r" % _frag)
+    check("our joint DESI DR2 + CMB chain" not in _pm,
+          "Round-23: prd_manuscript.tex repeats the Round-21 misattribution")
+    check("computed from the official DESI DR2 + CMB" in _pm
+          and "our committed chains give" in _pm,
+          "Round-23: prd_manuscript.tex hyperbola attribution missing")
+    check(_pm.count("\\bibitem") >= 20,
+          "Round-23: prd_manuscript.tex reference list too short")
 
 print("checks run:", checks)
 if fails:
