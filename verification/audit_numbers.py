@@ -906,8 +906,8 @@ _fp_path = os.path.join(ROOT, "submission", "full_paper.tex")
 check(os.path.exists(_fp_path), "Round-24: full_paper.tex missing")
 if os.path.exists(_fp_path):
     _fp = open(_fp_path, encoding="utf-8").read()
-    check("revtex4-2" in _fp and "twocolumn" in _fp,
-          "Round-24: full_paper.tex is not REVTeX two-column")
+    check("revtex4-2" in _fp and "preprint" in _fp,
+          "Round-24: full_paper.tex is not REVTeX preprint (single-column)")
     check("mirage axis" in _fp and "sound-horizon-free" in _fp,
           "Round-24: full_paper.tex title fragments missing")
     for _frag in ["68.35 \\pm 0.33", "68.19 \\pm 1.45", "146.36 \\pm 2.88",
@@ -919,11 +919,17 @@ if os.path.exists(_fp_path):
                   "0.3153 \\pm 0.0073", "29.398 \\pm 0.025",
                   "+5.62", "+2.78 \\pm 0.42", "53.8", "+1.30", "+6.66",
                   "73.50 \\pm 2.80", "85{,}811", "1.0037", "403{,}200",
-                  "app:cc", "app:hosts", "app:sd", "Vikman2005",
+                  "app:ccdata", "app:sd", "Vikman2005",
+                  "app:chains", "app:artifacts", "app:figprov",
+                  "app:source", "Extended Part I", "Extended Part VII-B",
+                  "m:lst:python_pipeline", "lst:cosmo_full",
+                  "tab:chaininv", "tab:artifacts", "tab:figprov",
+                  "m:tab:host_galaxy_distances",
                   "w_{\\rm JBP}(z) &= w_0 + w_a", "w_{\\rm Log}(z) = w_0 + w_a \\ln(1+z)"]:
         check(_frag in _fp, "Round-24: full_paper.tex missing %r" % _frag)
+    _fp_ws = re.sub(r"\s+", " ", _fp)
     for _z, _h, _s in _mod.CC_DATA:
-        check("$%.4f$ & $%.1f$ & $%.1f$" % (_z, _h, _s) in _fp,
+        check("$%.4f$ & $%.1f$ & $%.1f$" % (_z, _h, _s) in _fp_ws,
               "Round-24: full_paper.tex CC table missing point (%.4f, %.1f +/- %.1f)"
               % (_z, _h, _s))
     check("our joint DESI DR2 + CMB chain" not in _fp,

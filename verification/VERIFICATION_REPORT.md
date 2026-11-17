@@ -576,3 +576,19 @@ One transcription defect caught and fixed before commit: an unbalanced superscri
 | Bibliography | 25 references; the previously uncited ten bibliography entries are now all cited in the text |
 
 `audit_numbers.py` extended from 561 to **612 checks** (new: θ*, Ωm-discrepancy, decomposition, nested-cross-check, TDCOSMO, convergence, and CC-table fragments — the 32 CC points are now asserted verbatim in the full paper's Appendix A table, plus the JBP/Log model-definition fragments and the three appendix labels). Status: **612/612 pass**. Monograph unchanged (66 pages); full paper recompiled with Tectonic (**12 pages, zero errors, zero unresolved references**).
+
+## Plan C, track 3 (final) — the 121+ page extended paper
+
+`submission/full_paper.tex` grown from 12 pages to **124 pages (43,046 words, 4.56 MiB PDF)** by transplanting the complete audited monograph content into the journal-format paper, so the extended paper now carries the full analysis narrative alongside the distilled core:
+
+| Component | Content |
+| --- | --- |
+| Distilled core | Sections I–XI unchanged from the 12-page version (data, methodology, results, evidence, GP, SN systematics, hosts, early-Universe, neutrinos, conclusions) |
+| Extended Analysis | The monograph Executive Summary, Abstract, and Extended Parts I–X (including VII-B–VII-E) transplanted with all tables and 26 figures; "Part N" renamed "Extended Part N" throughout; 7 figure environments that duplicated the core-paper figures were stripped and their references remapped to the core labels (`fig:forest`, `fig:heatmap`, `fig:contours`, `fig:gp`, `fig:sn`, `fig:ede`, `fig:nu`) |
+| Labels | All transplanted `\label`/`\ref`/`\eqref`/`\pageref`/`\hyperref` keys prefixed `m:` to guarantee zero collisions with the core-paper namespace (e.g. `m:tab:model_comparison_full`, `m:tab:cosmological_constraints`, `m:lst:python_pipeline`) |
+| Appendices | A (Savage–Dickey systematics), B (32-point CC table), C (Python pipeline listing), D (glossary), E (corrections log), plus four NEW machine-generated appendices: F (39-row chain inventory), G (28-row JSON artifact inventory), H (26-row figure provenance table), I (the complete `cosmo.py` inference source via `\lstinputlisting`, 682 lines) |
+| Class | REVTeX 4.2 `preprint` option (12 pt single-column) replacing `twocolumn`; packages added: tabularx, array, xcolor[table], colortbl, textcomp, listings, microtype, hyperref, caption; 12 color definitions; the `\takeaway` box macro; `\graphicspath` covering `../figs/`, `../book_assets/`, `../` |
+
+Compile defects found and fixed during the expansion: the literal `\1` regex-output bug in the transplant script; the "Dimension too large" failure on the 4,058-character caption of `m:tab:model_comparison_full` (REVTeX measures captions in a single hbox — split into a caption plus a "Notes to Table." block); the unprefixed `listings` label (`label={lst:python_pipeline}` is not a `\label` key, so the m:-prefix pass missed it → "Listing ??"); and Unicode (±, Λ, Δ, −, ×, ≈, μ, σ, α, →, ≥, ≤, °) in the new-appendix text, sanitized to LaTeX macros.
+
+`audit_numbers.py` extended from 612 to **623 checks** (new: the `preprint` class check replacing the obsolete `twocolumn` check; the appendix labels `app:ccdata`, `app:chains`, `app:artifacts`, `app:figprov`, `app:source`; the `Extended Part I`/`Extended Part VII-B` headings; `m:lst:python_pipeline`, `lst:cosmo_full`, `tab:chaininv`, `tab:artifacts`, `tab:figprov`, `m:tab:host_galaxy_distances`; the 32 CC points are asserted verbatim against whitespace-normalized text, matching the monograph table's cell layout). Status: **623/623 pass**. Full paper recompiled with Tectonic (**124 pages, zero errors, zero unresolved references**); monograph unchanged (66 pages).
