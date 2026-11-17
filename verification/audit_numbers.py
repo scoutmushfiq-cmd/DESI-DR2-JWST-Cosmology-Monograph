@@ -716,6 +716,45 @@ try:
 except ImportError:
     print("pymupdf unavailable; fig13 gridline check skipped")
 
+# 16. Round-15 fixes: tension-matrix caption attribution (M1), compressed-CMB
+# validation paragraph attribution (M2), derived Savage-Dickey scatter (M3),
+# and the severity-boundary alignment (m1).
+check("sole exception is the Sound-Horizon-Free row" in tex
+      and "the DESI DR2 + CMB rows and the Sound-Horizon-Free row" not in tex
+      and "agree exactly; Part VII-B" not in tex,
+      "Round-15 M1: tension-matrix caption still attributes the published DESI rows to our chains")
+check("at or above $3\\sigma$ (severe tension) are set in bold" in tex,
+      "Round-15 m1: table caption severity rule not aligned with the fig8 >= 3 sigma rule")
+check("our committed compressed-CMB chains give $H_0 = 68.35" in tex
+      and "0.3007" in tex
+      and "the compressed-chain posteriors" not in tex
+      and "agree exactly" not in tex,
+      "Round-15 M2: compressed-CMB validation paragraph still misattributes DESI's published values to our chains")
+_c = np.load(os.path.join(VER, "chains", "chain_lcdm_desi_cmb.npy"))
+check(abs(_c[:, 0].mean() - 68.35) < 0.01 and abs(_c[:, 0].std() - 0.33) < 0.01,
+      "Round-15 M2: chain_lcdm_desi_cmb disagrees with the quoted 68.35 +/- 0.33")
+_w = np.load(os.path.join(VER, "chains", "chain_w0wa_desi_cmb.npy"))
+check(abs(_w[:, 2].mean() + 0.48) < 0.01 and abs(_w[:, 3].mean() + 1.71) < 0.01
+      and abs(_w[:, 0].mean() - 63.60) < 0.01,
+      "Round-15 M2: chain_w0wa_desi_cmb disagrees with the quoted (-0.48, -1.71, 63.60)")
+check("mathcal{O}(0.4)" not in tex and "run\\_sd\\_canonical.py" in tex
+      and "sd\\_chain\\_scatter.json" in tex,
+      "Round-15 M3: tex does not cite the derived scatter artifacts (or still quotes the invented O(0.4) scale)")
+_scs_path = os.path.join(VER, "sd_chain_scatter.json")
+check(os.path.exists(os.path.join(VER, "run_sd_canonical.py")) and os.path.exists(_scs_path),
+      "Round-15 M3: Savage-Dickey generator or scatter artifact missing")
+if os.path.exists(_scs_path):
+    _scs = json.load(open(_scs_path))
+    check(abs(_scs["all4chains_lnB"] - 2.6005) < 5e-4
+          and abs(_scs["pairs_std"] - 0.513) < 5e-3
+          and abs(_scs["singles_std"] - 0.900) < 5e-3
+          and abs(_scs["pairs_min"] - 2.08) < 5e-3
+          and abs(_scs["pairs_max"] - 3.36) < 5e-3,
+          "Round-15 M3: sd_chain_scatter.json disagrees with the tex-quoted scatter (0.90 singles, 0.51 pairs, 2.08-3.36)")
+_vr = open(os.path.join(VER, "VERIFICATION_REPORT.md"), encoding="utf-8").read()
+check("legacy computation" in _vr and "zc" in _vr,
+      "Round-15 m2: VERIFICATION_REPORT does not document the legacy z_c block")
+
 print("checks run:", checks)
 if fails:
     print("FAILURES (%d):" % len(fails))
