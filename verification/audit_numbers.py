@@ -755,6 +755,20 @@ _vr = open(os.path.join(VER, "VERIFICATION_REPORT.md"), encoding="utf-8").read()
 check("legacy computation" in _vr and "zc" in _vr,
       "Round-15 m2: VERIFICATION_REPORT does not document the legacy z_c block")
 
+# 17. Round-16 fixes: tex-quoted scatter fragments enforced against the
+# artifact, the 'every subset' overstatement removed, and the intro-summary
+# attribution clarified.
+if os.path.exists(_scs_path):
+    check("standard deviation $0.90$" in tex and "standard deviation $0.51$" in tex
+          and "mean $2.54$" in tex and "+1.78$ to $+3.90" in tex
+          and "+2.08$ to $+3.36" in tex,
+          "Round-16 m1: tex does not quote the artifact-derived scatter numbers")
+check("every subset of the four" not in tex
+      and "four single chains and the six two-chain subsets" in tex,
+      "Round-16 m2: tex still overstates the subset coverage ('every subset')")
+check("official DESI DR2 values --- our committed chains give $68.35" in tex,
+      "Round-16 m3: intro summary still presents the published 68.17 without our-chain attribution")
+
 print("checks run:", checks)
 if fails:
     print("FAILURES (%d):" % len(fails))

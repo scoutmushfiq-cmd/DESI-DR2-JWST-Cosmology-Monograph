@@ -441,3 +441,17 @@ Verified-clean in the same pass: the four own-pipeline CPL Δχ²_MAP values (�
 `audit_numbers.py` extended from 432 to **441 checks** (new Round-15 section: caption attribution fragments, severity-boundary alignment, chain-direct ΛCDM/w0wa values, scatter artifact values vs tex, generator + artifact existence, z_c documentation). Status: **441/441 pass**. Recompiled: **65 pages, zero errors**; official PDF rebuilt.
 
 **Limitations §8 addition (Round 15):** the z_c block of `savage_dickey_canonical.json` (medians 0.495/0.345, quoted in the tex) predates the committed scripts and is retained as a legacy computation; the lnB rows of the same artifact are fully reproducible via `run_sd_canonical.py`.
+
+## Round 16 (hostile referee, audit of the Round-15 fixes + external DESI DR2 verification) — findings and fixes
+
+Round-16 review (`submission/hostile_referee_report_round16.md`). Verdict: MINOR REVISION. All addressed:
+
+| Finding | Fix applied |
+| --- | --- |
+| m1: the audit checked `sd_chain_scatter.json` against hardcoded values but never enforced the tex-quoted scatter numbers | Audit extended: the tex fragments (standard deviation $0.90$ / $0.51$, mean $2.54$, ranges +1.78–3.90 and +2.08–3.36) are now enforced |
+| m2: the tex said "every subset of the four released chains" but only the 4 singles and 6 pairs were computed (triples omitted as complement-redundant) | Reworded to the exact coverage |
+| m3: the intro foundational-results sentence presented the published 68.17 ± 0.28 / Ωm 0.3027 ± 0.0036 without attribution, indistinguishable from an own-pipeline claim | Explicit parenthetical: official DESI DR2 values; our committed chains give 68.35 ± 0.33 / 0.3007 ± 0.0049 (Part VII-B) |
+
+External verification (published record): arXiv:2503.14738 (v3 = PRD 112, 083515) abstract — 3.1σ for DESI BAO + CMB, 2.8–4.2σ with SNe, Σmν < 0.064/0.16 eV — all matching the monograph's transcriptions; headline DESI DR2 values (68.17 ± 0.28, 0.3027 ± 0.0036; w0 −0.42 ± 0.21, wa −1.75 ± 0.58) consistent with the published record, with the compressed-baseline pair (−0.43 ± 0.22, −1.72 ± 0.64) < 0.1σ from the full-CamSpec pair as stated.
+
+`audit_numbers.py` extended from 441 to **444 checks**. Status: **444/444 pass**. Recompiled: **65 pages, zero errors**; official PDF rebuilt.
