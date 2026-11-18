@@ -941,6 +941,28 @@ if os.path.exists(_fp_path):
           "Round-24: full_paper.tex reference list too short")
     check(not re.search(r"\$\^-1\$", _fp),
           "Round-24: full_paper.tex has an unbalanced superscript (s$^{-1$ typo class)")
+    check("561-check" not in _fp and "536-check" not in _fp,
+          "Round-25: full_paper.tex carries a stale audit-count stamp")
+    check("23 posterior chains" not in _fp,
+          "Round-25: full_paper.tex still quotes 23 posterior chains")
+    check("26 Vector Figures" not in _fp and "24 Vector Figures" in _fp,
+          "Round-25: full_paper.tex scope-box figure count is stale")
+    check("this monograph" not in _fp,
+          "Round-25: full_paper.tex still self-identifies as a monograph")
+    check("Extended Part VII-A" not in _fp,
+          "Round-25: full_paper.tex dangles a reference to Extended Part VII-A")
+    check("fits of Parts IV" not in _fp and "Extended Parts IV--VI" in _fp,
+          "Round-25: full_paper.tex carries unprefixed monograph Part references")
+    check(_fp.count("\\appendix") == 1 and "app:primarysources" in _fp,
+          "Round-25: full_paper.tex appendix structure broken (duplicate \\appendix or missing primary-sources appendix)")
+    check("Monograph location" in _fp and "Where used &" not in _fp,
+          "Round-25: figure-provenance table still uses monograph locations without the mapping header")
+    check("estimator chain (published nested-sampling decomposition versus our density ratio)" in _fp,
+          "Round-25: Bayes-factor cross-walk sentence missing")
+    check("AIC, and BIC from bounded multi-start" not in _fp,
+          "Round-25: tab:modelcomp caption still claims AIC/BIC columns it does not have")
+    check(_fp.count("%d-check" % (checks + 1)) >= 3,
+          "Round-25: full_paper.tex audit-count stamps do not match this audit")
 
 print("checks run:", checks)
 if fails:
