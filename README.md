@@ -2,7 +2,6 @@
 
 **Model-Independent Constraints on the Hubble Constant and Dark Energy Equation of State from DESI DR2 BAO, Pantheon+ Supernovae, and JWST Distance-Ladder Calibrations**
 
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.23383762.svg)](https://doi.org/10.5281/zenodo.23383762)
 
 - **Author:** Md. Mushfiqur Rahim
 - **Official DOI:** [10.5281/zenodo.23383762](https://doi.org/10.5281/zenodo.23383762)
