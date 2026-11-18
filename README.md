@@ -4,7 +4,7 @@
 
 
 - **Author:** Md. Mushfiqur Rahim
-- **Official DOI:** [10.5281/zenodo.23383762](https://doi.org/10.5281/zenodo.23383762)
+-
 - **ORCID iD:** [0009-0003-1021-685X](https://orcid.org/0009-0003-1021-685X)
 - **GitHub:** [@MD-Mushfiqur123](https://github.com/MD-Mushfiqur123)
 - **Affiliations:**
