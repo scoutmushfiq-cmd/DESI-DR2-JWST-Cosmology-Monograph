@@ -961,6 +961,40 @@ if os.path.exists(_fp_path):
           "Round-25: Bayes-factor cross-walk sentence missing")
     check("AIC, and BIC from bounded multi-start" not in _fp,
           "Round-25: tab:modelcomp caption still claims AIC/BIC columns it does not have")
+    check("**released**" not in _fp and _fp.count("\\emph{released}") == 6,
+          "Round-25: figure-provenance table carries raw markdown emphasis (**released**)")
+    check("this monograph" not in _fp.lower(),
+          "Round-25: full_paper.tex still self-identifies as a monograph (case-insensitive)")
+    check("This paper is organized as a rigorous progression" in _fp
+          and "corresponding Extended Part:" in _fp,
+          "Round-25: Executive Summary organization sentence not paper-scoped")
+    check("as tabulated in Part IV" not in _fp and "as tabulated in Extended Part IV" in _fp,
+          "Round-25: figprov data source still says 'as tabulated in Part IV'")
+    check("quoted in Part VII" not in _fp and "quoted in Extended Part VII" in _fp,
+          "Round-25: figprov data source has an unprefixed Part VII reference")
+    check("quoted in Part VIII" not in _fp and "quoted in Extended Part VIII" in _fp,
+          "Round-25: figprov data source has an unprefixed Part VIII reference")
+    check("quoted in Part IX" not in _fp and _fp.count("quoted in Extended Part IX") == 2,
+          "Round-25: figprov data source has unprefixed Part IX references")
+    check("quoted in Part X" not in _fp and "quoted in Extended Part X" in _fp,
+          "Round-25: figprov data source has an unprefixed Part X reference")
+    check("2.80\\text{ km s}" not in _fp and "_{-5.5}\\text{ km s}" not in _fp
+          and "73.50 \\pm 2.80$~km~s$^{-1}$~Mpc$^{-1}$" in _fp
+          and "75.4^{+8.1}_{-5.5}$~km~s$^{-1}$~Mpc$^{-1}$" in _fp,
+          "Round-25: TDCOSMO item still carries unbreakable inline km/s/Mpc math")
+    check("\\qquad R_b(z) \\equiv" not in _fp
+          and "r_d &\\equiv r_s(z_d)" in _fp
+          and "R_b(z) &\\equiv \\frac{3\\rho_b(z)}{4\\rho_\\gamma(z)}" in _fp,
+          "Round-25: r_d integral equation not split into an aligned environment")
+    check("D_L(z)}{\\text{Mpc}} \\right) + 25\\\\[4pt]" in _fp,
+          "Round-25: mu_th equation not split into an aligned environment")
+    check("\\texttt{verification/\\allowbreak chains/}" in _fp,
+          "Round-25: chain-inventory lead-in has an unbreakable path token")
+    check("resizebox{\\textwidth}{!}{%\n\\begin{tabular}{lp{0.14\\linewidth}" in _fp
+          and _fp.count("\\end{tabular}%") >= 2,
+          "Round-25: figure-provenance table not scaled to text width")
+    check(_fp.count("\\_\\allowbreak") >= 40 and _fp.count("/\\allowbreak") >= 25,
+          "Round-25: figprov cells contain unbreakable path/filename tokens")
     check(_fp.count("%d-check" % (checks + 1)) >= 3,
           "Round-25: full_paper.tex audit-count stamps do not match this audit")
 

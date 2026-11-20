@@ -609,3 +609,22 @@ Two consecutive hostile-review passes over the 124-page extended paper surfaced 
 | Audit gap | None of the stale numbers above were machine-detectable | Ten new negative/positive guards (stale stamps, chain/figure counts, "this monograph", VII-A, unprefixed Parts, appendix structure, provenance header, cross-walk, caption claim) plus the runtime audit-count self-check |
 
 One mid-fix compile regression (an escaped underscore entering a `\ref{}` label inside the provenance table, `\endcsname` error) was caught and fixed before commit. Final state: **124 pages, ~43,300 words, zero errors, zero unresolved references, Appendix A–J unique, 634/634 audit checks pass**. Monograph unchanged (66 pages).
+
+## Round 25 (final hostile pass) - the residual typographic-window defects
+
+A final exhaustive pass over the fully fixed 124-page paper combined (i) a complete re-read of the figure-provenance table against `verification/figure_provenance.md`, (ii) a full list-of-overfull survey from a clean compile, and (iii) case-exhaustive self-identification scans. New findings and fixes:
+
+| # | Finding | Fix |
+|---|---|---|
+| 1 | Figure-provenance table carried raw markdown emphasis `**released**` in five Status cells (print shows literal asterisks) | Replaced by printer emphasis (emph released); audit guard added (raw stars forbidden, exactly six emphasised cells expected) |
+| 2 | Data-source column still referenced the monograph unprefixed ("quoted in Part VII/VIII/IX/X", "as tabulated in Part IV" - six rows) | All six now read "Extended Part N", consistent with the Monograph-location mapping convention; per-letter audit guards added |
+| 3 | A fifth "This monograph" (capital T, in the Executive Summary) escaped the lowercase-only guard; the takeaways pointer said "the corresponding Part" | "This paper is organized ..."; "the corresponding Extended Part:"; audit guard made case-insensitive; glossary table header "Role in This Monograph" changed to "Role in This Paper" |
+| 4 | Two unbreakable inline-math unit chunks survived in the TDCOSMO prose item (and one in the TDCOSMO table row) | Converted to tie-space style (H0 = value, km/s/Mpc with tie-spaces); audit guard added |
+| 5 | The SBF/MCP item title reproduced a 42.6 pt overfull through a bisection-verified mechanism (long bold run-in title plus the linked arXiv parenthetical leaves the first line unbreakable) | Restructured into bold title with the link separated and a shortened anchor; overfull eliminated (verified by standalone reproduction before and after) |
+| 6 | The r_d sound-horizon integral (17.3 pt) and the SN distance-modulus equation (9.9 pt) still exceeded the text width | Both split into aligned two-line forms (single equation number preserved) |
+| 7 | Figure-provenance table geometry: 26 rows with unbreakable path/filename tokens (individual cells overfull up to 13.7 pt; table 11 pt beyond text width) | Table wrapped in a text-width resize box (same treatment already used for the constraints table) and every verification/... path and filename token broken with explicit allowbreak points (138 + 54 insertion sites); the same break inserted in the chain-inventory and provenance-lead-in path tokens |
+| 8 | The model-comparison subsection heading overflowed by 7.95 pt on its math chunk | allowbreak inserted inside the heading math |
+
+En-route regression caught and fixed mid-fix: the mechanical allowbreak insertion initially produced allowbreak immediately followed by letters (e.g. the lexed token "allowbreakassets"), which TeX treats as one undefined control word; every insertion now carries the required terminating space. The regression was caught by the compile, fixed, and reverified.
+
+**Final state (this round):** 125 pages, ~43,200 words, zero errors, zero unresolved references (question-mark count 0), Appendices A-J unique at pp. 95/96/98/101/104/106/109, numeric audit extended 634 to 648 checks (14 new round-25 guards, including the case-insensitive self-identification guard and mechanical allowbreak-count guards), **648/648 ALL PASS**. Remaining compile-log entries are all in the documented benign classes: the two resize-box natural-width measurement warnings (the scaled output fits exactly), the page-1 vbox (25 pt), one 5.9 pt paragraph, and the long-title list-of-tables/list-of-figures cosmetic warnings.
